@@ -19,13 +19,13 @@ export default function Hero() {
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900">
-                Your Aviation Journey 
-                <span className="text-sky-600 block">Starts Here</span>
+                Lets Go Fly!!! 
+                <span className="text-sky-600 block">Your DFW Flight Training</span>
               </h1>
               
               <p className="text-xl text-gray-600">
-                Experience the thrill of flying with our Discovery Flight program. 
-                Professional instructors, modern aircraft, and the beautiful Texas sky await.
+                Experience aviation in the Dallas-Fort Worth area. Discovery flights, 
+                aircraft rentals, and flight training for pilots of all levels.
               </p>
             </div>
 
@@ -53,7 +53,7 @@ export default function Hero() {
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5 text-sky-600" />
-                <span>Dallas, Texas</span>
+                <span>Dallas-Fort Worth Area</span>
               </div>
             </div>
           </div>

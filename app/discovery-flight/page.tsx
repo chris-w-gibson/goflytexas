@@ -43,7 +43,7 @@ export default function DiscoveryFlightPage() {
                 href="tel:+1234567890"
                 className="inline-flex items-center justify-center px-8 py-3 bg-sky-600 text-white font-semibold rounded-full hover:bg-sky-700 transition-colors"
               >
-                Book Now - $99
+                Book Discovery Flight
               </a>
               <Link
                 href="/contact"
@@ -131,8 +131,8 @@ export default function DiscoveryFlightPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">No Hidden Fees</h3>
-                <p className="text-gray-600">$99 includes everything - aircraft, fuel, instructor, and insurance</p>
+                <h3 className="text-lg font-semibold mb-2">Competitive Rates</h3>
+                <p className="text-gray-600">Our rates include everything - aircraft, fuel, instructor, and insurance</p>
               </div>
             </div>
           </div>

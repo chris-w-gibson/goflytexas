@@ -71,7 +71,7 @@ export default function Home() {
               href="/discovery-flight"
               className="inline-flex items-center px-8 py-3 bg-white text-sky-600 font-semibold rounded-full hover:bg-gray-100 transition-colors"
             >
-              Book Now - $99
+              Book Discovery Flight
             </Link>
             <a
               href="tel:+1234567890"

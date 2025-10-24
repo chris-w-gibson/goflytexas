@@ -19,73 +19,73 @@ export const metadata: Metadata = {
   },
 };
 
-// Aircraft data - in a real app, this would come from a database
+// Aircraft data - Our Cessna 172 N model fleet
 const aircraft = [
   {
     id: 1,
-    model: "Cessna 172 Skyhawk",
-    registration: "N12345",
-    year: 2018,
+    model: "Cessna 172N Skyhawk",
+    registration: "N4501E",
+    year: null,
     features: [
-      "Garmin G1000 Glass Cockpit",
-      "Autopilot",
-      "Air Conditioning",
+      "Proven Training Platform",
       "GPS Navigation",
-      "Traffic Collision Avoidance",
-      "4-Seat Configuration"
+      "4-Seat Configuration",
+      "Dual Controls",
+      "High Wing Design",
+      "Excellent Visibility"
     ],
     specs: {
-      cruiseSpeed: "124 knots",
+      cruiseSpeed: "122 knots",
       range: "640 nm",
       ceiling: "13,500 ft",
-      fuelCapacity: "56 gal"
+      fuelCapacity: "40 gal"
     },
-    hourlyRate: "$145",
-    description: "Our flagship trainer, perfect for primary flight training with modern avionics."
+    hourlyRate: "Competitive Rates",
+    description: "Reliable and proven trainer, perfect for all stages of flight training."
   },
   {
     id: 2,
-    model: "Piper Cherokee Warrior",
-    registration: "N67890",
-    year: 2020,
+    model: "Cessna 172N Skyhawk",
+    registration: "N5217D",
+    year: null,
     features: [
-      "Garmin 430W GPS",
-      "Digital Engine Monitor",
-      "Leather Interior",
-      "Low Wing Design",
-      "Excellent Visibility",
-      "4-Seat Configuration"
+      "Proven Training Platform",
+      "GPS Navigation",
+      "4-Seat Configuration",
+      "Dual Controls",
+      "High Wing Design",
+      "Excellent Visibility"
     ],
     specs: {
-      cruiseSpeed: "115 knots",
-      range: "530 nm",
-      ceiling: "11,000 ft",
-      fuelCapacity: "50 gal"
+      cruiseSpeed: "122 knots",
+      range: "640 nm",
+      ceiling: "13,500 ft",
+      fuelCapacity: "40 gal"
     },
-    hourlyRate: "$135",
-    description: "Low-wing trainer ideal for cross-country flights and instrument training."
+    hourlyRate: "Competitive Rates",
+    description: "Identical model ensuring consistent training experience across our fleet."
   },
   {
     id: 3,
-    model: "Cessna 152",
-    registration: "N54321",
-    year: 2019,
+    model: "Cessna 172N Skyhawk",
+    registration: "N5550J",
+    year: null,
     features: [
-      "Simple & Reliable",
-      "Ideal for New Pilots",
-      "Economic Operation",
-      "Standard Instruments",
-      "2-Seat Configuration",
-      "Proven Training Platform"
+      "Proven Training Platform",
+      "GPS Navigation",
+      "4-Seat Configuration",
+      "Dual Controls",
+      "High Wing Design",
+      "Excellent Visibility"
     ],
     specs: {
-      cruiseSpeed: "107 knots",
-      range: "415 nm",
-      ceiling: "14,700 ft",
-      fuelCapacity: "26 gal"
+      cruiseSpeed: "122 knots",
+      range: "640 nm",
+      ceiling: "13,500 ft",
+      fuelCapacity: "40 gal"
     },
-    hourlyRate: "$115",
-    description: "Cost-effective trainer perfect for private pilot certification."
+    hourlyRate: "Competitive Rates",
+    description: "Consistent fleet means you can train in any aircraft with minimal differences."
   }
 ];
 
