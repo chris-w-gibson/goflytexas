@@ -55,7 +55,7 @@ export default function CFIAcademyPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="tel:+1234567890"
+                href="tel:+19409053090"
                 className="inline-flex items-center justify-center px-8 py-3 bg-sky-600 text-white font-semibold rounded-full hover:bg-sky-700 transition-colors"
               >
                 Start CFI Training
@@ -404,10 +404,10 @@ export default function CFIAcademyPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+1234567890"
+              href="tel:+19409053090"
               className="inline-flex items-center justify-center px-8 py-3 bg-white text-orange-600 font-semibold rounded-full hover:bg-gray-100 transition-colors text-lg"
             >
-              Call (123) 456-7890
+              Call (940) 905-3090
             </a>
             <Link
               href="/contact"

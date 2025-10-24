@@ -206,10 +206,10 @@ export default function FlightTrainingPage() {
               Book Discovery Flight
             </Link>
             <a
-              href="tel:+1234567890"
+              href="tel:+19409053090"
               className="inline-flex items-center justify-center px-8 py-3 bg-sky-500 text-white font-semibold rounded-full hover:bg-sky-400 transition-colors text-lg"
             >
-              Call (123) 456-7890
+              Call (940) 905-3090
             </a>
           </div>
         </div>

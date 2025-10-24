@@ -34,7 +34,7 @@ export default function Navigation() {
               Contact
             </Link>
             <a
-              href="tel:+1234567890"
+              href="tel:+19409053090"
               className="flex items-center space-x-2 bg-sky-600 text-white px-4 py-2 rounded-full hover:bg-sky-700 transition-colors"
             >
               <Phone className="h-4 w-4" />
@@ -92,10 +92,10 @@ export default function Navigation() {
               Contact
             </Link>
             <a
-              href="tel:+1234567890"
+              href="tel:+19409053090"
               className="block px-3 py-2 rounded-md bg-sky-600 text-white hover:bg-sky-700 text-center"
             >
-              Call Now: (123) 456-7890
+              Call Now: (940) 905-3090
             </a>
           </div>
         </div>

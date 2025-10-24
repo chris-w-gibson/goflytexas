@@ -77,10 +77,10 @@ export default function ContactPage() {
               <h3 className="text-lg font-semibold mb-2">Call Us</h3>
               <p className="text-gray-900 mb-2">Ready to answer your questions</p>
               <a 
-                href="tel:+1234567890" 
+                href="tel:+19409053090" 
                 className="text-sky-600 hover:text-sky-700 font-medium"
               >
-                (123) 456-7890
+                (940) 905-3090
               </a>
             </div>
 
@@ -318,11 +318,11 @@ export default function ContactPage() {
                   The fastest way to get started is to give us a call!
                 </p>
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+19409053090"
                   className="inline-flex items-center text-sky-600 hover:text-sky-700 font-medium"
                 >
                   <Phone className="h-5 w-5 mr-2" />
-                  (123) 456-7890
+                  (940) 905-3090
                 </a>
               </div>
             </div>

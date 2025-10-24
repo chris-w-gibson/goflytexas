@@ -175,10 +175,10 @@ export default function Home() {
               Book Discovery Flight
             </Link>
             <a
-              href="tel:+1234567890"
+              href="tel:+19409053090"
               className="inline-flex items-center px-8 py-3 bg-sky-500 text-white font-semibold rounded-full hover:bg-sky-400 transition-colors"
             >
-              Call (123) 456-7890
+              Call (940) 905-3090
             </a>
           </div>
         </div>
@@ -207,7 +207,7 @@ export default function Home() {
               <ul className="space-y-2 text-sm">
                 <li>Dallas Executive Airport</li>
                 <li>Dallas, TX 75001</li>
-                <li><a href="tel:+1234567890" className="hover:text-white transition-colors">(123) 456-7890</a></li>
+                <li><a href="tel:+19409053090" className="hover:text-white transition-colors">(940) 905-3090</a></li>
                 <li><a href="mailto:info@goflytexas.com" className="hover:text-white transition-colors">info@goflytexas.com</a></li>
               </ul>
             </div>
