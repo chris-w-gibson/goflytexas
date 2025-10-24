@@ -1,101 +1,122 @@
-import Image from "next/image";
+import Navigation from '@/components/Navigation';
+import Hero from '@/components/Hero';
+import Link from 'next/link';
+import { CheckCircle, Users, Award, Calendar } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main className="min-h-screen">
+      <Navigation />
+      <Hero />
+      
+      {/* Why Choose Us Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Why Choose GoFlyTexas
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              With decades of experience and a passion for aviation, we're committed to making your flying dreams a reality.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
+                <Users className="h-8 w-8 text-sky-600" />
+              </div>
+              <h3 className="text-xl font-semibold">Expert Instructors</h3>
+              <p className="text-gray-600">FAA-certified instructors with thousands of flight hours</p>
+            </div>
+            
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
+                <Award className="h-8 w-8 text-sky-600" />
+              </div>
+              <h3 className="text-xl font-semibold">Modern Fleet</h3>
+              <p className="text-gray-600">Well-maintained aircraft with latest avionics</p>
+            </div>
+            
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
+                <Calendar className="h-8 w-8 text-sky-600" />
+              </div>
+              <h3 className="text-xl font-semibold">Flexible Scheduling</h3>
+              <p className="text-gray-600">Book flights that fit your busy schedule</p>
+            </div>
+            
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
+                <CheckCircle className="h-8 w-8 text-sky-600" />
+              </div>
+              <h3 className="text-xl font-semibold">Proven Success</h3>
+              <p className="text-gray-600">High pass rate for pilot certification exams</p>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      {/* Discovery Flight CTA */}
+      <section className="py-20 bg-gradient-to-r from-sky-600 to-sky-700">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Ready to Take Off?
+          </h2>
+          <p className="text-xl text-sky-100 mb-8">
+            Your first flight is just a click away. Experience the freedom of flight with our Discovery Flight program.
+          </p>
+          <div className="space-x-4">
+            <Link
+              href="/discovery-flight"
+              className="inline-flex items-center px-8 py-3 bg-white text-sky-600 font-semibold rounded-full hover:bg-gray-100 transition-colors"
+            >
+              Book Now - $99
+            </Link>
+            <a
+              href="tel:+1234567890"
+              className="inline-flex items-center px-8 py-3 bg-sky-500 text-white font-semibold rounded-full hover:bg-sky-400 transition-colors"
+            >
+              Call (123) 456-7890
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-300 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-white font-bold text-xl mb-4">GoFlyTexas</h3>
+              <p className="text-sm">Professional flight training in Dallas, Texas. Your aviation journey starts here.</p>
+            </div>
+            
+            <div>
+              <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/discovery-flight" className="hover:text-white transition-colors">Discovery Flight</Link></li>
+                <li><Link href="/aircraft" className="hover:text-white transition-colors">Our Aircraft</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-white font-semibold mb-4">Contact Info</h4>
+              <ul className="space-y-2 text-sm">
+                <li>Dallas Executive Airport</li>
+                <li>Dallas, TX 75001</li>
+                <li><a href="tel:+1234567890" className="hover:text-white transition-colors">(123) 456-7890</a></li>
+                <li><a href="mailto:info@goflytexas.com" className="hover:text-white transition-colors">info@goflytexas.com</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+            <p>&copy; {new Date().getFullYear()} GoFlyTexas. All rights reserved.</p>
+          </div>
+        </div>
       </footer>
-    </div>
+    </main>
   );
 }
