@@ -32,11 +32,20 @@ export default function DiscoveryFlightPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Discovery Flight Experience
+              Discovery Flight
             </h1>
-            <p className="text-xl text-gray-900 mb-8">
-              Your first step into the world of aviation. Take the controls and experience 
-              the freedom of flight with our certified instructors.
+            <h2 className="text-2xl text-sky-600 font-semibold mb-6">
+              You have dreamed of flying, here is your chance!
+            </h2>
+            <p className="text-lg text-gray-900 mb-8 text-left">
+              Taking a discovery flight in one our Cessna 172N is an unforgettable introduction to the world of aviation. 
+              The Cessna 172N, known for its reliability and forgiving flight characteristics, is a popular choice for 
+              flight training and a perfect aircraft for first-time flyers. On a discovery flight, you'll typically start 
+              with a pre-flight briefing where your instructor explains the basic flight controls and safety procedures. 
+              Then, once airborne, you'll get hands-on experience as you take the yoke and feel what it's like to fly. 
+              The instructor guides you through gentle turns, climbs, and descents, giving you a real taste of pilot 
+              life—all while soaking in the scenic views from above. It's an exciting and empowering experience as well 
+              as a logged hour towards your certificate.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
