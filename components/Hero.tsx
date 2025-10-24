@@ -23,7 +23,7 @@ export default function Hero() {
                 <span className="text-sky-600 block">Your DFW Flight Training</span>
               </h1>
               
-              <p className="text-xl text-gray-600">
+              <p className="text-xl text-gray-900">
                 Experience aviation in the Dallas-Fort Worth area. Discovery flights, 
                 aircraft rentals, and flight training for pilots of all levels.
               </p>
@@ -46,7 +46,7 @@ export default function Hero() {
               </Link>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 text-sm text-gray-600">
+            <div className="flex flex-col sm:flex-row gap-6 text-sm text-gray-900">
               <div className="flex items-center space-x-2">
                 <Clock className="h-5 w-5 text-sky-600" />
                 <span>30-60 min flights</span>

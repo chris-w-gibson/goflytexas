@@ -16,7 +16,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Why Choose GoFlyTexas
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-900 max-w-3xl mx-auto">
               With decades of experience and a passion for aviation, we're committed to making your flying dreams a reality.
             </p>
           </div>
@@ -27,7 +27,7 @@ export default function Home() {
                 <Users className="h-8 w-8 text-sky-600" />
               </div>
               <h3 className="text-xl font-semibold">Expert Instructors</h3>
-              <p className="text-gray-600">FAA-certified instructors with thousands of flight hours</p>
+              <p className="text-gray-900">FAA-certified instructors with thousands of flight hours</p>
             </div>
             
             <div className="text-center space-y-4">
@@ -35,7 +35,7 @@ export default function Home() {
                 <Award className="h-8 w-8 text-sky-600" />
               </div>
               <h3 className="text-xl font-semibold">Modern Fleet</h3>
-              <p className="text-gray-600">Well-maintained aircraft with latest avionics</p>
+              <p className="text-gray-900">Well-maintained aircraft with latest avionics</p>
             </div>
             
             <div className="text-center space-y-4">
@@ -43,7 +43,7 @@ export default function Home() {
                 <Calendar className="h-8 w-8 text-sky-600" />
               </div>
               <h3 className="text-xl font-semibold">Flexible Scheduling</h3>
-              <p className="text-gray-600">Book flights that fit your busy schedule</p>
+              <p className="text-gray-900">Book flights that fit your busy schedule</p>
             </div>
             
             <div className="text-center space-y-4">
@@ -51,7 +51,7 @@ export default function Home() {
                 <CheckCircle className="h-8 w-8 text-sky-600" />
               </div>
               <h3 className="text-xl font-semibold">Proven Success</h3>
-              <p className="text-gray-600">High pass rate for pilot certification exams</p>
+              <p className="text-gray-900">High pass rate for pilot certification exams</p>
             </div>
           </div>
         </div>

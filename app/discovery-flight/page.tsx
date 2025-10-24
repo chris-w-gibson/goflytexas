@@ -34,7 +34,7 @@ export default function DiscoveryFlightPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Discovery Flight Experience
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-900 mb-8">
               Your first step into the world of aviation. Take the controls and experience 
               the freedom of flight with our certified instructors.
             </p>
@@ -72,7 +72,7 @@ export default function DiscoveryFlightPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-2">30-60 Minute Flight</h3>
-                <p className="text-gray-600">Plenty of time to experience the joy of flying and take the controls yourself</p>
+                <p className="text-gray-900">Plenty of time to experience the joy of flying and take the controls yourself</p>
               </div>
             </div>
 
@@ -84,7 +84,7 @@ export default function DiscoveryFlightPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-2">Certified Instructor</h3>
-                <p className="text-gray-600">Fly with FAA-certified instructors with thousands of hours experience</p>
+                <p className="text-gray-900">Fly with FAA-certified instructors with thousands of hours experience</p>
               </div>
             </div>
 
@@ -96,7 +96,7 @@ export default function DiscoveryFlightPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-2">Pre-Flight Briefing</h3>
-                <p className="text-gray-600">Learn the basics of aircraft operation and safety procedures</p>
+                <p className="text-gray-900">Learn the basics of aircraft operation and safety procedures</p>
               </div>
             </div>
 
@@ -108,7 +108,7 @@ export default function DiscoveryFlightPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-2">Scenic Route</h3>
-                <p className="text-gray-600">Fly over Dallas landmarks and enjoy breathtaking aerial views</p>
+                <p className="text-gray-900">Fly over Dallas landmarks and enjoy breathtaking aerial views</p>
               </div>
             </div>
 
@@ -120,7 +120,7 @@ export default function DiscoveryFlightPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-2">Logbook Entry</h3>
-                <p className="text-gray-600">Receive your first official logbook entry - counts toward pilot license</p>
+                <p className="text-gray-900">Receive your first official logbook entry - counts toward pilot license</p>
               </div>
             </div>
 
@@ -132,7 +132,7 @@ export default function DiscoveryFlightPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-2">Competitive Rates</h3>
-                <p className="text-gray-600">Our rates include everything - aircraft, fuel, instructor, and insurance</p>
+                <p className="text-gray-900">Our rates include everything - aircraft, fuel, instructor, and insurance</p>
               </div>
             </div>
           </div>
@@ -152,7 +152,7 @@ export default function DiscoveryFlightPage() {
                 1
               </div>
               <h3 className="text-lg font-semibold mb-2">Book Your Flight</h3>
-              <p className="text-gray-600">Call us or book online. We'll schedule at your convenience</p>
+              <p className="text-gray-900">Call us or book online. We'll schedule at your convenience</p>
             </div>
 
             <div className="text-center">
@@ -160,7 +160,7 @@ export default function DiscoveryFlightPage() {
                 2
               </div>
               <h3 className="text-lg font-semibold mb-2">Ground Briefing</h3>
-              <p className="text-gray-600">Learn basic controls and safety procedures (15 mins)</p>
+              <p className="text-gray-900">Learn basic controls and safety procedures (15 mins)</p>
             </div>
 
             <div className="text-center">
@@ -168,7 +168,7 @@ export default function DiscoveryFlightPage() {
                 3
               </div>
               <h3 className="text-lg font-semibold mb-2">Take Flight!</h3>
-              <p className="text-gray-600">You'll actually fly the airplane with instructor guidance</p>
+              <p className="text-gray-900">You'll actually fly the airplane with instructor guidance</p>
             </div>
 
             <div className="text-center">
@@ -176,7 +176,7 @@ export default function DiscoveryFlightPage() {
                 4
               </div>
               <h3 className="text-lg font-semibold mb-2">Debrief & Next Steps</h3>
-              <p className="text-gray-600">Discuss your experience and pilot training options</p>
+              <p className="text-gray-900">Discuss your experience and pilot training options</p>
             </div>
           </div>
         </div>
@@ -192,7 +192,7 @@ export default function DiscoveryFlightPage() {
           <div className="space-y-8">
             <div>
               <h3 className="text-xl font-semibold mb-3">Do I need any experience?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-900">
                 No experience necessary! Discovery flights are designed for complete beginners. 
                 Your instructor will guide you through everything.
               </p>
@@ -200,7 +200,7 @@ export default function DiscoveryFlightPage() {
 
             <div>
               <h3 className="text-xl font-semibold mb-3">What should I bring?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-900">
                 Just bring yourself and a photo ID. Wear comfortable clothes and shoes. 
                 We provide headsets and all necessary equipment.
               </p>
@@ -208,7 +208,7 @@ export default function DiscoveryFlightPage() {
 
             <div>
               <h3 className="text-xl font-semibold mb-3">Can I bring a friend or family member?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-900">
                 Yes! Most of our aircraft can accommodate one passenger in addition to you 
                 and the instructor. They fly free!
               </p>
@@ -216,7 +216,7 @@ export default function DiscoveryFlightPage() {
 
             <div>
               <h3 className="text-xl font-semibold mb-3">What if the weather is bad?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-900">
                 Safety is our top priority. If weather conditions aren't suitable, we'll 
                 reschedule your flight at no charge.
               </p>
@@ -224,7 +224,7 @@ export default function DiscoveryFlightPage() {
 
             <div>
               <h3 className="text-xl font-semibold mb-3">Is this a real flight or just a ride?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-900">
                 This is real flying! You'll be at the controls for most of the flight. 
                 Your instructor handles takeoff and landing, but you fly in between.
               </p>
@@ -295,7 +295,7 @@ export default function DiscoveryFlightPage() {
           <h2 className="text-3xl font-bold text-gray-900 mb-6">
             Ready to Experience the Freedom of Flight?
           </h2>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-gray-900 mb-8">
             Book your Discovery Flight today and take the first step toward becoming a pilot.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -312,7 +312,7 @@ export default function DiscoveryFlightPage() {
               Email Us
             </Link>
           </div>
-          <p className="mt-6 text-gray-500">
+          <p className="mt-6 text-gray-900">
             Or visit us at Dallas Executive Airport
           </p>
         </div>
