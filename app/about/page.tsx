@@ -51,11 +51,15 @@ export default function AboutPage() {
                 Our Mission
               </h2>
               <p className="text-lg text-gray-900 text-center leading-relaxed">
-                At GoFlyTexas, we take immense pride in our one-on-one pilot training 
-                approach. We believe that personalized instruction is the key to creating 
-                confident, skilled, and safe pilots. Our mission is to provide the highest 
-                quality flight training in a supportive environment where every student 
-                receives the individual attention they deserve.
+                At Go Fly Texas, we take immense pride in our one-on-one pilot training, 
+                where every student receives personalized instruction tailored to their 
+                unique learning style and pace. We believe that aviation is more than just 
+                mastering controls—it's about building confidence, skill, and a deep respect 
+                for the skies. Our dedicated instructors forge strong connections with each 
+                aspiring pilot, creating a supportive environment where questions are encouraged, 
+                progress is celebrated, and dreams take flight. With a focus on safety, 
+                precision, and passion, Go Fly Texas is committed to shaping confident 
+                aviators who are ready to soar with purpose and pride.
               </p>
             </div>
           </div>
