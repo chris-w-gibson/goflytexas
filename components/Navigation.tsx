@@ -21,8 +21,8 @@ export default function Navigation() {
             <Link href="/" className="text-gray-700 hover:text-sky-600 transition-colors">
               Home
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-sky-600 transition-colors">
-              About
+            <Link href="/our-team" className="text-gray-700 hover:text-sky-600 transition-colors">
+              Our Team
             </Link>
             <Link href="/flight-training" className="text-gray-700 hover:text-sky-600 transition-colors">
               Flight Training
@@ -64,11 +64,11 @@ export default function Navigation() {
               Home
             </Link>
             <Link
-              href="/about"
+              href="/our-team"
               className="block px-3 py-2 rounded-md text-gray-700 hover:text-sky-600 hover:bg-sky-50"
               onClick={() => setIsOpen(false)}
             >
-              About
+              Our Team
             </Link>
             <Link
               href="/flight-training"

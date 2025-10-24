@@ -1,7 +1,7 @@
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import Link from 'next/link';
-import { Plane, Navigation2, Trophy, Shield, MapPin, Camera } from 'lucide-react';
+import { Plane, Navigation2, Trophy, Shield, MapPin, Camera, Users, Award, Heart } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -153,6 +153,73 @@ export default function Home() {
                   Transitioning to a new aircraft or need to meet insurance requirements? Our comprehensive insurance checkout program ensures you're fully prepared and compliant. We work directly with all major aviation insurance companies to provide the dual instruction time required for coverage. Our structured approach covers aircraft systems, performance characteristics, emergency procedures, and type-specific handling qualities. Whether stepping up to a complex aircraft or getting back into flying after a break, we'll ensure you meet all insurance prerequisites while building genuine proficiency and confidence.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+              About GoFlyTexas
+            </h2>
+            <div className="bg-gradient-to-r from-sky-50 to-blue-50 rounded-lg p-8 shadow-lg">
+              <p className="text-lg text-gray-900 text-center leading-relaxed">
+                At Go Fly Texas, we take immense pride in our one-on-one pilot training, 
+                where every student receives personalized instruction tailored to their 
+                unique learning style and pace. We believe that aviation is more than just 
+                mastering controls—it's about building confidence, skill, and a deep respect 
+                for the skies. Our dedicated instructors forge strong connections with each 
+                aspiring pilot, creating a supportive environment where questions are encouraged, 
+                progress is celebrated, and dreams take flight. With a focus on safety, 
+                precision, and passion, Go Fly Texas is committed to shaping confident 
+                aviators who are ready to soar with purpose and pride.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose GoFlyTexas */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+            Why Choose GoFlyTexas
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-sky-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">One-on-One Training</h3>
+              <p className="text-gray-900">Personalized instruction tailored to your learning style and pace</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="h-8 w-8 text-sky-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Safety First</h3>
+              <p className="text-gray-900">Impeccable safety record with modern, well-maintained aircraft</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Award className="h-8 w-8 text-sky-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Experienced Instructors</h3>
+              <p className="text-gray-900">Learn from seasoned pilots with thousands of hours experience</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="h-8 w-8 text-sky-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Passion for Aviation</h3>
+              <p className="text-gray-900">We love flying and sharing that passion with our students</p>
             </div>
           </div>
         </div>
