@@ -21,8 +21,11 @@ export default function Navigation() {
             <Link href="/" className="text-gray-700 hover:text-sky-600 transition-colors">
               Home
             </Link>
-            <Link href="/discovery-flight" className="text-gray-700 hover:text-sky-600 transition-colors">
-              Discovery Flight
+            <Link href="/about" className="text-gray-700 hover:text-sky-600 transition-colors">
+              About
+            </Link>
+            <Link href="/flight-training" className="text-gray-700 hover:text-sky-600 transition-colors">
+              Flight Training
             </Link>
             <Link href="/aircraft" className="text-gray-700 hover:text-sky-600 transition-colors">
               Our Aircraft
@@ -61,11 +64,18 @@ export default function Navigation() {
               Home
             </Link>
             <Link
-              href="/discovery-flight"
+              href="/about"
               className="block px-3 py-2 rounded-md text-gray-700 hover:text-sky-600 hover:bg-sky-50"
               onClick={() => setIsOpen(false)}
             >
-              Discovery Flight
+              About
+            </Link>
+            <Link
+              href="/flight-training"
+              className="block px-3 py-2 rounded-md text-gray-700 hover:text-sky-600 hover:bg-sky-50"
+              onClick={() => setIsOpen(false)}
+            >
+              Flight Training
             </Link>
             <Link
               href="/aircraft"
