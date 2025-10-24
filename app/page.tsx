@@ -31,7 +31,7 @@ export default function Home() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+            <Link href="/discovery-flight" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Plane className="h-8 w-8 text-sky-600" />
@@ -39,9 +39,9 @@ export default function Home() {
                 <h3 className="text-xl font-semibold">Discovery Flight</h3>
                 <p className="text-gray-900">Experience the joy of flying with an introductory flight lesson</p>
               </div>
-            </div>
+            </Link>
             
-            <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+            <Link href="/private-pilot" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Shield className="h-8 w-8 text-sky-600" />
@@ -49,9 +49,9 @@ export default function Home() {
                 <h3 className="text-xl font-semibold">Private Pilot</h3>
                 <p className="text-gray-900">Your first step to becoming a certified pilot</p>
               </div>
-            </div>
+            </Link>
             
-            <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+            <Link href="/instrument" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Navigation2 className="h-8 w-8 text-sky-600" />
@@ -59,9 +59,9 @@ export default function Home() {
                 <h3 className="text-xl font-semibold">Instrument</h3>
                 <p className="text-gray-900">Master flying in all weather conditions</p>
               </div>
-            </div>
+            </Link>
             
-            <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+            <Link href="/commercial" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Trophy className="h-8 w-8 text-sky-600" />
@@ -69,9 +69,9 @@ export default function Home() {
                 <h3 className="text-xl font-semibold">Commercial</h3>
                 <p className="text-gray-900">Turn your passion into a career</p>
               </div>
-            </div>
+            </Link>
             
-            <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+            <Link href="/bfr-ipc" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Shield className="h-8 w-8 text-sky-600" />
@@ -79,9 +79,9 @@ export default function Home() {
                 <h3 className="text-xl font-semibold">BFR/IPC</h3>
                 <p className="text-gray-900">Stay current and proficient</p>
               </div>
-            </div>
+            </Link>
             
-            <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+            <Link href="/cfi-academy" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Trophy className="h-8 w-8 text-sky-600" />
@@ -89,7 +89,7 @@ export default function Home() {
                 <h3 className="text-xl font-semibold">CFI Academy</h3>
                 <p className="text-gray-900">Become a flight instructor</p>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
