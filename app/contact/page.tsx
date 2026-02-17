@@ -137,7 +137,7 @@ export default function ContactPage() {
                       type="text"
                       id="name"
                       {...register('name', { required: 'Name is required' })}
-                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 ${
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black ${
                         errors.name ? 'border-red-500' : 'border-gray-300'
                       }`}
                     />
@@ -153,14 +153,14 @@ export default function ContactPage() {
                     <input
                       type="email"
                       id="email"
-                      {...register('email', { 
+                      {...register('email', {
                         required: 'Email is required',
                         pattern: {
                           value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                           message: 'Invalid email address'
                         }
                       })}
-                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 ${
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black ${
                         errors.email ? 'border-red-500' : 'border-gray-300'
                       }`}
                     />
@@ -179,7 +179,7 @@ export default function ContactPage() {
                       type="tel"
                       id="phone"
                       {...register('phone')}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black"
                     />
                   </div>
 
@@ -190,7 +190,7 @@ export default function ContactPage() {
                     <select
                       id="flightInterest"
                       {...register('flightInterest')}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black"
                     >
                       <option value="">Select an option</option>
                       <option value="discovery">Discovery Flight</option>
@@ -211,7 +211,7 @@ export default function ContactPage() {
                     type="text"
                     id="subject"
                     {...register('subject')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black"
                   />
                 </div>
 
@@ -223,7 +223,7 @@ export default function ContactPage() {
                     id="message"
                     rows={5}
                     {...register('message', { required: 'Message is required' })}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 ${
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black ${
                       errors.message ? 'border-red-500' : 'border-gray-300'
                     }`}
                   />
