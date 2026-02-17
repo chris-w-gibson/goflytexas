@@ -39,7 +39,7 @@ export default function ImagePicker({ locationId, onClose, currentImage }: Image
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b bg-gray-50">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Select Image</h2>
+            <h2 className="text-xl font-bold text-black">Select Image</h2>
             <p className="text-sm text-gray-600">Location: {locationId}</p>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-gray-200 rounded-full transition-colors">
@@ -64,7 +64,7 @@ export default function ImagePicker({ locationId, onClose, currentImage }: Image
             <div className="flex items-center gap-3">
               <img src={currentImage} alt="Current" className="w-16 h-16 object-cover rounded" />
               <div>
-                <p className="text-sm font-medium text-gray-900">Current Image</p>
+                <p className="text-sm font-medium text-black">Current Image</p>
                 <p className="text-xs text-gray-600">{currentImage}</p>
               </div>
             </div>

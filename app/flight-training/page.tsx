@@ -80,10 +80,10 @@ export default function FlightTrainingPage() {
       <section className="bg-gradient-to-br from-sky-50 to-white pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
               Flight Training Programs
             </h1>
-            <p className="text-xl text-gray-900 mb-4">
+            <p className="text-xl text-black mb-4">
               From your first discovery flight to advanced certifications, we offer comprehensive 
               training tailored to your goals and learning style.
             </p>
@@ -98,7 +98,7 @@ export default function FlightTrainingPage() {
       <section className="py-12 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow-lg p-8">
-            <p className="text-lg text-gray-900 leading-relaxed text-center">
+            <p className="text-lg text-black leading-relaxed text-center">
               At Go Fly Texas, we take immense pride in our one-on-one pilot training, where every 
               student receives personalized instruction tailored to their unique learning style and pace. 
               We believe that aviation is more than just mastering controls—it's about building confidence, 
@@ -126,10 +126,10 @@ export default function FlightTrainingPage() {
                       <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${program.color} flex items-center justify-center text-white`}>
                         <Icon className="h-6 w-6" />
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 ml-4">{program.title}</h3>
+                      <h3 className="text-xl font-bold text-black ml-4">{program.title}</h3>
                     </div>
                     
-                    <p className="text-gray-900 mb-4 h-20">
+                    <p className="text-black mb-4 h-20">
                       {program.description}
                     </p>
                     
@@ -137,7 +137,7 @@ export default function FlightTrainingPage() {
                       {program.highlights.map((highlight, idx) => (
                         <li key={idx} className="flex items-start">
                           <span className="text-sky-600 mr-2">•</span>
-                          <span className="text-gray-900 text-sm">{highlight}</span>
+                          <span className="text-black text-sm">{highlight}</span>
                         </li>
                       ))}
                     </ul>
@@ -157,7 +157,7 @@ export default function FlightTrainingPage() {
       {/* Why Choose Our Training */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Why Choose Go Fly Texas
           </h2>
           
@@ -167,7 +167,7 @@ export default function FlightTrainingPage() {
                 <Users className="h-10 w-10 text-sky-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">One-on-One Instruction</h3>
-              <p className="text-gray-900">Personalized training tailored to your learning style and pace</p>
+              <p className="text-black">Personalized training tailored to your learning style and pace</p>
             </div>
             
             <div className="text-center">
@@ -175,7 +175,7 @@ export default function FlightTrainingPage() {
                 <Plane className="h-10 w-10 text-sky-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Modern Fleet</h3>
-              <p className="text-gray-900">Well-maintained Cessna 172N aircraft with updated avionics</p>
+              <p className="text-black">Well-maintained Cessna 172N aircraft with updated avionics</p>
             </div>
             
             <div className="text-center">
@@ -183,7 +183,7 @@ export default function FlightTrainingPage() {
                 <Trophy className="h-10 w-10 text-sky-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Proven Success</h3>
-              <p className="text-gray-900">High pass rate with students achieving their aviation goals</p>
+              <p className="text-black">High pass rate with students achieving their aviation goals</p>
             </div>
           </div>
         </div>

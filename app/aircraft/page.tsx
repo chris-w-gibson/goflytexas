@@ -129,10 +129,10 @@ export default function AircraftPage() {
       <section className="bg-gradient-to-br from-sky-50 to-white pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
               Our Aircraft Fleet
             </h1>
-            <p className="text-xl text-gray-900 mb-8">
+            <p className="text-xl text-black mb-8">
               Train in modern, well-maintained aircraft equipped with the latest avionics. 
               Our diverse fleet ensures you'll find the perfect aircraft for your training needs.
             </p>
@@ -149,7 +149,7 @@ export default function AircraftPage() {
                 <Plane className="h-8 w-8 text-sky-600" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Modern Fleet</h3>
-              <p className="text-gray-900">All aircraft less than 5 years old with latest equipment</p>
+              <p className="text-black">All aircraft less than 5 years old with latest equipment</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm text-center">
@@ -157,7 +157,7 @@ export default function AircraftPage() {
                 <Shield className="h-8 w-8 text-sky-600" />
               </div>
               <h3 className="text-xl font-semibold mb-2">100-Hour Inspections</h3>
-              <p className="text-gray-900">Rigorous maintenance program exceeding FAA requirements</p>
+              <p className="text-black">Rigorous maintenance program exceeding FAA requirements</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm text-center">
@@ -165,7 +165,7 @@ export default function AircraftPage() {
                 <Navigation2 className="h-8 w-8 text-sky-600" />
               </div>
               <h3 className="text-xl font-semibold mb-2">GPS Equipped</h3>
-              <p className="text-gray-900">Advanced navigation systems in every aircraft</p>
+              <p className="text-black">Advanced navigation systems in every aircraft</p>
             </div>
           </div>
 
@@ -184,18 +184,18 @@ export default function AircraftPage() {
 
                   {/* Content */}
                   <div className="p-8 lg:p-12">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">{plane.model}</h2>
+                    <h2 className="text-3xl font-bold text-black mb-2">{plane.model}</h2>
                     <p className="text-2xl text-sky-600 font-semibold mb-4">{plane.hourlyRate}/hour</p>
-                    <p className="text-gray-900 mb-6">{plane.description}</p>
+                    <p className="text-black mb-6">{plane.description}</p>
 
                     {/* Features */}
                     <div className="mb-6">
-                      <h3 className="font-semibold text-gray-900 mb-3">Key Features</h3>
+                      <h3 className="font-semibold text-black mb-3">Key Features</h3>
                       <ul className="grid grid-cols-2 gap-2">
                         {plane.features.map((feature, index) => (
                           <li key={index} className="flex items-start">
                             <span className="text-sky-600 mr-2">•</span>
-                            <span className="text-gray-900 text-sm">{feature}</span>
+                            <span className="text-black text-sm">{feature}</span>
                           </li>
                         ))}
                       </ul>
@@ -203,23 +203,23 @@ export default function AircraftPage() {
 
                     {/* Specifications */}
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-3">Specifications</h3>
+                      <h3 className="font-semibold text-black mb-3">Specifications</h3>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="flex items-center space-x-2">
                           <Gauge className="h-4 w-4 text-sky-600" />
-                          <span className="text-sm text-gray-900">Cruise: {plane.specs.cruiseSpeed}</span>
+                          <span className="text-sm text-black">Cruise: {plane.specs.cruiseSpeed}</span>
                         </div>
                         <div className="flex items-center space-x-2">
                           <Navigation2 className="h-4 w-4 text-sky-600" />
-                          <span className="text-sm text-gray-900">Range: {plane.specs.range}</span>
+                          <span className="text-sm text-black">Range: {plane.specs.range}</span>
                         </div>
                         <div className="flex items-center space-x-2">
                           <Plane className="h-4 w-4 text-sky-600" />
-                          <span className="text-sm text-gray-900">Ceiling: {plane.specs.ceiling}</span>
+                          <span className="text-sm text-black">Ceiling: {plane.specs.ceiling}</span>
                         </div>
                         <div className="flex items-center space-x-2">
                           <Fuel className="h-4 w-4 text-sky-600" />
-                          <span className="text-sm text-gray-900">Fuel: {plane.specs.fuelCapacity}</span>
+                          <span className="text-sm text-black">Fuel: {plane.specs.fuelCapacity}</span>
                         </div>
                       </div>
                     </div>
@@ -234,7 +234,7 @@ export default function AircraftPage() {
       {/* Rental Information */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Aircraft Rental Information
           </h2>
           

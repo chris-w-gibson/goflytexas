@@ -30,11 +30,11 @@ export default function FlightReviewPage() {
       <section className="bg-gradient-to-br from-sky-50 to-white pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
               Bi-Annual Flight Review (BFR) & <br/>
               Instrument Proficiency Check (IPC)
             </h1>
-            <p className="text-xl text-gray-900 mb-8">
+            <p className="text-xl text-black mb-8">
               Stay current and confident with our Bi-Annual Flight Reviews (BFRs) and 
               Instrument Proficiency Checks (IPCs). We tailor each session to your 
               experience level, helping you refresh skills, review regulations, and 
@@ -70,35 +70,35 @@ export default function FlightReviewPage() {
                 <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
                   <RefreshCw className="h-6 w-6 text-green-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Biennial Flight Review</h2>
+                <h2 className="text-2xl font-bold text-black">Biennial Flight Review</h2>
               </div>
               
-              <p className="text-gray-900 mb-6">
+              <p className="text-black mb-6">
                 Required every 24 calendar months to exercise pilot privileges. Our BFR 
                 sessions are designed to be both educational and confidence-building.
               </p>
 
-              <h3 className="font-semibold text-gray-900 mb-3">BFR Includes:</h3>
+              <h3 className="font-semibold text-black mb-3">BFR Includes:</h3>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">1+ hour ground review of regulations</span>
+                  <span className="text-black">1+ hour ground review of regulations</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">1+ hour flight covering maneuvers</span>
+                  <span className="text-black">1+ hour flight covering maneuvers</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Emergency procedures review</span>
+                  <span className="text-black">Emergency procedures review</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Airspace and weather refresher</span>
+                  <span className="text-black">Airspace and weather refresher</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Logbook endorsement</span>
+                  <span className="text-black">Logbook endorsement</span>
                 </li>
               </ul>
 
@@ -115,35 +115,35 @@ export default function FlightReviewPage() {
                 <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
                   <Navigation2 className="h-6 w-6 text-indigo-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Instrument Proficiency Check</h2>
+                <h2 className="text-2xl font-bold text-black">Instrument Proficiency Check</h2>
               </div>
               
-              <p className="text-gray-900 mb-6">
+              <p className="text-black mb-6">
                 If you haven't met IFR currency requirements in the past 6 months, 
                 an IPC gets you back to flying in the clouds safely and legally.
               </p>
 
-              <h3 className="font-semibold text-gray-900 mb-3">IPC Includes:</h3>
+              <h3 className="font-semibold text-black mb-3">IPC Includes:</h3>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Ground review of IFR procedures</span>
+                  <span className="text-black">Ground review of IFR procedures</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Multiple instrument approaches</span>
+                  <span className="text-black">Multiple instrument approaches</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Holding patterns and procedures</span>
+                  <span className="text-black">Holding patterns and procedures</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Emergency procedures under IFR</span>
+                  <span className="text-black">Emergency procedures under IFR</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">IFR currency restoration</span>
+                  <span className="text-black">IFR currency restoration</span>
                 </li>
               </ul>
 
@@ -160,7 +160,7 @@ export default function FlightReviewPage() {
       {/* Why Stay Current */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Why Regular Reviews Matter
           </h2>
           
@@ -170,7 +170,7 @@ export default function FlightReviewPage() {
                 <Shield className="h-8 w-8 text-sky-600" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Enhanced Safety</h3>
-              <p className="text-gray-900">Refresh critical skills and stay sharp on emergency procedures</p>
+              <p className="text-black">Refresh critical skills and stay sharp on emergency procedures</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
@@ -178,7 +178,7 @@ export default function FlightReviewPage() {
                 <FileCheck className="h-8 w-8 text-sky-600" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Regulatory Compliance</h3>
-              <p className="text-gray-900">Meet FAA requirements and maintain legal flying status</p>
+              <p className="text-black">Meet FAA requirements and maintain legal flying status</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
@@ -186,7 +186,7 @@ export default function FlightReviewPage() {
                 <Award className="h-8 w-8 text-sky-600" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Confidence Building</h3>
-              <p className="text-gray-900">Feel assured in your abilities with regular practice</p>
+              <p className="text-black">Feel assured in your abilities with regular practice</p>
             </div>
           </div>
         </div>
@@ -195,7 +195,7 @@ export default function FlightReviewPage() {
       {/* Our Approach */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Our Personalized Review Approach
           </h2>
           
@@ -207,8 +207,8 @@ export default function FlightReviewPage() {
                 </div>
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Pre-Review Assessment</h3>
-                <p className="text-gray-900">We discuss your experience level, recent flying, and areas you'd like to focus on</p>
+                <h3 className="text-xl font-semibold text-black mb-2">Pre-Review Assessment</h3>
+                <p className="text-black">We discuss your experience level, recent flying, and areas you'd like to focus on</p>
               </div>
             </div>
 
@@ -219,8 +219,8 @@ export default function FlightReviewPage() {
                 </div>
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Tailored Ground Session</h3>
-                <p className="text-gray-900">Review regulations, weather, and procedures relevant to your flying</p>
+                <h3 className="text-xl font-semibold text-black mb-2">Tailored Ground Session</h3>
+                <p className="text-black">Review regulations, weather, and procedures relevant to your flying</p>
               </div>
             </div>
 
@@ -231,8 +231,8 @@ export default function FlightReviewPage() {
                 </div>
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Practical Flight Review</h3>
-                <p className="text-gray-900">Practice maneuvers and procedures in a supportive environment</p>
+                <h3 className="text-xl font-semibold text-black mb-2">Practical Flight Review</h3>
+                <p className="text-black">Practice maneuvers and procedures in a supportive environment</p>
               </div>
             </div>
 
@@ -243,8 +243,8 @@ export default function FlightReviewPage() {
                 </div>
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Debrief & Endorsement</h3>
-                <p className="text-gray-900">Receive feedback, tips for improvement, and your logbook endorsement</p>
+                <h3 className="text-xl font-semibold text-black mb-2">Debrief & Endorsement</h3>
+                <p className="text-black">Receive feedback, tips for improvement, and your logbook endorsement</p>
               </div>
             </div>
           </div>
@@ -255,7 +255,7 @@ export default function FlightReviewPage() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            <h2 className="text-2xl font-bold text-black mb-6 text-center">
               When to Schedule Your Review
             </h2>
             
@@ -263,16 +263,16 @@ export default function FlightReviewPage() {
               <div className="flex items-start">
                 <Clock className="h-6 w-6 text-sky-600 mr-3 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">BFR Timing</h3>
-                  <p className="text-gray-900">Every 24 calendar months from your last review</p>
+                  <h3 className="font-semibold text-black mb-2">BFR Timing</h3>
+                  <p className="text-black">Every 24 calendar months from your last review</p>
                 </div>
               </div>
 
               <div className="flex items-start">
                 <AlertCircle className="h-6 w-6 text-indigo-600 mr-3 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">IPC Timing</h3>
-                  <p className="text-gray-900">When IFR currency lapses beyond 6 months</p>
+                  <h3 className="font-semibold text-black mb-2">IPC Timing</h3>
+                  <p className="text-black">When IFR currency lapses beyond 6 months</p>
                 </div>
               </div>
             </div>

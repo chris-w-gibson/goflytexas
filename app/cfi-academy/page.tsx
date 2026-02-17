@@ -31,13 +31,13 @@ export default function CFIAcademyPage() {
       <section className="bg-gradient-to-br from-sky-50 to-white pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
               CFI/CFII Academy
             </h1>
             <h2 className="text-2xl text-sky-600 font-semibold mb-6">
               Become the Instructor Others Dream of Flying With
             </h2>
-            <p className="text-lg text-gray-900 mb-6">
+            <p className="text-lg text-black mb-6">
               Our Certified Flight Instructor (CFI) course is designed for commercial pilots 
               ready to take the next step in their aviation careers by becoming skilled, 
               confident instructors. This program offers personalized, one-on-one instruction 
@@ -46,7 +46,7 @@ export default function CFIAcademyPage() {
               maneuvers, and FAA regulations—all with the goal of preparing you to teach 
               and inspire the next generation of pilots.
             </p>
-            <p className="text-lg text-gray-900 mb-8">
+            <p className="text-lg text-black mb-8">
               More than just a certification, this course is a mentorship experience. You'll 
               work closely with experienced instructors who are committed to your success, 
               both as a teacher and a professional aviator. Whether your goal is to build 
@@ -74,7 +74,7 @@ export default function CFIAcademyPage() {
       {/* Why Become a CFI */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Why Become a Flight Instructor?
           </h2>
           
@@ -86,7 +86,7 @@ export default function CFIAcademyPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Build Flight Hours</h3>
               </div>
-              <p className="text-gray-900">Fastest way to accumulate hours for airline requirements while getting paid</p>
+              <p className="text-black">Fastest way to accumulate hours for airline requirements while getting paid</p>
             </div>
 
             <div className="bg-gradient-to-br from-orange-50 to-sky-50 p-6 rounded-lg shadow-md">
@@ -96,7 +96,7 @@ export default function CFIAcademyPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Share Your Passion</h3>
               </div>
-              <p className="text-gray-900">Inspire others to achieve their aviation dreams and be part of their journey</p>
+              <p className="text-black">Inspire others to achieve their aviation dreams and be part of their journey</p>
             </div>
 
             <div className="bg-gradient-to-br from-orange-50 to-sky-50 p-6 rounded-lg shadow-md">
@@ -106,7 +106,7 @@ export default function CFIAcademyPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Master Your Craft</h3>
               </div>
-              <p className="text-gray-900">Teaching others deepens your own knowledge and flying skills</p>
+              <p className="text-black">Teaching others deepens your own knowledge and flying skills</p>
             </div>
 
             <div className="bg-gradient-to-br from-orange-50 to-sky-50 p-6 rounded-lg shadow-md">
@@ -116,7 +116,7 @@ export default function CFIAcademyPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Career Flexibility</h3>
               </div>
-              <p className="text-gray-900">Work full-time, part-time, or freelance with multiple schools</p>
+              <p className="text-black">Work full-time, part-time, or freelance with multiple schools</p>
             </div>
 
             <div className="bg-gradient-to-br from-orange-50 to-sky-50 p-6 rounded-lg shadow-md">
@@ -126,7 +126,7 @@ export default function CFIAcademyPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Job Security</h3>
               </div>
-              <p className="text-gray-900">High demand for quality instructors in the aviation industry</p>
+              <p className="text-black">High demand for quality instructors in the aviation industry</p>
             </div>
 
             <div className="bg-gradient-to-br from-orange-50 to-sky-50 p-6 rounded-lg shadow-md">
@@ -136,7 +136,7 @@ export default function CFIAcademyPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Personal Growth</h3>
               </div>
-              <p className="text-gray-900">Develop leadership, communication, and mentorship skills</p>
+              <p className="text-black">Develop leadership, communication, and mentorship skills</p>
             </div>
           </div>
         </div>
@@ -145,75 +145,75 @@ export default function CFIAcademyPage() {
       {/* Training Components */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Comprehensive CFI Training Program
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Ground Training */}
             <div className="bg-white rounded-lg p-8 shadow-lg">
-              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <h3 className="text-xl font-bold text-black mb-6 flex items-center">
                 <BookOpen className="h-6 w-6 text-orange-600 mr-2" />
                 Advanced Ground Instruction
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Fundamentals of Instruction (FOI)</span>
+                  <span className="text-black">Fundamentals of Instruction (FOI)</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Advanced aerodynamics and systems</span>
+                  <span className="text-black">Advanced aerodynamics and systems</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Teaching techniques and learning psychology</span>
+                  <span className="text-black">Teaching techniques and learning psychology</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Lesson plan development</span>
+                  <span className="text-black">Lesson plan development</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">FAA regulations and endorsements</span>
+                  <span className="text-black">FAA regulations and endorsements</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Risk management and ADM</span>
+                  <span className="text-black">Risk management and ADM</span>
                 </li>
               </ul>
             </div>
 
             {/* Flight Training */}
             <div className="bg-white rounded-lg p-8 shadow-lg">
-              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <h3 className="text-xl font-bold text-black mb-6 flex items-center">
                 <Award className="h-6 w-6 text-orange-600 mr-2" />
                 Flight Instructor Skills
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Right-seat flying proficiency</span>
+                  <span className="text-black">Right-seat flying proficiency</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Demonstration of all maneuvers</span>
+                  <span className="text-black">Demonstration of all maneuvers</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Common student error recognition</span>
+                  <span className="text-black">Common student error recognition</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Emergency situation management</span>
+                  <span className="text-black">Emergency situation management</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Effective communication techniques</span>
+                  <span className="text-black">Effective communication techniques</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Practice teaching with supervision</span>
+                  <span className="text-black">Practice teaching with supervision</span>
                 </li>
               </ul>
             </div>
@@ -225,10 +225,10 @@ export default function CFIAcademyPage() {
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-orange-50 to-sky-50 rounded-lg p-8 shadow-lg">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            <h2 className="text-2xl font-bold text-black mb-6 text-center">
               Our Mentorship Approach
             </h2>
-            <p className="text-lg text-gray-900 mb-6 text-center">
+            <p className="text-lg text-black mb-6 text-center">
               Unlike traditional CFI programs, we focus on building relationships and providing 
               ongoing support throughout your journey.
             </p>
@@ -237,32 +237,32 @@ export default function CFIAcademyPage() {
               <div className="flex items-start">
                 <MessageCircle className="h-6 w-6 text-orange-600 mr-3 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">One-on-One Attention</h3>
-                  <p className="text-gray-900">Personalized training tailored to your learning style</p>
+                  <h3 className="font-semibold text-black mb-2">One-on-One Attention</h3>
+                  <p className="text-black">Personalized training tailored to your learning style</p>
                 </div>
               </div>
 
               <div className="flex items-start">
                 <Heart className="h-6 w-6 text-orange-600 mr-3 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Ongoing Support</h3>
-                  <p className="text-gray-900">Mentorship continues even after certification</p>
+                  <h3 className="font-semibold text-black mb-2">Ongoing Support</h3>
+                  <p className="text-black">Mentorship continues even after certification</p>
                 </div>
               </div>
 
               <div className="flex items-start">
                 <Target className="h-6 w-6 text-orange-600 mr-3 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Real-World Preparation</h3>
-                  <p className="text-gray-900">Practice scenarios you'll actually encounter</p>
+                  <h3 className="font-semibold text-black mb-2">Real-World Preparation</h3>
+                  <p className="text-black">Practice scenarios you'll actually encounter</p>
                 </div>
               </div>
 
               <div className="flex items-start">
                 <Users className="h-6 w-6 text-orange-600 mr-3 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Job Placement Help</h3>
-                  <p className="text-gray-900">Assistance finding instructor positions</p>
+                  <h3 className="font-semibold text-black mb-2">Job Placement Help</h3>
+                  <p className="text-black">Assistance finding instructor positions</p>
                 </div>
               </div>
             </div>
@@ -273,7 +273,7 @@ export default function CFIAcademyPage() {
       {/* CFII Add-On */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Add Your CFII Rating
           </h2>
           
@@ -282,10 +282,10 @@ export default function CFIAcademyPage() {
               <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
                 <Compass className="h-6 w-6 text-indigo-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">Certified Flight Instructor - Instrument</h3>
+              <h3 className="text-xl font-bold text-black">Certified Flight Instructor - Instrument</h3>
             </div>
             
-            <p className="text-gray-900 mb-6">
+            <p className="text-black mb-6">
               Expand your teaching capabilities and earning potential by adding instrument 
               instruction privileges. The CFII rating allows you to teach instrument flying, 
               making you more valuable to flight schools and students.
@@ -293,37 +293,37 @@ export default function CFIAcademyPage() {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">CFII Benefits:</h4>
+                <h4 className="font-semibold text-black mb-3">CFII Benefits:</h4>
                 <ul className="space-y-2">
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Higher earning potential</span>
+                    <span className="text-black">Higher earning potential</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">More teaching opportunities</span>
+                    <span className="text-black">More teaching opportunities</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Stay IFR current while teaching</span>
+                    <span className="text-black">Stay IFR current while teaching</span>
                   </li>
                 </ul>
               </div>
               
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Additional Training:</h4>
+                <h4 className="font-semibold text-black mb-3">Additional Training:</h4>
                 <ul className="space-y-2">
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Instrument teaching techniques</span>
+                    <span className="text-black">Instrument teaching techniques</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">IFR scenario-based training</span>
+                    <span className="text-black">IFR scenario-based training</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-indigo-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Approach instruction methods</span>
+                    <span className="text-black">Approach instruction methods</span>
                   </li>
                 </ul>
               </div>
@@ -335,7 +335,7 @@ export default function CFIAcademyPage() {
       {/* Your Journey */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Your CFI Journey
           </h2>
           
@@ -345,8 +345,8 @@ export default function CFIAcademyPage() {
                 1
               </div>
               <div className="ml-6">
-                <h3 className="text-lg font-semibold text-gray-900">Initial Assessment</h3>
-                <p className="text-gray-900">Evaluate your current skills and create a personalized training plan</p>
+                <h3 className="text-lg font-semibold text-black">Initial Assessment</h3>
+                <p className="text-black">Evaluate your current skills and create a personalized training plan</p>
               </div>
             </div>
 
@@ -355,8 +355,8 @@ export default function CFIAcademyPage() {
                 2
               </div>
               <div className="ml-6">
-                <h3 className="text-lg font-semibold text-gray-900">Ground Instruction Mastery</h3>
-                <p className="text-gray-900">Deep dive into teaching theory and advanced aviation knowledge</p>
+                <h3 className="text-lg font-semibold text-black">Ground Instruction Mastery</h3>
+                <p className="text-black">Deep dive into teaching theory and advanced aviation knowledge</p>
               </div>
             </div>
 
@@ -365,8 +365,8 @@ export default function CFIAcademyPage() {
                 3
               </div>
               <div className="ml-6">
-                <h3 className="text-lg font-semibold text-gray-900">Flight Proficiency</h3>
-                <p className="text-gray-900">Perfect your demonstration and teaching skills from the right seat</p>
+                <h3 className="text-lg font-semibold text-black">Flight Proficiency</h3>
+                <p className="text-black">Perfect your demonstration and teaching skills from the right seat</p>
               </div>
             </div>
 
@@ -375,8 +375,8 @@ export default function CFIAcademyPage() {
                 4
               </div>
               <div className="ml-6">
-                <h3 className="text-lg font-semibold text-gray-900">Practice Teaching</h3>
-                <p className="text-gray-900">Gain confidence with supervised teaching experience</p>
+                <h3 className="text-lg font-semibold text-black">Practice Teaching</h3>
+                <p className="text-black">Gain confidence with supervised teaching experience</p>
               </div>
             </div>
 
@@ -385,8 +385,8 @@ export default function CFIAcademyPage() {
                 5
               </div>
               <div className="ml-6">
-                <h3 className="text-lg font-semibold text-gray-900">CFI Checkride Success</h3>
-                <p className="text-gray-900">Ace your exam with thorough preparation and mock checkrides</p>
+                <h3 className="text-lg font-semibold text-black">CFI Checkride Success</h3>
+                <p className="text-black">Ace your exam with thorough preparation and mock checkrides</p>
               </div>
             </div>
           </div>

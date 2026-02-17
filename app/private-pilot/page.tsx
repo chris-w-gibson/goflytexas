@@ -30,10 +30,10 @@ export default function PrivatePilotPage() {
       <section className="bg-gradient-to-br from-sky-50 to-white pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
               Private Pilot Training
             </h1>
-            <p className="text-xl text-gray-900 mb-8">
+            <p className="text-xl text-black mb-8">
               Your journey to becoming a licensed pilot starts here. Comprehensive training 
               with personalized instruction tailored to your learning style and pace.
             </p>
@@ -66,10 +66,10 @@ export default function PrivatePilotPage() {
                 <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mr-4">
                   <BookOpen className="h-6 w-6 text-sky-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Ground Instruction</h2>
+                <h2 className="text-2xl font-bold text-black">Ground Instruction</h2>
               </div>
               
-              <p className="text-gray-900 mb-6 leading-relaxed">
+              <p className="text-black mb-6 leading-relaxed">
                 Private pilot ground school provides the essential theoretical foundation every aspiring 
                 pilot needs before taking to the skies. Students learn about aerodynamics, weather, 
                 airspace, navigation, and FAA regulations one on one with an instructor, textbooks, 
@@ -78,27 +78,27 @@ export default function PrivatePilotPage() {
               </p>
 
               <div className="space-y-4">
-                <h3 className="font-semibold text-gray-900">Topics Covered:</h3>
+                <h3 className="font-semibold text-black">Topics Covered:</h3>
                 <ul className="space-y-2">
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Aerodynamics and aircraft systems</span>
+                    <span className="text-black">Aerodynamics and aircraft systems</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Weather theory and interpretation</span>
+                    <span className="text-black">Weather theory and interpretation</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Navigation and flight planning</span>
+                    <span className="text-black">Navigation and flight planning</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Federal Aviation Regulations</span>
+                    <span className="text-black">Federal Aviation Regulations</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Airport operations and airspace</span>
+                    <span className="text-black">Airport operations and airspace</span>
                   </li>
                 </ul>
               </div>
@@ -110,10 +110,10 @@ export default function PrivatePilotPage() {
                 <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mr-4">
                   <Plane className="h-6 w-6 text-sky-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Flight Lessons</h2>
+                <h2 className="text-2xl font-bold text-black">Flight Lessons</h2>
               </div>
               
-              <p className="text-gray-900 mb-6 leading-relaxed">
+              <p className="text-black mb-6 leading-relaxed">
                 Flight lessons teach you how to operate an aircraft safely and confidently under 
                 the guidance of a certified instructor. You'll learn everything from basic maneuvers 
                 and navigation to emergency procedures and airspace rules. With consistent training, 
@@ -121,27 +121,27 @@ export default function PrivatePilotPage() {
               </p>
 
               <div className="space-y-4">
-                <h3 className="font-semibold text-gray-900">Skills You'll Master:</h3>
+                <h3 className="font-semibold text-black">Skills You'll Master:</h3>
                 <ul className="space-y-2">
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Takeoffs and landings</span>
+                    <span className="text-black">Takeoffs and landings</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Navigation and cross-country flying</span>
+                    <span className="text-black">Navigation and cross-country flying</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Emergency procedures</span>
+                    <span className="text-black">Emergency procedures</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Radio communications</span>
+                    <span className="text-black">Radio communications</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-900">Night flying operations</span>
+                    <span className="text-black">Night flying operations</span>
                   </li>
                 </ul>
               </div>
@@ -153,7 +153,7 @@ export default function PrivatePilotPage() {
       {/* Requirements Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Private Pilot License Requirements
           </h2>
           
@@ -162,32 +162,32 @@ export default function PrivatePilotPage() {
               <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Clock className="h-6 w-6 text-sky-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">40 Hours Minimum</h3>
-              <p className="text-gray-900 text-sm">Flight time including solo and dual instruction</p>
+              <h3 className="font-semibold text-black mb-2">40 Hours Minimum</h3>
+              <p className="text-black text-sm">Flight time including solo and dual instruction</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm text-center">
               <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FileText className="h-6 w-6 text-sky-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Written Exam</h3>
-              <p className="text-gray-900 text-sm">Pass FAA knowledge test with 70% or higher</p>
+              <h3 className="font-semibold text-black mb-2">Written Exam</h3>
+              <p className="text-black text-sm">Pass FAA knowledge test with 70% or higher</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm text-center">
               <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="h-6 w-6 text-sky-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Checkride</h3>
-              <p className="text-gray-900 text-sm">Oral and practical test with FAA examiner</p>
+              <h3 className="font-semibold text-black mb-2">Checkride</h3>
+              <p className="text-black text-sm">Oral and practical test with FAA examiner</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm text-center">
               <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="h-6 w-6 text-sky-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Medical Certificate</h3>
-              <p className="text-gray-900 text-sm">Third-class medical from FAA physician</p>
+              <h3 className="font-semibold text-black mb-2">Medical Certificate</h3>
+              <p className="text-black text-sm">Third-class medical from FAA physician</p>
             </div>
           </div>
         </div>
@@ -196,7 +196,7 @@ export default function PrivatePilotPage() {
       {/* Training Timeline */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Your Training Journey
           </h2>
           
@@ -208,8 +208,8 @@ export default function PrivatePilotPage() {
                 </div>
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Discovery Flight</h3>
-                <p className="text-gray-900">Experience flying firsthand and meet your instructor</p>
+                <h3 className="text-xl font-semibold text-black mb-2">Discovery Flight</h3>
+                <p className="text-black">Experience flying firsthand and meet your instructor</p>
               </div>
             </div>
 
@@ -220,8 +220,8 @@ export default function PrivatePilotPage() {
                 </div>
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Ground School</h3>
-                <p className="text-gray-900">Master aviation theory and prepare for written exam</p>
+                <h3 className="text-xl font-semibold text-black mb-2">Ground School</h3>
+                <p className="text-black">Master aviation theory and prepare for written exam</p>
               </div>
             </div>
 
@@ -232,8 +232,8 @@ export default function PrivatePilotPage() {
                 </div>
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Flight Training</h3>
-                <p className="text-gray-900">Develop flying skills with dual and solo flights</p>
+                <h3 className="text-xl font-semibold text-black mb-2">Flight Training</h3>
+                <p className="text-black">Develop flying skills with dual and solo flights</p>
               </div>
             </div>
 
@@ -244,8 +244,8 @@ export default function PrivatePilotPage() {
                 </div>
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Checkride Prep</h3>
-                <p className="text-gray-900">Polish skills and prepare for FAA practical test</p>
+                <h3 className="text-xl font-semibold text-black mb-2">Checkride Prep</h3>
+                <p className="text-black">Polish skills and prepare for FAA practical test</p>
               </div>
             </div>
 
@@ -256,8 +256,8 @@ export default function PrivatePilotPage() {
                 </div>
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">License in Hand!</h3>
-                <p className="text-gray-900">Pass your checkride and start flying as pilot in command</p>
+                <h3 className="text-xl font-semibold text-black mb-2">License in Hand!</h3>
+                <p className="text-black">Pass your checkride and start flying as pilot in command</p>
               </div>
             </div>
           </div>

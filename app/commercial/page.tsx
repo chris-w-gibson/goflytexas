@@ -31,14 +31,14 @@ export default function CommercialPage() {
       <section className="bg-gradient-to-br from-sky-50 to-white pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
               Commercial Pilot License
             </h1>
             <h2 className="text-2xl text-sky-600 font-semibold mb-6">
               Turn your passion for flying into a paid profession—earn your Commercial 
               Pilot License and get paid to chase the skies!
             </h2>
-            <p className="text-lg text-gray-900 mb-8">
+            <p className="text-lg text-black mb-8">
               A Commercial Pilot License (CPL) allows you to be paid for flying and opens 
               the door to careers in aviation. Training includes advanced flight skills, 
               navigation, and in-depth aviation theory. Earning your CPL is a major step 
@@ -65,7 +65,7 @@ export default function CommercialPage() {
       {/* Career Opportunities */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Career Opportunities with Your CPL
           </h2>
           
@@ -77,7 +77,7 @@ export default function CommercialPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Airline Pilot</h3>
               </div>
-              <p className="text-gray-900">Build hours toward airline transport pilot requirements</p>
+              <p className="text-black">Build hours toward airline transport pilot requirements</p>
             </div>
 
             <div className="bg-gradient-to-br from-purple-50 to-sky-50 p-6 rounded-lg shadow-md">
@@ -87,7 +87,7 @@ export default function CommercialPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Flight Instructor</h3>
               </div>
-              <p className="text-gray-900">Teach others to fly while building your experience</p>
+              <p className="text-black">Teach others to fly while building your experience</p>
             </div>
 
             <div className="bg-gradient-to-br from-purple-50 to-sky-50 p-6 rounded-lg shadow-md">
@@ -97,7 +97,7 @@ export default function CommercialPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Charter Pilot</h3>
               </div>
-              <p className="text-gray-900">Fly private charters and business aviation</p>
+              <p className="text-black">Fly private charters and business aviation</p>
             </div>
 
             <div className="bg-gradient-to-br from-purple-50 to-sky-50 p-6 rounded-lg shadow-md">
@@ -107,7 +107,7 @@ export default function CommercialPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Aerial Survey</h3>
               </div>
-              <p className="text-gray-900">Conduct aerial photography and mapping operations</p>
+              <p className="text-black">Conduct aerial photography and mapping operations</p>
             </div>
 
             <div className="bg-gradient-to-br from-purple-50 to-sky-50 p-6 rounded-lg shadow-md">
@@ -117,7 +117,7 @@ export default function CommercialPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Pipeline Patrol</h3>
               </div>
-              <p className="text-gray-900">Monitor infrastructure and environmental conditions</p>
+              <p className="text-black">Monitor infrastructure and environmental conditions</p>
             </div>
 
             <div className="bg-gradient-to-br from-purple-50 to-sky-50 p-6 rounded-lg shadow-md">
@@ -127,7 +127,7 @@ export default function CommercialPage() {
                 </div>
                 <h3 className="text-lg font-semibold">Banner Towing</h3>
               </div>
-              <p className="text-gray-900">Aerial advertising and promotional flying</p>
+              <p className="text-black">Aerial advertising and promotional flying</p>
             </div>
           </div>
         </div>
@@ -136,67 +136,67 @@ export default function CommercialPage() {
       {/* Advanced Skills */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Advanced Skills You'll Master
           </h2>
           
           <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {/* Flight Skills */}
             <div className="bg-white rounded-lg p-8 shadow-lg">
-              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <h3 className="text-xl font-bold text-black mb-6 flex items-center">
                 <Trophy className="h-6 w-6 text-purple-600 mr-2" />
                 Advanced Flight Skills
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Complex aircraft operations</span>
+                  <span className="text-black">Complex aircraft operations</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Advanced maneuvers and precision flying</span>
+                  <span className="text-black">Advanced maneuvers and precision flying</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Emergency procedures mastery</span>
+                  <span className="text-black">Emergency procedures mastery</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Night and cross-country operations</span>
+                  <span className="text-black">Night and cross-country operations</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Maximum performance techniques</span>
+                  <span className="text-black">Maximum performance techniques</span>
                 </li>
               </ul>
             </div>
 
             {/* Professional Skills */}
             <div className="bg-white rounded-lg p-8 shadow-lg">
-              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <h3 className="text-xl font-bold text-black mb-6 flex items-center">
                 <Award className="h-6 w-6 text-purple-600 mr-2" />
                 Professional Development
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Aviation regulations and commercial operations</span>
+                  <span className="text-black">Aviation regulations and commercial operations</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Weather analysis and decision making</span>
+                  <span className="text-black">Weather analysis and decision making</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Advanced navigation and flight planning</span>
+                  <span className="text-black">Advanced navigation and flight planning</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Professional pilot responsibilities</span>
+                  <span className="text-black">Professional pilot responsibilities</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-sky-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-900">Customer service and communication</span>
+                  <span className="text-black">Customer service and communication</span>
                 </li>
               </ul>
             </div>
@@ -207,7 +207,7 @@ export default function CommercialPage() {
       {/* Requirements */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Commercial License Requirements
           </h2>
           
@@ -216,32 +216,32 @@ export default function CommercialPage() {
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Trophy className="h-6 w-6 text-purple-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">250 Hours Total Time</h3>
-              <p className="text-gray-900 text-sm">Including specific experience requirements</p>
+              <h3 className="font-semibold text-black mb-2">250 Hours Total Time</h3>
+              <p className="text-black text-sm">Including specific experience requirements</p>
             </div>
 
             <div className="bg-purple-50 p-6 rounded-lg text-center">
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="h-6 w-6 text-purple-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">18+ Years Old</h3>
-              <p className="text-gray-900 text-sm">Minimum age requirement</p>
+              <h3 className="font-semibold text-black mb-2">18+ Years Old</h3>
+              <p className="text-black text-sm">Minimum age requirement</p>
             </div>
 
             <div className="bg-purple-50 p-6 rounded-lg text-center">
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Target className="h-6 w-6 text-purple-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Written & Practical</h3>
-              <p className="text-gray-900 text-sm">Pass FAA exams</p>
+              <h3 className="font-semibold text-black mb-2">Written & Practical</h3>
+              <p className="text-black text-sm">Pass FAA exams</p>
             </div>
 
             <div className="bg-purple-50 p-6 rounded-lg text-center">
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="h-6 w-6 text-purple-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">2nd Class Medical</h3>
-              <p className="text-gray-900 text-sm">FAA medical certificate</p>
+              <h3 className="font-semibold text-black mb-2">2nd Class Medical</h3>
+              <p className="text-black text-sm">FAA medical certificate</p>
             </div>
           </div>
         </div>
@@ -250,7 +250,7 @@ export default function CommercialPage() {
       {/* Training Timeline */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-black mb-12">
             Your Path to Commercial Success
           </h2>
           
@@ -260,8 +260,8 @@ export default function CommercialPage() {
                 1
               </div>
               <div className="ml-6">
-                <h3 className="text-lg font-semibold text-gray-900">Build Flight Hours</h3>
-                <p className="text-gray-900">Accumulate the required 250 hours through various flying activities</p>
+                <h3 className="text-lg font-semibold text-black">Build Flight Hours</h3>
+                <p className="text-black">Accumulate the required 250 hours through various flying activities</p>
               </div>
             </div>
 
@@ -270,8 +270,8 @@ export default function CommercialPage() {
                 2
               </div>
               <div className="ml-6">
-                <h3 className="text-lg font-semibold text-gray-900">Advanced Ground School</h3>
-                <p className="text-gray-900">Master commercial operations, regulations, and advanced theory</p>
+                <h3 className="text-lg font-semibold text-black">Advanced Ground School</h3>
+                <p className="text-black">Master commercial operations, regulations, and advanced theory</p>
               </div>
             </div>
 
@@ -280,8 +280,8 @@ export default function CommercialPage() {
                 3
               </div>
               <div className="ml-6">
-                <h3 className="text-lg font-semibold text-gray-900">Commercial Maneuvers</h3>
-                <p className="text-gray-900">Perfect advanced flying techniques and precision maneuvers</p>
+                <h3 className="text-lg font-semibold text-black">Commercial Maneuvers</h3>
+                <p className="text-black">Perfect advanced flying techniques and precision maneuvers</p>
               </div>
             </div>
 
@@ -290,8 +290,8 @@ export default function CommercialPage() {
                 4
               </div>
               <div className="ml-6">
-                <h3 className="text-lg font-semibold text-gray-900">Pass Your Checkride</h3>
-                <p className="text-gray-900">Demonstrate your skills to an FAA examiner and earn your CPL</p>
+                <h3 className="text-lg font-semibold text-black">Pass Your Checkride</h3>
+                <p className="text-black">Demonstrate your skills to an FAA examiner and earn your CPL</p>
               </div>
             </div>
           </div>

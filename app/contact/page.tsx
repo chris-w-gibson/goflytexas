@@ -54,10 +54,10 @@ export default function ContactPage() {
       <section className="bg-gradient-to-br from-sky-50 to-white pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
               Get in Touch
             </h1>
-            <p className="text-xl text-gray-900">
+            <p className="text-xl text-black">
               Ready to start your aviation journey? Have questions about our programs? 
               We're here to help!
             </p>
@@ -75,7 +75,7 @@ export default function ContactPage() {
                 <Phone className="h-6 w-6 text-sky-600" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Call Us</h3>
-              <p className="text-gray-900 mb-2">Ready to answer your questions</p>
+              <p className="text-black mb-2">Ready to answer your questions</p>
               <a 
                 href="tel:+19409053090" 
                 className="text-sky-600 hover:text-sky-700 font-medium"
@@ -89,7 +89,7 @@ export default function ContactPage() {
                 <Mail className="h-6 w-6 text-sky-600" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Email Us</h3>
-              <p className="text-gray-900 mb-2">We'll respond within 24 hours</p>
+              <p className="text-black mb-2">We'll respond within 24 hours</p>
               <a 
                 href="mailto:info@goflytexas.com" 
                 className="text-sky-600 hover:text-sky-700 font-medium"
@@ -103,7 +103,7 @@ export default function ContactPage() {
                 <MapPin className="h-6 w-6 text-sky-600" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Visit Us</h3>
-              <p className="text-gray-900">
+              <p className="text-black">
                 Dallas Executive Airport<br />
                 Dallas, TX 75001
               </p>
@@ -114,7 +114,7 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Form */}
             <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <h2 className="text-2xl font-bold text-black mb-6">
                 Send Us a Message
               </h2>
 
@@ -283,7 +283,7 @@ export default function ContactPage() {
                   <Clock className="h-5 w-5 text-sky-600 mr-2" />
                   Hours of Operation
                 </h3>
-                <ul className="space-y-2 text-gray-900">
+                <ul className="space-y-2 text-black">
                   <li>Monday - Friday: 8:00 AM - 6:00 PM</li>
                   <li>Saturday: 8:00 AM - 5:00 PM</li>
                   <li>Sunday: 9:00 AM - 4:00 PM</li>
@@ -292,7 +292,7 @@ export default function ContactPage() {
 
               <div>
                 <h3 className="text-xl font-semibold mb-4">Quick Info</h3>
-                <ul className="space-y-2 text-gray-900">
+                <ul className="space-y-2 text-black">
                   <li className="flex items-start">
                     <span className="text-sky-600 mr-2">•</span>
                     Discovery flights available 7 days a week
@@ -314,7 +314,7 @@ export default function ContactPage() {
 
               <div className="bg-sky-50 rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-2">Ready to Fly?</h3>
-                <p className="text-gray-900 mb-4">
+                <p className="text-black mb-4">
                   The fastest way to get started is to give us a call!
                 </p>
                 <a
@@ -335,8 +335,8 @@ export default function ContactPage() {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
             <MapPin className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-900 text-lg">Interactive Map Placeholder</p>
-            <p className="text-gray-900">Google Maps integration would go here</p>
+            <p className="text-black text-lg">Interactive Map Placeholder</p>
+            <p className="text-black">Google Maps integration would go here</p>
           </div>
         </div>
       </section>
