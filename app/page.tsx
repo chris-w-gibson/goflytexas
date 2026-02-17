@@ -1,7 +1,10 @@
+"use client";
+
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import Link from 'next/link';
 import { Plane, Navigation2, Trophy, Shield, MapPin, Camera, Users, Award, Heart } from 'lucide-react';
+import EditableBackground from '@/components/EditableBackground';
 
 export default function Home() {
   return (
@@ -226,7 +229,12 @@ export default function Home() {
       </section>
 
       {/* Discovery Flight CTA */}
-      <section className="py-20 bg-gradient-to-r from-sky-600 to-sky-700">
+      <EditableBackground
+        locationId="home-cta-background"
+        className="py-20"
+        fallbackClassName="bg-gradient-to-r from-sky-600 to-sky-700"
+        overlayClassName="bg-sky-900/70"
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Ready to Take Off?
@@ -249,7 +257,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </section>
+      </EditableBackground>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-300 py-12">

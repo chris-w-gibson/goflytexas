@@ -1,10 +1,11 @@
-import { Metadata } from 'next';
+"use client";
+
 import Navigation from '@/components/Navigation';
 import Link from 'next/link';
-import { 
-  Clock, 
-  DollarSign, 
-  CheckCircle, 
+import {
+  Clock,
+  DollarSign,
+  CheckCircle,
   Calendar,
   Shield,
   Heart,
@@ -12,8 +13,11 @@ import {
   MapPin,
   Gift
 } from 'lucide-react';
+import EditableImage from '@/components/EditableImage';
+import EditableBackground from '@/components/EditableBackground';
 
-export const metadata: Metadata = {
+// Note: Metadata moved to layout for client components
+const pageMetadata = {
   title: 'Discovery Flight - Experience Flying in Dallas',
   description: 'Take the controls on a Discovery Flight with GoFlyTexas. Professional instructors, modern aircraft, and unforgettable views of Dallas. Book your $99 intro flight today!',
   openGraph: {
@@ -30,6 +34,15 @@ export default function DiscoveryFlightPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-sky-50 to-white pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Hero Image */}
+          <div className="max-w-4xl mx-auto mb-12 rounded-2xl overflow-hidden shadow-xl">
+            <EditableImage
+              locationId="discovery-hero"
+              alt="Cockpit view approaching runway - Discovery Flight experience"
+              className="w-full object-cover"
+              aspectRatio="aspect-[21/9]"
+            />
+          </div>
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Discovery Flight

@@ -13,7 +13,7 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-sky-600">GoFlyTexas</span>
+            <img src="/logo-new.png" alt="GoFlyTexas" className="h-12 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}

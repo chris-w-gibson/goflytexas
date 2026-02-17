@@ -1,7 +1,8 @@
-import { Metadata } from 'next';
+"use client";
+
 import Navigation from '@/components/Navigation';
 import Link from 'next/link';
-import { 
+import {
   Plane,
   Users,
   Gauge,
@@ -9,8 +10,12 @@ import {
   Shield,
   Fuel
 } from 'lucide-react';
+import EditableImage from '@/components/EditableImage';
+import EditableBackground from '@/components/EditableBackground';
+import ImageCarousel from '@/components/ImageCarousel';
 
-export const metadata: Metadata = {
+// Note: Metadata moved to layout or separate file for client components
+const pageMetadata = {
   title: 'Our Aircraft - Modern Fleet for Flight Training',
   description: 'Explore GoFlyTexas fleet of well-maintained training aircraft. Cessna 172s and Piper Warriors equipped with modern avionics for safe, effective flight training.',
   openGraph: {
@@ -25,6 +30,7 @@ const aircraft = [
     id: 1,
     model: "Cessna 172N Skyhawk",
     registration: "N4501E",
+    image: "/4501E in T Hangar.jpg",
     year: null,
     features: [
       "Proven Training Platform",
@@ -47,6 +53,7 @@ const aircraft = [
     id: 2,
     model: "Cessna 172N Skyhawk",
     registration: "N5217D",
+    image: "/IMG_4960.jpeg",
     year: null,
     features: [
       "Proven Training Platform",
@@ -68,7 +75,8 @@ const aircraft = [
   {
     id: 3,
     model: "Cessna 172N Skyhawk",
-    registration: "N5550J",
+    registration: "N738UY",
+    image: "/IMG_4954.jpeg",
     year: null,
     features: [
       "Proven Training Platform",
@@ -86,6 +94,29 @@ const aircraft = [
     },
     hourlyRate: "Competitive Rates",
     description: "Consistent fleet means you can train in any aircraft with minimal differences."
+  },
+  {
+    id: 4,
+    model: "Cessna 172N Skyhawk",
+    registration: "N0000X",
+    image: null,
+    year: null,
+    features: [
+      "Proven Training Platform",
+      "GPS Navigation",
+      "4-Seat Configuration",
+      "Dual Controls",
+      "High Wing Design",
+      "Excellent Visibility"
+    ],
+    specs: {
+      cruiseSpeed: "122 knots",
+      range: "640 nm",
+      ceiling: "13,500 ft",
+      fuelCapacity: "40 gal"
+    },
+    hourlyRate: "Competitive Rates",
+    description: "Update this description with aircraft details."
   }
 ];
 
@@ -143,13 +174,12 @@ export default function AircraftPage() {
             {aircraft.map((plane) => (
               <div key={plane.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="grid lg:grid-cols-2">
-                  {/* Image Placeholder */}
-                  <div className="bg-gradient-to-br from-sky-100 to-sky-200 p-12 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-8xl mb-4">✈️</div>
-                      <p className="text-sky-800 font-medium text-lg">{plane.model}</p>
-                      <p className="text-sky-700">{plane.registration}</p>
-                    </div>
+                  {/* Aircraft Image Carousel */}
+                  <div className="p-4 lg:p-6">
+                    <ImageCarousel
+                      locationPrefix={`aircraft-${plane.registration.toLowerCase()}`}
+                      imageCount={5}
+                    />
                   </div>
 
                   {/* Content */}

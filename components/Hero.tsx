@@ -1,5 +1,8 @@
+"use client";
+
 import Link from 'next/link';
 import { ArrowRight, Star, Clock, MapPin } from 'lucide-react';
+import EditableImage from './EditableImage';
 
 export default function Hero() {
   return (
@@ -19,7 +22,7 @@ export default function Hero() {
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900">
-                Lets Go Fly!!! 
+                Let's Go Fly!
                 <span className="text-sky-600 block">Your DFW Flight Training</span>
               </h1>
               
@@ -58,19 +61,17 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Image/Video Placeholder */}
+          {/* Hero Image */}
           <div className="relative">
-            <div className="aspect-[4/3] bg-gradient-to-br from-sky-100 to-sky-200 rounded-2xl shadow-2xl overflow-hidden">
-              {/* Replace with actual aircraft image */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-4 p-8">
-                  <div className="text-6xl">✈️</div>
-                  <p className="text-sky-800 font-medium">Aircraft Image Placeholder</p>
-                  <p className="text-sky-700 text-sm">Professional photos of your aircraft fleet</p>
-                </div>
-              </div>
+            <div className="rounded-2xl shadow-2xl overflow-hidden">
+              <EditableImage
+                locationId="hero-main"
+                alt="GoFlyTexas Cessna fleet"
+                className="w-full h-full object-cover"
+                aspectRatio="aspect-[4/3]"
+              />
             </div>
-            
+
             {/* Decorative Elements */}
             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-sky-200 rounded-full blur-3xl opacity-50"></div>
             <div className="absolute -top-4 -left-4 w-24 h-24 bg-sky-300 rounded-full blur-2xl opacity-40"></div>
