@@ -40,7 +40,7 @@ export default function Home() {
                   <Plane className="h-8 w-8 text-sky-600" />
                 </div>
                 <h3 className="text-xl font-semibold">Discovery Flight</h3>
-                <p className="text-gray-900">Experience the joy of flying with an introductory flight lesson</p>
+                <p className="text-black">Experience the joy of flying with an introductory flight lesson</p>
               </div>
             </Link>
             
@@ -50,7 +50,7 @@ export default function Home() {
                   <Shield className="h-8 w-8 text-sky-600" />
                 </div>
                 <h3 className="text-xl font-semibold">Private Pilot</h3>
-                <p className="text-gray-900">Your first step to becoming a certified pilot</p>
+                <p className="text-black">Your first step to becoming a certified pilot</p>
               </div>
             </Link>
             
@@ -60,7 +60,7 @@ export default function Home() {
                   <Navigation2 className="h-8 w-8 text-sky-600" />
                 </div>
                 <h3 className="text-xl font-semibold">Instrument</h3>
-                <p className="text-gray-900">Master flying in all weather conditions</p>
+                <p className="text-black">Master flying in all weather conditions</p>
               </div>
             </Link>
             
@@ -70,7 +70,7 @@ export default function Home() {
                   <Trophy className="h-8 w-8 text-sky-600" />
                 </div>
                 <h3 className="text-xl font-semibold">Commercial</h3>
-                <p className="text-gray-900">Turn your passion into a career</p>
+                <p className="text-black">Turn your passion into a career</p>
               </div>
             </Link>
             
@@ -80,7 +80,7 @@ export default function Home() {
                   <Shield className="h-8 w-8 text-sky-600" />
                 </div>
                 <h3 className="text-xl font-semibold">BFR/IPC</h3>
-                <p className="text-gray-900">Stay current and proficient</p>
+                <p className="text-black">Stay current and proficient</p>
               </div>
             </Link>
             
@@ -90,7 +90,7 @@ export default function Home() {
                   <Trophy className="h-8 w-8 text-sky-600" />
                 </div>
                 <h3 className="text-xl font-semibold">CFI Academy</h3>
-                <p className="text-gray-900">Become a flight instructor</p>
+                <p className="text-black">Become a flight instructor</p>
               </div>
             </Link>
           </div>
