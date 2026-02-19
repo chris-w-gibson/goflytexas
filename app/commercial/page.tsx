@@ -75,7 +75,7 @@ export default function CommercialPage() {
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
                   <Plane className="h-6 w-6 text-purple-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Airline Pilot</h3>
+                <h3 className="text-lg font-semibold text-black">Airline Pilot</h3>
               </div>
               <p className="text-black">Build hours toward airline transport pilot requirements</p>
             </div>
@@ -85,7 +85,7 @@ export default function CommercialPage() {
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
                   <Users className="h-6 w-6 text-purple-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Flight Instructor</h3>
+                <h3 className="text-lg font-semibold text-black">Flight Instructor</h3>
               </div>
               <p className="text-black">Teach others to fly while building your experience</p>
             </div>
@@ -95,7 +95,7 @@ export default function CommercialPage() {
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
                   <Briefcase className="h-6 w-6 text-purple-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Charter Pilot</h3>
+                <h3 className="text-lg font-semibold text-black">Charter Pilot</h3>
               </div>
               <p className="text-black">Fly private charters and business aviation</p>
             </div>
@@ -105,7 +105,7 @@ export default function CommercialPage() {
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
                   <Target className="h-6 w-6 text-purple-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Aerial Survey</h3>
+                <h3 className="text-lg font-semibold text-black">Aerial Survey</h3>
               </div>
               <p className="text-black">Conduct aerial photography and mapping operations</p>
             </div>
@@ -115,7 +115,7 @@ export default function CommercialPage() {
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
                   <TrendingUp className="h-6 w-6 text-purple-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Pipeline Patrol</h3>
+                <h3 className="text-lg font-semibold text-black">Pipeline Patrol</h3>
               </div>
               <p className="text-black">Monitor infrastructure and environmental conditions</p>
             </div>
@@ -125,7 +125,7 @@ export default function CommercialPage() {
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
                   <DollarSign className="h-6 w-6 text-purple-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Banner Towing</h3>
+                <h3 className="text-lg font-semibold text-black">Banner Towing</h3>
               </div>
               <p className="text-black">Aerial advertising and promotional flying</p>
             </div>

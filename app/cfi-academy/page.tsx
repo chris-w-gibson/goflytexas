@@ -84,7 +84,7 @@ export default function CFIAcademyPage() {
                 <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-3">
                   <TrendingUp className="h-6 w-6 text-orange-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Build Flight Hours</h3>
+                <h3 className="text-lg font-semibold text-black">Build Flight Hours</h3>
               </div>
               <p className="text-black">Fastest way to accumulate hours for airline requirements while getting paid</p>
             </div>
@@ -94,7 +94,7 @@ export default function CFIAcademyPage() {
                 <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-3">
                   <Heart className="h-6 w-6 text-orange-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Share Your Passion</h3>
+                <h3 className="text-lg font-semibold text-black">Share Your Passion</h3>
               </div>
               <p className="text-black">Inspire others to achieve their aviation dreams and be part of their journey</p>
             </div>
@@ -104,7 +104,7 @@ export default function CFIAcademyPage() {
                 <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-3">
                   <Award className="h-6 w-6 text-orange-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Master Your Craft</h3>
+                <h3 className="text-lg font-semibold text-black">Master Your Craft</h3>
               </div>
               <p className="text-black">Teaching others deepens your own knowledge and flying skills</p>
             </div>
@@ -114,7 +114,7 @@ export default function CFIAcademyPage() {
                 <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-3">
                   <Users className="h-6 w-6 text-orange-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Career Flexibility</h3>
+                <h3 className="text-lg font-semibold text-black">Career Flexibility</h3>
               </div>
               <p className="text-black">Work full-time, part-time, or freelance with multiple schools</p>
             </div>
@@ -124,7 +124,7 @@ export default function CFIAcademyPage() {
                 <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-3">
                   <Target className="h-6 w-6 text-orange-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Job Security</h3>
+                <h3 className="text-lg font-semibold text-black">Job Security</h3>
               </div>
               <p className="text-black">High demand for quality instructors in the aviation industry</p>
             </div>
@@ -134,7 +134,7 @@ export default function CFIAcademyPage() {
                 <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-3">
                   <Compass className="h-6 w-6 text-orange-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Personal Growth</h3>
+                <h3 className="text-lg font-semibold text-black">Personal Growth</h3>
               </div>
               <p className="text-black">Develop leadership, communication, and mentorship skills</p>
             </div>

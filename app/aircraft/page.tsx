@@ -148,7 +148,7 @@ export default function AircraftPage() {
               <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Plane className="h-8 w-8 text-sky-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Modern Fleet</h3>
+              <h3 className="text-xl font-semibold text-black mb-2">Modern Fleet</h3>
               <p className="text-black">All aircraft less than 5 years old with latest equipment</p>
             </div>
 
@@ -156,7 +156,7 @@ export default function AircraftPage() {
               <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="h-8 w-8 text-sky-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">100-Hour Inspections</h3>
+              <h3 className="text-xl font-semibold text-black mb-2">100-Hour Inspections</h3>
               <p className="text-black">Rigorous maintenance program exceeding FAA requirements</p>
             </div>
 
@@ -164,7 +164,7 @@ export default function AircraftPage() {
               <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Navigation2 className="h-8 w-8 text-sky-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">GPS Equipped</h3>
+              <h3 className="text-xl font-semibold text-black mb-2">GPS Equipped</h3>
               <p className="text-black">Advanced navigation systems in every aircraft</p>
             </div>
           </div>
@@ -239,68 +239,68 @@ export default function AircraftPage() {
           </h2>
           
           <div className="bg-sky-50 rounded-lg p-8 mb-8">
-            <h3 className="text-xl font-semibold mb-4">Rental Requirements</h3>
+            <h3 className="text-xl font-semibold text-black mb-4">Rental Requirements</h3>
             <ul className="space-y-2">
               <li className="flex items-start">
                 <span className="text-sky-600 mr-2">✓</span>
-                <span>Valid pilot certificate and medical</span>
+                <span className="text-black">Valid pilot certificate and medical</span>
               </li>
               <li className="flex items-start">
                 <span className="text-sky-600 mr-2">✓</span>
-                <span>Checkout with GoFlyTexas instructor</span>
+                <span className="text-black">Checkout with GoFlyTexas instructor</span>
               </li>
               <li className="flex items-start">
                 <span className="text-sky-600 mr-2">✓</span>
-                <span>Current renter's insurance</span>
+                <span className="text-black">Current renter's insurance</span>
               </li>
               <li className="flex items-start">
                 <span className="text-sky-600 mr-2">✓</span>
-                <span>90-day currency requirement</span>
+                <span className="text-black">90-day currency requirement</span>
               </li>
             </ul>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-xl font-semibold mb-4">Hourly Rates Include</h3>
+              <h3 className="text-xl font-semibold text-black mb-4">Hourly Rates Include</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <span className="text-sky-600 mr-2">•</span>
-                  <span>Fuel costs</span>
+                  <span className="text-black">Fuel costs</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-sky-600 mr-2">•</span>
-                  <span>Basic insurance coverage</span>
+                  <span className="text-black">Basic insurance coverage</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-sky-600 mr-2">•</span>
-                  <span>Oil and consumables</span>
+                  <span className="text-black">Oil and consumables</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-sky-600 mr-2">•</span>
-                  <span>GPS database updates</span>
+                  <span className="text-black">GPS database updates</span>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold mb-4">Block Time Discounts</h3>
+              <h3 className="text-xl font-semibold text-black mb-4">Block Time Discounts</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <span className="text-sky-600 mr-2">•</span>
-                  <span>10 hours: 3% discount</span>
+                  <span className="text-black">10 hours: 3% discount</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-sky-600 mr-2">•</span>
-                  <span>25 hours: 5% discount</span>
+                  <span className="text-black">25 hours: 5% discount</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-sky-600 mr-2">•</span>
-                  <span>50 hours: 8% discount</span>
+                  <span className="text-black">50 hours: 8% discount</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-sky-600 mr-2">•</span>
-                  <span>100 hours: 10% discount</span>
+                  <span className="text-black">100 hours: 10% discount</span>
                 </li>
               </ul>
             </div>

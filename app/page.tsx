@@ -115,7 +115,7 @@ export default function Home() {
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center">
                   <Plane className="h-8 w-8 text-sky-600" />
                 </div>
-                <h3 className="text-2xl font-semibold">Aircraft Rental</h3>
+                <h3 className="text-2xl font-semibold text-black">Aircraft Rental</h3>
                 <p className="text-black leading-relaxed">
                   Elevate your flying experience with our low-cost Cessna 172 rentals! Whether you're a seasoned pilot or building hours, our meticulously maintained aircraft offer the perfect blend of reliability and affordability. Equipped with modern avionics including advanced GPS navigation, our fleet ensures you fly with confidence. Available for local flights, cross-country adventures, or proficiency training. Our competitive hourly rates and flexible scheduling make it easy to take to the skies whenever inspiration strikes. Current fleet: N5217D, N738UY, N737ET - each aircraft maintained to the highest standards for your safety and comfort.
                 </p>
@@ -127,7 +127,7 @@ export default function Home() {
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center">
                   <Camera className="h-8 w-8 text-sky-600" />
                 </div>
-                <h3 className="text-2xl font-semibold">Aerial Tours</h3>
+                <h3 className="text-2xl font-semibold text-black">Aerial Tours</h3>
                 <p className="text-black leading-relaxed">
                   Experience the Dallas-Fort Worth metroplex like never before with our breathtaking aerial tours! Soar above iconic landmarks including the Dallas skyline, AT&T Stadium, Texas Motor Speedway, and beautiful Lake Ray Hubbard. Our experienced pilots provide engaging narration as you capture stunning photographs from unique vantage points. Perfect for special occasions, romantic dates, or simply treating yourself to an unforgettable adventure. Tours can be customized to your interests, whether you want to see downtown architecture, suburban sprawl, or natural landscapes. Gift certificates available - give the gift of flight!
                 </p>
@@ -139,7 +139,7 @@ export default function Home() {
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center">
                   <MapPin className="h-8 w-8 text-sky-600" />
                 </div>
-                <h3 className="text-2xl font-semibold">Ferry Flights</h3>
+                <h3 className="text-2xl font-semibold text-black">Ferry Flights</h3>
                 <p className="text-black leading-relaxed">
                   Need an aircraft delivered safely and efficiently? Our professional ferry flight services connect buyers, sellers, and owners across the continental United States. With extensive experience in aircraft relocation, we handle everything from pre-flight inspections to weather planning and fuel stops. Our pilots are trained in various aircraft types and understand the importance of treating your aircraft with care. Whether you've purchased a plane across the country or need to reposition for maintenance, we provide reliable, insured ferry services with real-time flight tracking for your peace of mind.
                 </p>
@@ -151,7 +151,7 @@ export default function Home() {
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center">
                   <Shield className="h-8 w-8 text-sky-600" />
                 </div>
-                <h3 className="text-2xl font-semibold">Insurance Checkouts</h3>
+                <h3 className="text-2xl font-semibold text-black">Insurance Checkouts</h3>
                 <p className="text-black leading-relaxed">
                   Transitioning to a new aircraft or need to meet insurance requirements? Our comprehensive insurance checkout program ensures you're fully prepared and compliant. We work directly with all major aviation insurance companies to provide the dual instruction time required for coverage. Our structured approach covers aircraft systems, performance characteristics, emergency procedures, and type-specific handling qualities. Whether stepping up to a complex aircraft or getting back into flying after a break, we'll ensure you meet all insurance prerequisites while building genuine proficiency and confidence.
                 </p>
@@ -197,7 +197,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="h-8 w-8 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">One-on-One Training</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">One-on-One Training</h3>
               <p className="text-black">Personalized instruction tailored to your learning style and pace</p>
             </div>
 
@@ -205,7 +205,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="h-8 w-8 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Safety First</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">Safety First</h3>
               <p className="text-black">Impeccable safety record with modern, well-maintained aircraft</p>
             </div>
 
@@ -213,7 +213,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="h-8 w-8 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Experienced Instructors</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">Experienced Instructors</h3>
               <p className="text-black">Learn from seasoned pilots with thousands of hours experience</p>
             </div>
 
@@ -221,7 +221,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Heart className="h-8 w-8 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Passion for Aviation</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">Passion for Aviation</h3>
               <p className="text-black">We love flying and sharing that passion with our students</p>
             </div>
           </div>

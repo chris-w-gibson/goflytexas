@@ -88,7 +88,7 @@ export default function OurTeamPage() {
           <div className="max-w-4xl mx-auto mb-12">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="bg-gradient-to-r from-sky-600 to-sky-700 text-white p-6">
-                <h3 className="text-2xl font-bold mb-1">Chief Flight Instructor</h3>
+                <h3 className="text-2xl font-bold text-black mb-1">Chief Flight Instructor</h3>
                 <p className="text-sky-100">CFI, CFII, MEI, ATP</p>
               </div>
               <div className="p-8">
@@ -210,7 +210,7 @@ export default function OurTeamPage() {
               <div className="w-20 h-20 bg-gradient-to-br from-sky-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="h-10 w-10 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Safety Excellence</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">Safety Excellence</h3>
               <p className="text-black">Zero compromise on safety standards and procedures</p>
             </div>
 
@@ -218,7 +218,7 @@ export default function OurTeamPage() {
               <div className="w-20 h-20 bg-gradient-to-br from-sky-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <GraduationCap className="h-10 w-10 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Continuous Learning</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">Continuous Learning</h3>
               <p className="text-black">Always improving our teaching methods and skills</p>
             </div>
 
@@ -226,7 +226,7 @@ export default function OurTeamPage() {
               <div className="w-20 h-20 bg-gradient-to-br from-sky-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Heart className="h-10 w-10 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Student Success</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">Student Success</h3>
               <p className="text-black">Your achievements are our greatest rewards</p>
             </div>
 
@@ -234,7 +234,7 @@ export default function OurTeamPage() {
               <div className="w-20 h-20 bg-gradient-to-br from-sky-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="h-10 w-10 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Professional Excellence</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">Professional Excellence</h3>
               <p className="text-black">Maintaining the highest standards in aviation</p>
             </div>
           </div>

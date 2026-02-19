@@ -169,7 +169,7 @@ export default function FlightReviewPage() {
               <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="h-8 w-8 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Enhanced Safety</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">Enhanced Safety</h3>
               <p className="text-black">Refresh critical skills and stay sharp on emergency procedures</p>
             </div>
 
@@ -177,7 +177,7 @@ export default function FlightReviewPage() {
               <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FileCheck className="h-8 w-8 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Regulatory Compliance</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">Regulatory Compliance</h3>
               <p className="text-black">Meet FAA requirements and maintain legal flying status</p>
             </div>
 
@@ -185,7 +185,7 @@ export default function FlightReviewPage() {
               <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="h-8 w-8 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Confidence Building</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">Confidence Building</h3>
               <p className="text-black">Feel assured in your abilities with regular practice</p>
             </div>
           </div>

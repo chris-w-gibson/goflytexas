@@ -99,7 +99,7 @@ export default function InstrumentPage() {
                 <div className="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center mr-3">
                   <Cloud className="h-5 w-5 text-sky-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Cloud Flying</h3>
+                <h3 className="text-lg font-semibold text-black">Cloud Flying</h3>
               </div>
               <p className="text-black">Confidently navigate through clouds and IMC conditions using only instruments</p>
             </div>
@@ -109,7 +109,7 @@ export default function InstrumentPage() {
                 <div className="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center mr-3">
                   <Navigation2 className="h-5 w-5 text-sky-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Precision Navigation</h3>
+                <h3 className="text-lg font-semibold text-black">Precision Navigation</h3>
               </div>
               <p className="text-black">Master GPS, VOR, and ILS approaches for precise navigation</p>
             </div>
@@ -119,7 +119,7 @@ export default function InstrumentPage() {
                 <div className="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center mr-3">
                   <Radio className="h-5 w-5 text-sky-600" />
                 </div>
-                <h3 className="text-lg font-semibold">ATC Communications</h3>
+                <h3 className="text-lg font-semibold text-black">ATC Communications</h3>
               </div>
               <p className="text-black">Develop professional radio skills for IFR clearances and procedures</p>
             </div>
@@ -129,7 +129,7 @@ export default function InstrumentPage() {
                 <div className="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center mr-3">
                   <Map className="h-5 w-5 text-sky-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Chart Reading</h3>
+                <h3 className="text-lg font-semibold text-black">Chart Reading</h3>
               </div>
               <p className="text-black">Interpret approach plates, enroute charts, and weather reports</p>
             </div>
@@ -139,7 +139,7 @@ export default function InstrumentPage() {
                 <div className="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center mr-3">
                   <Eye className="h-5 w-5 text-sky-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Low Visibility Ops</h3>
+                <h3 className="text-lg font-semibold text-black">Low Visibility Ops</h3>
               </div>
               <p className="text-black">Safely operate in reduced visibility and challenging weather</p>
             </div>
@@ -149,7 +149,7 @@ export default function InstrumentPage() {
                 <div className="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center mr-3">
                   <Shield className="h-5 w-5 text-sky-600" />
                 </div>
-                <h3 className="text-lg font-semibold">Emergency Procedures</h3>
+                <h3 className="text-lg font-semibold text-black">Emergency Procedures</h3>
               </div>
               <p className="text-black">Handle instrument failures and emergency situations with confidence</p>
             </div>

@@ -166,7 +166,7 @@ export default function FlightTrainingPage() {
               <div className="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="h-10 w-10 text-sky-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">One-on-One Instruction</h3>
+              <h3 className="text-xl font-semibold text-black mb-3">One-on-One Instruction</h3>
               <p className="text-black">Personalized training tailored to your learning style and pace</p>
             </div>
             
@@ -174,7 +174,7 @@ export default function FlightTrainingPage() {
               <div className="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Plane className="h-10 w-10 text-sky-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Modern Fleet</h3>
+              <h3 className="text-xl font-semibold text-black mb-3">Modern Fleet</h3>
               <p className="text-black">Well-maintained Cessna 172N aircraft with updated avionics</p>
             </div>
             
@@ -182,7 +182,7 @@ export default function FlightTrainingPage() {
               <div className="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Trophy className="h-10 w-10 text-sky-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Proven Success</h3>
+              <h3 className="text-xl font-semibold text-black mb-3">Proven Success</h3>
               <p className="text-black">High pass rate with students achieving their aviation goals</p>
             </div>
           </div>
