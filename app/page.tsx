@@ -39,57 +39,57 @@ export default function Home() {
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Plane className="h-8 w-8 text-sky-600" />
                 </div>
-                <h3 className="text-xl font-semibold">Discovery Flight</h3>
+                <h3 className="text-xl font-semibold text-black">Discovery Flight</h3>
                 <p className="text-black">Experience the joy of flying with an introductory flight lesson</p>
               </div>
             </Link>
-            
+
             <Link href="/private-pilot" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Shield className="h-8 w-8 text-sky-600" />
                 </div>
-                <h3 className="text-xl font-semibold">Private Pilot</h3>
+                <h3 className="text-xl font-semibold text-black">Private Pilot</h3>
                 <p className="text-black">Your first step to becoming a certified pilot</p>
               </div>
             </Link>
-            
+
             <Link href="/instrument" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Navigation2 className="h-8 w-8 text-sky-600" />
                 </div>
-                <h3 className="text-xl font-semibold">Instrument</h3>
+                <h3 className="text-xl font-semibold text-black">Instrument</h3>
                 <p className="text-black">Master flying in all weather conditions</p>
               </div>
             </Link>
-            
+
             <Link href="/commercial" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Trophy className="h-8 w-8 text-sky-600" />
                 </div>
-                <h3 className="text-xl font-semibold">Commercial</h3>
+                <h3 className="text-xl font-semibold text-black">Commercial</h3>
                 <p className="text-black">Turn your passion into a career</p>
               </div>
             </Link>
-            
+
             <Link href="/bfr-ipc" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Shield className="h-8 w-8 text-sky-600" />
                 </div>
-                <h3 className="text-xl font-semibold">BFR/IPC</h3>
+                <h3 className="text-xl font-semibold text-black">BFR/IPC</h3>
                 <p className="text-black">Stay current and proficient</p>
               </div>
             </Link>
-            
+
             <Link href="/cfi-academy" className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto">
                   <Trophy className="h-8 w-8 text-sky-600" />
                 </div>
-                <h3 className="text-xl font-semibold">CFI Academy</h3>
+                <h3 className="text-xl font-semibold text-black">CFI Academy</h3>
                 <p className="text-black">Become a flight instructor</p>
               </div>
             </Link>

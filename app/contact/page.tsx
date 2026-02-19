@@ -74,7 +74,7 @@ export default function ContactPage() {
               <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Phone className="h-6 w-6 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Call Us</h3>
+              <h3 className="text-lg font-semibold mb-2 text-black">Call Us</h3>
               <p className="text-black mb-2">Ready to answer your questions</p>
               <a 
                 href="tel:+19409053090" 
@@ -88,7 +88,7 @@ export default function ContactPage() {
               <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Mail className="h-6 w-6 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Email Us</h3>
+              <h3 className="text-lg font-semibold mb-2 text-black">Email Us</h3>
               <p className="text-black mb-2">We'll respond within 24 hours</p>
               <a 
                 href="mailto:info@goflytexas.com" 
@@ -102,7 +102,7 @@ export default function ContactPage() {
               <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <MapPin className="h-6 w-6 text-sky-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Visit Us</h3>
+              <h3 className="text-lg font-semibold mb-2 text-black">Visit Us</h3>
               <p className="text-black">
                 Dallas Executive Airport<br />
                 Dallas, TX 75001
@@ -130,7 +130,7 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
                       Full Name *
                     </label>
                     <input
@@ -147,7 +147,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
                       Email Address *
                     </label>
                     <input
@@ -172,7 +172,7 @@ export default function ContactPage() {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
                       Phone Number
                     </label>
                     <input
@@ -184,7 +184,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="flightInterest" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="flightInterest" className="block text-sm font-medium text-gray-900 mb-2">
                       I'm Interested In
                     </label>
                     <select
@@ -204,7 +204,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-900 mb-2">
                     Subject
                   </label>
                   <input
@@ -216,7 +216,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-2">
                     Message *
                   </label>
                   <textarea
@@ -233,7 +233,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-900 mb-2">
                     Preferred Contact Method
                   </label>
                   <div className="space-x-6">
@@ -245,7 +245,7 @@ export default function ContactPage() {
                         defaultChecked
                         className="text-sky-600 focus:ring-sky-500"
                       />
-                      <span className="ml-2">Email</span>
+                      <span className="ml-2 text-black">Email</span>
                     </label>
                     <label className="inline-flex items-center">
                       <input
@@ -254,7 +254,7 @@ export default function ContactPage() {
                         {...register('preferredContact')}
                         className="text-sky-600 focus:ring-sky-500"
                       />
-                      <span className="ml-2">Phone</span>
+                      <span className="ml-2 text-black">Phone</span>
                     </label>
                   </div>
                 </div>
@@ -279,7 +279,7 @@ export default function ContactPage() {
             {/* Additional Info */}
             <div className="space-y-8">
               <div>
-                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                <h3 className="text-xl font-semibold mb-4 flex items-center text-black">
                   <Clock className="h-5 w-5 text-sky-600 mr-2" />
                   Hours of Operation
                 </h3>
@@ -291,7 +291,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold mb-4">Quick Info</h3>
+                <h3 className="text-xl font-semibold mb-4 text-black">Quick Info</h3>
                 <ul className="space-y-2 text-black">
                   <li className="flex items-start">
                     <span className="text-sky-600 mr-2">•</span>
@@ -313,7 +313,7 @@ export default function ContactPage() {
               </div>
 
               <div className="bg-sky-50 rounded-lg p-6">
-                <h3 className="text-lg font-semibold mb-2">Ready to Fly?</h3>
+                <h3 className="text-lg font-semibold mb-2 text-black">Ready to Fly?</h3>
                 <p className="text-black mb-4">
                   The fastest way to get started is to give us a call!
                 </p>
