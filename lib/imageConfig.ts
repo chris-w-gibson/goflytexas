@@ -9,26 +9,26 @@ export const defaultImageConfig: ImageConfig = {
   'hero-main': '/4501E and 738UY.jpg',
   'hero-background': null,
 
-  // Aircraft page - N4501E carousel
+  // Aircraft page - N4501E carousel (maroon stripe)
   'aircraft-n4501e-main': '/4501E in T Hangar.jpg',
-  'aircraft-n4501e-1': '/4501E GFT Logo in Background.jpg',
-  'aircraft-n4501e-2': '/IMG_4961.jpeg',
-  'aircraft-n4501e-3': '/IMG_4955.jpeg',
-  'aircraft-n4501e-4': null,
+  'aircraft-n4501e-1': '/IMG_4961.jpeg',
+  'aircraft-n4501e-2': '/IMG_4962.jpeg',
+  'aircraft-n4501e-3': '/IMG_4963.jpeg',
+  'aircraft-n4501e-4': '/4501E GFT Logo in Background.jpg',
 
-  // Aircraft page - N5217D carousel
-  'aircraft-n5217d-main': '/IMG_4960.jpeg',
-  'aircraft-n5217d-1': '/IMG_4957.jpeg',
-  'aircraft-n5217d-2': '/IMG_4956.jpeg',
+  // Aircraft page - N5217D carousel (brown/copper stripe)
+  'aircraft-n5217d-main': '/IMG_4957.jpeg',
+  'aircraft-n5217d-1': '/IMG_4960.jpeg',
+  'aircraft-n5217d-2': '/IMG_4958.jpeg',
   'aircraft-n5217d-3': null,
   'aircraft-n5217d-4': null,
 
-  // Aircraft page - N738UY carousel
+  // Aircraft page - N738UY carousel (blue stripe)
   'aircraft-n738uy-main': '/IMG_4954.jpeg',
   'aircraft-n738uy-1': '/n738uy-ramp.jpg',
-  'aircraft-n738uy-2': '/4501E and 738UY.jpg',
-  'aircraft-n738uy-3': '/fleet-in-hangar.jpg',
-  'aircraft-n738uy-4': null,
+  'aircraft-n738uy-2': '/IMG_4955.jpeg',
+  'aircraft-n738uy-3': '/IMG_4956.jpeg',
+  'aircraft-n738uy-4': '/fleet-in-hangar.jpg',
 
   // Aircraft page - N5550J carousel
   'aircraft-n5550j-main': '/5550J-in-Cali.png',
@@ -78,18 +78,24 @@ export const availableImages = [
   { path: '/IMG_4432.JPG', name: '3 Aircraft Lineup (Alternate)' },
   { path: '/fleet-in-hangar.jpg', name: 'Two Planes in Hangar with GFT Logo' },
 
-  // Individual Aircraft
-  { path: '/IMG_4954.jpeg', name: 'N738UY in Hangar' },
-  { path: '/IMG_4955.jpeg', name: 'N4501E Interior/Detail' },
-  { path: '/IMG_4956.jpeg', name: 'Aircraft Detail Shot' },
-  { path: '/IMG_4957.jpeg', name: 'Aircraft in Hangar with Texas Flag' },
-  { path: '/IMG_4958.jpeg', name: 'Aircraft Detail' },
-  { path: '/IMG_4960.jpeg', name: 'N5217D Cockpit View' },
-  { path: '/IMG_4961.jpeg', name: 'N4501E Hangar Side View' },
-  { path: '/IMG_4962.jpeg', name: 'Aircraft Detail' },
-  { path: '/IMG_4963.jpeg', name: 'Aircraft Detail' },
-  { path: '/IMG_4964.jpeg', name: 'N737ET in Hangar with Texas Flag' },
-  { path: '/IMG_4965.jpeg', name: 'Aircraft Detail' },
+  // N4501E (maroon stripe)
+  { path: '/IMG_4961.jpeg', name: 'N4501E Exterior - Hangar Side' },
+  { path: '/IMG_4962.jpeg', name: 'N4501E Interior (Gray Seats)' },
+  { path: '/IMG_4963.jpeg', name: 'N4501E Cockpit Panel' },
+
+  // N5217D (brown/copper stripe)
+  { path: '/IMG_4957.jpeg', name: 'N5217D Exterior - Hangar w/ Texas Flag' },
+  { path: '/IMG_4958.jpeg', name: 'N5217D Interior (Brown Seats)' },
+  { path: '/IMG_4960.jpeg', name: 'N5217D Cockpit Panel' },
+
+  // N738UY (blue stripe)
+  { path: '/IMG_4954.jpeg', name: 'N738UY Exterior - In Hangar' },
+  { path: '/IMG_4955.jpeg', name: 'N738UY Interior (Tan Seats)' },
+  { path: '/IMG_4956.jpeg', name: 'N738UY Cockpit Panel (Skyhawk II)' },
+
+  // N737ET (red stripe)
+  { path: '/IMG_4964.jpeg', name: 'N737ET Exterior - Hangar w/ Texas Flag' },
+  { path: '/IMG_4965.jpeg', name: 'N737ET Cockpit Panel (Wood Trim)' },
   { path: '/n738uy-ramp.jpg', name: 'N738UY on Ramp (Blue)' },
   { path: '/cessna-ramp-sunny.jpg', name: 'Cessna on Ramp - Sunny Day' },
   { path: '/cessna-hangar-red.jpg', name: 'Cessna in Hangar (Red Stripes)' },
