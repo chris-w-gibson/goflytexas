@@ -10,8 +10,18 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <div className="space-y-8">
-            <div className="space-y-4">
+          <div className="relative space-y-8">
+            {/* Transparent logo watermark behind text */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+              <img
+                src="/logo-new.png"
+                alt=""
+                aria-hidden="true"
+                className="w-[500px] h-auto opacity-[0.07]"
+              />
+            </div>
+
+            <div className="relative space-y-4">
               <div className="flex items-center space-x-2 text-sky-600">
                 <Star className="h-5 w-5 fill-current" />
                 <Star className="h-5 w-5 fill-current" />

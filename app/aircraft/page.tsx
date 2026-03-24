@@ -98,8 +98,8 @@ const aircraft = [
   {
     id: 4,
     model: "Cessna 172N Skyhawk",
-    registration: "N0000X",
-    image: null,
+    registration: "N5550J",
+    image: "/5550J-in-Cali.png",
     year: null,
     features: [
       "Proven Training Platform",
@@ -116,7 +116,7 @@ const aircraft = [
       fuelCapacity: "40 gal"
     },
     hourlyRate: "Competitive Rates",
-    description: "Update this description with aircraft details."
+    description: "Another reliable Cessna 172N in our fleet, ensuring training availability and consistency."
   }
 ];
 
