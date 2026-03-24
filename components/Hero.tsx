@@ -6,22 +6,22 @@ import EditableImage from './EditableImage';
 
 export default function Hero() {
   return (
-    <div className="relative bg-gradient-to-br from-sky-50 to-white pt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+    <div className="relative bg-gradient-to-br from-sky-50 to-white pt-16 overflow-hidden">
+      {/* Transparent logo watermark filling entire hero section */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <img
+          src="/logo-new.png"
+          alt=""
+          aria-hidden="true"
+          className="w-full max-w-[900px] h-auto opacity-[0.06]"
+        />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <div className="relative space-y-8">
-            {/* Transparent logo watermark behind text */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-              <img
-                src="/logo-new.png"
-                alt=""
-                aria-hidden="true"
-                className="w-[500px] h-auto opacity-[0.07]"
-              />
-            </div>
-
-            <div className="relative space-y-4">
+          <div className="space-y-8">
+            <div className="space-y-4">
               <div className="flex items-center space-x-2 text-sky-600">
                 <Star className="h-5 w-5 fill-current" />
                 <Star className="h-5 w-5 fill-current" />
@@ -30,14 +30,14 @@ export default function Hero() {
                 <Star className="h-5 w-5 fill-current" />
                 <span className="text-sm font-medium">Rated 5/5 by 100+ Students</span>
               </div>
-              
+
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black">
                 Let's Go Fly!
                 <span className="text-sky-600 block">Your DFW Flight Training</span>
               </h1>
-              
+
               <p className="text-xl text-black">
-                Experience aviation in the Dallas-Fort Worth area. Discovery flights, 
+                Experience aviation in the Dallas-Fort Worth area. Discovery flights,
                 aircraft rentals, and flight training for pilots of all levels.
               </p>
             </div>
@@ -50,7 +50,7 @@ export default function Hero() {
                 Book Discovery Flight
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              
+
               <Link
                 href="/contact"
                 className="inline-flex items-center justify-center px-6 py-3 bg-white text-sky-600 font-semibold rounded-full border-2 border-sky-600 hover:bg-sky-50 transition-colors"
