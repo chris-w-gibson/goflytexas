@@ -19,7 +19,7 @@ export const defaultImageConfig: ImageConfig = {
   // Aircraft page - N5217D carousel (brown/copper stripe)
   'aircraft-n5217d-main': '/IMG_4957.jpeg',
   'aircraft-n5217d-1': '/IMG_4960.jpeg',
-  'aircraft-n5217d-2': '/IMG_4958.jpeg',
+  'aircraft-n5217d-2': null,
   'aircraft-n5217d-3': null,
   'aircraft-n5217d-4': null,
 
@@ -32,8 +32,8 @@ export const defaultImageConfig: ImageConfig = {
 
   // Aircraft page - N5550J carousel
   'aircraft-n5550j-main': '/5550J-in-Cali.png',
-  'aircraft-n5550j-1': null,
-  'aircraft-n5550j-2': null,
+  'aircraft-n5550j-1': '/IMG_4958.jpeg',
+  'aircraft-n5550j-2': '/B88773E1-BA65-43D1-A60C-355E8E7FE5D0.JPG',
   'aircraft-n5550j-3': null,
   'aircraft-n5550j-4': null,
 
