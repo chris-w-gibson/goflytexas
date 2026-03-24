@@ -13,7 +13,7 @@ export default function Hero() {
           src="/logo-new.png"
           alt=""
           aria-hidden="true"
-          className="w-full max-w-[900px] h-auto opacity-[0.06]"
+          className="w-full max-w-[900px] h-auto opacity-40"
         />
       </div>
 
