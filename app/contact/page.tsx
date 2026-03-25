@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Navigation from '@/components/Navigation';
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
+import Footer from '@/components/Footer';
+import {
+  Phone,
+  Mail,
+  MapPin,
   Clock,
   Send,
   CheckCircle
@@ -24,41 +25,35 @@ type FormData = {
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
-  const { 
-    register, 
-    handleSubmit, 
+
+  const {
+    register,
+    handleSubmit,
     formState: { errors, isSubmitting },
     reset
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    // In a real app, this would send to your API
     console.log('Form submitted:', data);
-    
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
     setIsSubmitted(true);
     reset();
-    
-    // Reset success message after 5 seconds
     setTimeout(() => setIsSubmitted(false), 5000);
   };
 
   return (
     <main className="min-h-screen">
       <Navigation />
-      
+
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-sky-50 to-white pt-24 pb-12">
+      <section className="bg-navy-950 pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Get in Touch
             </h1>
-            <p className="text-xl text-black">
-              Ready to start your aviation journey? Have questions about our programs? 
+            <p className="text-xl text-navy-200">
+              Ready to start your aviation journey? Have questions about our programs?
               We're here to help!
             </p>
           </div>
@@ -69,43 +64,43 @@ export default function ContactPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-8 mb-16">
-            {/* Contact Cards */}
-            <div className="bg-gray-50 rounded-lg p-6 text-center">
-              <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Phone className="h-6 w-6 text-sky-600" />
+            <div className="bg-navy-50 rounded-lg p-6 text-center border border-navy-100">
+              <div className="w-12 h-12 bg-navy-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Phone className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2 text-black">Call Us</h3>
-              <p className="text-black mb-2">Ready to answer your questions</p>
-              <a 
-                href="tel:+19409053090" 
-                className="text-sky-600 hover:text-sky-700 font-medium"
+              <h3 className="text-lg font-semibold mb-2 text-navy-900">Call Us</h3>
+              <p className="text-navy-600 mb-2">Ready to answer your questions</p>
+              <a
+                href="tel:+19409053090"
+                className="text-navy-900 hover:text-navy-700 font-medium"
               >
                 (940) 905-3090
               </a>
             </div>
 
-            <div className="bg-gray-50 rounded-lg p-6 text-center">
-              <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="h-6 w-6 text-sky-600" />
+            <div className="bg-navy-50 rounded-lg p-6 text-center border border-navy-100">
+              <div className="w-12 h-12 bg-navy-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mail className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2 text-black">Email Us</h3>
-              <p className="text-black mb-2">We'll respond within 24 hours</p>
-              <a 
-                href="mailto:info@goflytexas.com" 
-                className="text-sky-600 hover:text-sky-700 font-medium"
+              <h3 className="text-lg font-semibold mb-2 text-navy-900">Email Us</h3>
+              <p className="text-navy-600 mb-2">We'll respond within 24 hours</p>
+              <a
+                href="mailto:info@goflytexas.com"
+                className="text-navy-900 hover:text-navy-700 font-medium"
               >
                 info@goflytexas.com
               </a>
             </div>
 
-            <div className="bg-gray-50 rounded-lg p-6 text-center">
-              <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="h-6 w-6 text-sky-600" />
+            <div className="bg-navy-50 rounded-lg p-6 text-center border border-navy-100">
+              <div className="w-12 h-12 bg-navy-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <MapPin className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2 text-black">Visit Us</h3>
-              <p className="text-black">
-                Dallas Executive Airport<br />
-                Dallas, TX 75001
+              <h3 className="text-lg font-semibold mb-2 text-navy-900">Visit Us</h3>
+              <p className="text-navy-700">
+                Aero Valley Airport (52F)<br />
+                104 Boeing Way<br />
+                Roanoke, TX 76272
               </p>
             </div>
           </div>
@@ -114,7 +109,7 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Form */}
             <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold text-black mb-6">
+              <h2 className="text-2xl font-bold text-navy-900 mb-6">
                 Send Us a Message
               </h2>
 
@@ -130,15 +125,15 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-navy-900 mb-2">
                       Full Name *
                     </label>
                     <input
                       type="text"
                       id="name"
                       {...register('name', { required: 'Name is required' })}
-                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black ${
-                        errors.name ? 'border-red-500' : 'border-gray-300'
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900 ${
+                        errors.name ? 'border-red-500' : 'border-navy-200'
                       }`}
                     />
                     {errors.name && (
@@ -147,7 +142,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-navy-900 mb-2">
                       Email Address *
                     </label>
                     <input
@@ -160,8 +155,8 @@ export default function ContactPage() {
                           message: 'Invalid email address'
                         }
                       })}
-                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black ${
-                        errors.email ? 'border-red-500' : 'border-gray-300'
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900 ${
+                        errors.email ? 'border-red-500' : 'border-navy-200'
                       }`}
                     />
                     {errors.email && (
@@ -172,25 +167,25 @@ export default function ContactPage() {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
+                    <label htmlFor="phone" className="block text-sm font-medium text-navy-900 mb-2">
                       Phone Number
                     </label>
                     <input
                       type="tel"
                       id="phone"
                       {...register('phone')}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black"
+                      className="w-full px-4 py-2 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="flightInterest" className="block text-sm font-medium text-gray-900 mb-2">
+                    <label htmlFor="flightInterest" className="block text-sm font-medium text-navy-900 mb-2">
                       I'm Interested In
                     </label>
                     <select
                       id="flightInterest"
                       {...register('flightInterest')}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black"
+                      className="w-full px-4 py-2 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900"
                     >
                       <option value="">Select an option</option>
                       <option value="discovery">Discovery Flight</option>
@@ -198,33 +193,36 @@ export default function ContactPage() {
                       <option value="instrument">Instrument Rating</option>
                       <option value="commercial">Commercial License</option>
                       <option value="rental">Aircraft Rental</option>
+                      <option value="tour">Aerial Tour</option>
+                      <option value="ferry">Ferry Flight</option>
+                      <option value="insurance">Insurance Checkout</option>
                       <option value="other">Other</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium text-navy-900 mb-2">
                     Subject
                   </label>
                   <input
                     type="text"
                     id="subject"
                     {...register('subject')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black"
+                    className="w-full px-4 py-2 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-navy-900 mb-2">
                     Message *
                   </label>
                   <textarea
                     id="message"
                     rows={5}
                     {...register('message', { required: 'Message is required' })}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-black ${
-                      errors.message ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900 ${
+                      errors.message ? 'border-red-500' : 'border-navy-200'
                     }`}
                   />
                   {errors.message && (
@@ -233,7 +231,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-2">
+                  <label className="block text-sm font-medium text-navy-900 mb-2">
                     Preferred Contact Method
                   </label>
                   <div className="space-x-6">
@@ -243,18 +241,18 @@ export default function ContactPage() {
                         value="email"
                         {...register('preferredContact')}
                         defaultChecked
-                        className="text-sky-600 focus:ring-sky-500"
+                        className="text-navy-900 focus:ring-navy-500"
                       />
-                      <span className="ml-2 text-black">Email</span>
+                      <span className="ml-2 text-navy-800">Email</span>
                     </label>
                     <label className="inline-flex items-center">
                       <input
                         type="radio"
                         value="phone"
                         {...register('preferredContact')}
-                        className="text-sky-600 focus:ring-sky-500"
+                        className="text-navy-900 focus:ring-navy-500"
                       />
-                      <span className="ml-2 text-black">Phone</span>
+                      <span className="ml-2 text-navy-800">Phone</span>
                     </label>
                   </div>
                 </div>
@@ -262,7 +260,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex items-center px-6 py-3 bg-sky-600 text-white font-semibold rounded-full hover:bg-sky-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="inline-flex items-center px-6 py-3 bg-navy-900 text-white font-semibold rounded-full hover:bg-navy-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>Sending...</>
@@ -279,11 +277,11 @@ export default function ContactPage() {
             {/* Additional Info */}
             <div className="space-y-8">
               <div>
-                <h3 className="text-xl font-semibold mb-4 flex items-center text-black">
-                  <Clock className="h-5 w-5 text-sky-600 mr-2" />
+                <h3 className="text-xl font-semibold mb-4 flex items-center text-navy-900">
+                  <Clock className="h-5 w-5 text-navy-700 mr-2" />
                   Hours of Operation
                 </h3>
-                <ul className="space-y-2 text-black">
+                <ul className="space-y-2 text-navy-700">
                   <li>Monday - Friday: 8:00 AM - 6:00 PM</li>
                   <li>Saturday: 8:00 AM - 5:00 PM</li>
                   <li>Sunday: 9:00 AM - 4:00 PM</li>
@@ -291,35 +289,35 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold mb-4 text-black">Quick Info</h3>
-                <ul className="space-y-2 text-black">
+                <h3 className="text-xl font-semibold mb-4 text-navy-900">Quick Info</h3>
+                <ul className="space-y-2 text-navy-700">
                   <li className="flex items-start">
-                    <span className="text-sky-600 mr-2">•</span>
+                    <span className="text-navy-500 mr-2">•</span>
                     Discovery flights available 7 days a week
                   </li>
                   <li className="flex items-start">
-                    <span className="text-sky-600 mr-2">•</span>
+                    <span className="text-navy-500 mr-2">•</span>
                     Walk-ins welcome (appointments preferred)
                   </li>
                   <li className="flex items-start">
-                    <span className="text-sky-600 mr-2">•</span>
+                    <span className="text-navy-500 mr-2">•</span>
                     Free parking at the airport
                   </li>
                   <li className="flex items-start">
-                    <span className="text-sky-600 mr-2">•</span>
+                    <span className="text-navy-500 mr-2">•</span>
                     Gift certificates available
                   </li>
                 </ul>
               </div>
 
-              <div className="bg-sky-50 rounded-lg p-6">
-                <h3 className="text-lg font-semibold mb-2 text-black">Ready to Fly?</h3>
-                <p className="text-black mb-4">
+              <div className="bg-navy-900 rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-2 text-white">Ready to Fly?</h3>
+                <p className="text-navy-200 mb-4">
                   The fastest way to get started is to give us a call!
                 </p>
                 <a
                   href="tel:+19409053090"
-                  className="inline-flex items-center text-sky-600 hover:text-sky-700 font-medium"
+                  className="inline-flex items-center text-white hover:text-navy-200 font-medium"
                 >
                   <Phone className="h-5 w-5 mr-2" />
                   (940) 905-3090
@@ -330,23 +328,18 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map Placeholder */}
-      <section className="h-96 bg-gray-200 relative">
+      {/* Map Section */}
+      <section className="h-96 bg-navy-100 relative">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <MapPin className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <p className="text-black text-lg">Interactive Map Placeholder</p>
-            <p className="text-black">Google Maps integration would go here</p>
+            <MapPin className="h-16 w-16 text-navy-400 mx-auto mb-4" />
+            <p className="text-navy-900 text-lg font-semibold">Aero Valley Airport (52F)</p>
+            <p className="text-navy-600">104 Boeing Way, Roanoke, TX 76272</p>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p>&copy; {new Date().getFullYear()} GoFlyTexas. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

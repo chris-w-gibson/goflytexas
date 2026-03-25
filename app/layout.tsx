@@ -9,14 +9,14 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://goflytexas.com'),
   title: {
-    default: "GoFlyTexas - Discovery Flights & Flight Training in Dallas",
-    template: "%s | GoFlyTexas"
+    default: "Go Fly Texas - Flight Training at Aero Valley Airport | Roanoke, TX",
+    template: "%s | Go Fly Texas"
   },
-  description: "Experience the thrill of flying with GoFlyTexas. Professional flight training and discovery flights in Dallas, Texas. Start your aviation journey today!",
-  keywords: ["discovery flight Dallas", "flight school Texas", "learn to fly Dallas", "pilot training Texas", "aviation school Dallas"],
-  authors: [{ name: "GoFlyTexas" }],
-  creator: "GoFlyTexas",
-  publisher: "GoFlyTexas",
+  description: "One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Discovery flights, aircraft rentals, aerial tours, and pilot training for all levels. Call (940) 905-3090.",
+  keywords: ["flight school Roanoke TX", "discovery flight Dallas Fort Worth", "flight training Texas", "learn to fly DFW", "pilot training Aero Valley Airport", "Cessna 172 rental", "aerial tours Dallas"],
+  authors: [{ name: "Go Fly Texas" }],
+  creator: "Go Fly Texas",
+  publisher: "Go Fly Texas",
   robots: {
     index: true,
     follow: true,
@@ -32,20 +32,20 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://goflytexas.com',
-    siteName: 'GoFlyTexas',
-    title: 'GoFlyTexas - Discovery Flights & Flight Training in Dallas',
-    description: 'Experience the thrill of flying with GoFlyTexas. Professional flight training and discovery flights in Dallas, Texas.',
+    siteName: 'Go Fly Texas',
+    title: 'Go Fly Texas - Flight Training at Aero Valley Airport',
+    description: 'One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Discovery flights, aircraft rentals, and pilot training.',
     images: [{
       url: '/og-image.jpg',
       width: 1200,
       height: 630,
-      alt: 'GoFlyTexas Aircraft'
+      alt: 'Go Fly Texas Aircraft Fleet at Aero Valley Airport'
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GoFlyTexas - Discovery Flights & Flight Training',
-    description: 'Experience the thrill of flying with GoFlyTexas. Professional flight training and discovery flights in Dallas, Texas.',
+    title: 'Go Fly Texas - Flight Training in DFW',
+    description: 'One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Discovery flights, aircraft rentals, and pilot training.',
     images: ['/og-image.jpg'],
   },
   alternates: {
@@ -68,38 +68,72 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "FlightSchool",
-              "name": "GoFlyTexas",
-              "description": "Professional flight training and discovery flights in Dallas, Texas",
+              "name": "Go Fly Texas",
+              "description": "One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Discovery flights, aircraft rentals, aerial tours, and pilot training.",
               "url": "https://goflytexas.com",
-              "telephone": "+1-XXX-XXX-XXXX",
+              "telephone": "+1-940-905-3090",
+              "email": "info@goflytexas.com",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Your Airport Address",
-                "addressLocality": "Dallas",
+                "streetAddress": "104 Boeing Way",
+                "addressLocality": "Roanoke",
                 "addressRegion": "TX",
-                "postalCode": "75001",
+                "postalCode": "76272",
                 "addressCountry": "US"
               },
               "geo": {
                 "@type": "GeoCoordinates",
-                "latitude": "32.7767",
-                "longitude": "-96.7970"
+                "latitude": "33.0462",
+                "longitude": "-97.2006"
               },
-              "openingHours": "Mo-Su 08:00-18:00",
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                  "opens": "08:00",
+                  "closes": "18:00"
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": "Saturday",
+                  "opens": "08:00",
+                  "closes": "17:00"
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": "Sunday",
+                  "opens": "09:00",
+                  "closes": "16:00"
+                }
+              ],
               "priceRange": "$$",
+              "sameAs": [
+                "https://www.facebook.com/goflytexas",
+                "https://www.instagram.com/goflytx"
+              ],
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
-                "name": "Flight Training Services",
+                "name": "Flight Training & Aviation Services",
                 "itemListElement": [
                   {
                     "@type": "Offer",
                     "name": "Discovery Flight",
-                    "description": "30-minute introductory flight experience"
+                    "description": "30-60 minute introductory flight experience"
                   },
                   {
                     "@type": "Offer",
                     "name": "Private Pilot License",
                     "description": "Complete private pilot training program"
+                  },
+                  {
+                    "@type": "Offer",
+                    "name": "Aircraft Rental",
+                    "description": "Cessna 172N rental for certified pilots"
+                  },
+                  {
+                    "@type": "Offer",
+                    "name": "Aerial Tours",
+                    "description": "Scenic flights over Dallas-Fort Worth"
                   }
                 ]
               }
