@@ -10,10 +10,10 @@ export default function Hero() {
       {/* Transparent logo watermark filling entire hero section */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <img
-          src="/logo-new.png"
+          src="/GFT-logo.png"
           alt=""
           aria-hidden="true"
-          className="w-full max-w-[900px] h-auto opacity-20"
+          className="w-full h-auto opacity-20"
         />
       </div>
 
