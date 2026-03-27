@@ -8,12 +8,12 @@ export default function Hero() {
   return (
     <div className="relative bg-navy-950 pt-16 overflow-hidden">
       {/* Transparent logo watermark filling entire hero section */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <img
           src="/GFT-logo.png"
           alt=""
           aria-hidden="true"
-          className="w-full h-auto opacity-20"
+          className="min-w-[150%] min-h-[150%] object-contain opacity-40"
         />
       </div>
 
