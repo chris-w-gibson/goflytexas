@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ImageEditProvider } from "@/components/ImageEditContext";
-import EditModeToggle from "@/components/EditModeToggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -127,7 +126,6 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <ImageEditProvider>
           {children}
-          <EditModeToggle />
         </ImageEditProvider>
       </body>
     </html>

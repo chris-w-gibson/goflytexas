@@ -36,8 +36,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Link href="/private-pilot" className="bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
+          <div className="flex flex-wrap justify-center gap-8">
+            <Link href="/private-pilot" className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)] bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto">
                   <Shield className="h-8 w-8 text-white" />
@@ -47,7 +47,7 @@ export default function Home() {
               </div>
             </Link>
 
-            <Link href="/instrument" className="bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
+            <Link href="/instrument" className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)] bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto">
                   <Navigation2 className="h-8 w-8 text-white" />
@@ -57,7 +57,7 @@ export default function Home() {
               </div>
             </Link>
 
-            <Link href="/commercial" className="bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
+            <Link href="/commercial" className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)] bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto">
                   <Trophy className="h-8 w-8 text-white" />
@@ -67,7 +67,7 @@ export default function Home() {
               </div>
             </Link>
 
-            <Link href="/flight-review" className="bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
+            <Link href="/flight-review" className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)] bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto">
                   <Shield className="h-8 w-8 text-white" />
@@ -77,7 +77,7 @@ export default function Home() {
               </div>
             </Link>
 
-            <Link href="/cfi-academy" className="bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
+            <Link href="/cfi-academy" className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)] bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto">
                   <Trophy className="h-8 w-8 text-white" />
