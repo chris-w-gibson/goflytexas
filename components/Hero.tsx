@@ -21,15 +21,6 @@ export default function Hero() {
 
       <div className="absolute inset-0 bg-navy-950/60" aria-hidden="true" />
 
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-        <img
-          src="/GFT-logo.png"
-          alt=""
-          aria-hidden="true"
-          className="min-w-[120%] object-contain opacity-15"
-        />
-      </div>
-
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
         <div className="space-y-8 animate-[fadeIn_1s_ease-out]">
           <div className="flex items-center justify-center space-x-2 text-white">
