@@ -30,6 +30,13 @@ export const defaultImageConfig: ImageConfig = {
   'aircraft-n738uy-3': '/IMG_4956.jpeg',
   'aircraft-n738uy-4': '/fleet-in-hangar.jpg',
 
+  // Aircraft page - N737ET carousel (red stripe)
+  'aircraft-n737et-main': '/IMG_4964.jpeg',
+  'aircraft-n737et-1': '/N737ET-hangar.jpg',
+  'aircraft-n737et-2': '/n737et-hangar-angle.jpg',
+  'aircraft-n737et-3': '/IMG_4965.jpeg',
+  'aircraft-n737et-4': null,
+
   // Aircraft page - N5550J carousel
   'aircraft-n5550j-main': '/5550J-in-Cali.png',
   'aircraft-n5550j-1': '/IMG_4958.jpeg',
@@ -38,10 +45,6 @@ export const defaultImageConfig: ImageConfig = {
   'aircraft-n5550j-4': null,
 
   'aircraft-hero-background': '/B88773E1-BA65-43D1-A60C-355E8E7FE5D0.JPG',
-
-  // Discovery flight
-  'discovery-hero': '/IMG_4569.jpg',
-  'discovery-background': null,
 
   // Homepage sections
   'home-cta-background': '/IMG_4239.JPG',

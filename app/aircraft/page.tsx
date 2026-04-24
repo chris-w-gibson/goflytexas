@@ -230,7 +230,7 @@ export default function AircraftPage() {
               </li>
               <li className="flex items-start">
                 <span className="text-navy-600 mr-2">✓</span>
-                <span className="text-navy-800">Checkout with Go Fly Texas instructor</span>
+                <span className="text-navy-800">Checkout with GoFlyTexas instructor</span>
               </li>
               <li className="flex items-start">
                 <span className="text-navy-600 mr-2">✓</span>
@@ -253,10 +253,6 @@ export default function AircraftPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-navy-600 mr-2">•</span>
-                  <span className="text-navy-700">Basic insurance coverage</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-navy-600 mr-2">•</span>
                   <span className="text-navy-700">Oil and consumables</span>
                 </li>
                 <li className="flex items-start">
@@ -268,24 +264,11 @@ export default function AircraftPage() {
 
             <div>
               <h3 className="text-xl font-semibold text-navy-900 mb-4">Block Time Discounts</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-navy-600 mr-2">•</span>
-                  <span className="text-navy-700">10 hours: 3% discount</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-navy-600 mr-2">•</span>
-                  <span className="text-navy-700">25 hours: 5% discount</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-navy-600 mr-2">•</span>
-                  <span className="text-navy-700">50 hours: 8% discount</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-navy-600 mr-2">•</span>
-                  <span className="text-navy-700">100 hours: 10% discount</span>
-                </li>
-              </ul>
+              <p className="text-navy-700 leading-relaxed">
+                Discounted hourly rates are available with the purchase of block time, sold in
+                <span className="font-semibold"> 10, 25, and 50 hour</span> blocks.
+                The more you buy, the more you save. Contact us for current pricing.
+              </p>
             </div>
           </div>
         </div>
@@ -298,14 +281,14 @@ export default function AircraftPage() {
             Ready to Fly Our Fleet?
           </h2>
           <p className="text-xl mb-8 text-navy-200">
-            Schedule a Discovery Flight or start your pilot training today.
+            Get in touch to talk rentals, training, or a checkout.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/discovery-flight"
+              href="/contact"
               className="inline-flex items-center justify-center px-8 py-3 bg-white text-navy-900 font-semibold rounded-full hover:bg-navy-100 transition-colors"
             >
-              Book Discovery Flight
+              Contact Us
             </Link>
             <a
               href="tel:+19409053090"

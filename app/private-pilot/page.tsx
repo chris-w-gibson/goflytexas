@@ -209,18 +209,6 @@ export default function PrivatePilotPage() {
                 </div>
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold text-white mb-2">Discovery Flight</h3>
-                <p className="text-navy-100">Experience flying firsthand and meet your instructor</p>
-              </div>
-            </div>
-
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <div className="w-10 h-10 bg-sky-600 text-white rounded-full flex items-center justify-center font-bold">
-                  2
-                </div>
-              </div>
-              <div className="ml-6">
                 <h3 className="text-xl font-semibold text-white mb-2">Ground School</h3>
                 <p className="text-navy-100">Master aviation theory and prepare for written exam</p>
               </div>
@@ -229,7 +217,7 @@ export default function PrivatePilotPage() {
             <div className="flex items-start">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-sky-600 text-white rounded-full flex items-center justify-center font-bold">
-                  3
+                  2
                 </div>
               </div>
               <div className="ml-6">
@@ -241,7 +229,7 @@ export default function PrivatePilotPage() {
             <div className="flex items-start">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-sky-600 text-white rounded-full flex items-center justify-center font-bold">
-                  4
+                  3
                 </div>
               </div>
               <div className="ml-6">
@@ -253,7 +241,7 @@ export default function PrivatePilotPage() {
             <div className="flex items-start">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-sky-600 text-white rounded-full flex items-center justify-center font-bold">
-                  5
+                  4
                 </div>
               </div>
               <div className="ml-6">
@@ -282,10 +270,10 @@ export default function PrivatePilotPage() {
               Call (940) 905-3090
             </a>
             <Link
-              href="/discovery-flight"
+              href="/contact"
               className="inline-flex items-center justify-center px-8 py-3 bg-sky-600 text-white font-semibold rounded-full hover:bg-sky-500 transition-colors text-lg"
             >
-              Book Discovery Flight
+              Contact Us
             </Link>
           </div>
         </div>

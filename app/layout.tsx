@@ -9,14 +9,14 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://goflytexas.com'),
   title: {
-    default: "Go Fly Texas - Flight Training at Aero Valley Airport | Roanoke, TX",
-    template: "%s | Go Fly Texas"
+    default: "GoFlyTexas - Flight Training at Aero Valley Airport | Roanoke, TX",
+    template: "%s | GoFlyTexas"
   },
-  description: "One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Discovery flights, aircraft rentals, aerial tours, and pilot training for all levels. Call (940) 905-3090.",
-  keywords: ["flight school Roanoke TX", "discovery flight Dallas Fort Worth", "flight training Texas", "learn to fly DFW", "pilot training Aero Valley Airport", "Cessna 172 rental", "aerial tours Dallas"],
-  authors: [{ name: "Go Fly Texas" }],
-  creator: "Go Fly Texas",
-  publisher: "Go Fly Texas",
+  description: "One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Aircraft rentals, aerial tours, and pilot training for all levels. Call (940) 905-3090.",
+  keywords: ["flight school Roanoke TX", "flight training Dallas Fort Worth", "flight training Texas", "learn to fly DFW", "pilot training Aero Valley Airport", "Cessna 172 rental", "aerial tours Dallas"],
+  authors: [{ name: "GoFlyTexas" }],
+  creator: "GoFlyTexas",
+  publisher: "GoFlyTexas",
   robots: {
     index: true,
     follow: true,
@@ -32,20 +32,20 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://goflytexas.com',
-    siteName: 'Go Fly Texas',
-    title: 'Go Fly Texas - Flight Training at Aero Valley Airport',
-    description: 'One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Discovery flights, aircraft rentals, and pilot training.',
+    siteName: 'GoFlyTexas',
+    title: 'GoFlyTexas - Flight Training at Aero Valley Airport',
+    description: 'One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Aircraft rentals and pilot training for all levels.',
     images: [{
       url: '/og-image.jpg',
       width: 1200,
       height: 630,
-      alt: 'Go Fly Texas Aircraft Fleet at Aero Valley Airport'
+      alt: 'GoFlyTexas Aircraft Fleet at Aero Valley Airport'
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Go Fly Texas - Flight Training in DFW',
-    description: 'One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Discovery flights, aircraft rentals, and pilot training.',
+    title: 'GoFlyTexas - Flight Training in DFW',
+    description: 'One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Aircraft rentals and pilot training for all levels.',
     images: ['/og-image.jpg'],
   },
   alternates: {
@@ -68,8 +68,8 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "FlightSchool",
-              "name": "Go Fly Texas",
-              "description": "One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Discovery flights, aircraft rentals, aerial tours, and pilot training.",
+              "name": "GoFlyTexas",
+              "description": "One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Aircraft rentals, aerial tours, and pilot training.",
               "url": "https://goflytexas.com",
               "telephone": "+1-940-905-3090",
               "email": "info@goflytexas.com",
@@ -89,21 +89,9 @@ export default function RootLayout({
               "openingHoursSpecification": [
                 {
                   "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                  "opens": "08:00",
-                  "closes": "18:00"
-                },
-                {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": "Saturday",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
                   "opens": "08:00",
                   "closes": "17:00"
-                },
-                {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": "Sunday",
-                  "opens": "09:00",
-                  "closes": "16:00"
                 }
               ],
               "priceRange": "$$",
@@ -115,11 +103,6 @@ export default function RootLayout({
                 "@type": "OfferCatalog",
                 "name": "Flight Training & Aviation Services",
                 "itemListElement": [
-                  {
-                    "@type": "Offer",
-                    "name": "Discovery Flight",
-                    "description": "30-60 minute introductory flight experience"
-                  },
                   {
                     "@type": "Offer",
                     "name": "Private Pilot License",

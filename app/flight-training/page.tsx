@@ -15,14 +15,6 @@ import {
 
 const trainingPrograms = [
   {
-    title: "Discovery Flight",
-    description: "Your first step into aviation. Experience the thrill of flying with a certified instructor and log your first flight hour.",
-    icon: Plane,
-    href: "/discovery-flight",
-    highlights: ["30-60 minute flight", "Hands-on experience", "Counts toward license"],
-    color: "from-navy-600 to-navy-800"
-  },
-  {
     title: "Private Pilot",
     description: "The foundation of your aviation journey. Learn to fly and earn your private pilot certificate with personalized instruction.",
     icon: GraduationCap,
@@ -77,7 +69,7 @@ export default function FlightTrainingPage() {
               Flight Training Programs
             </h1>
             <p className="text-xl text-navy-200 mb-4">
-              From your first discovery flight to advanced certifications, we offer comprehensive
+              From your first lesson to advanced certifications, we offer comprehensive
               training tailored to your goals and learning style.
             </p>
             <p className="text-lg text-white font-semibold">
@@ -92,7 +84,7 @@ export default function FlightTrainingPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-navy-50 rounded-lg border border-navy-100 p-8">
             <p className="text-lg text-navy-800 leading-relaxed text-center">
-              At Go Fly Texas, we take immense pride in our one-on-one pilot training, where every
+              At GoFlyTexas, we take immense pride in our one-on-one pilot training, where every
               student receives personalized instruction tailored to their unique learning style and pace.
               We believe that aviation is more than just mastering controls—it's about building confidence,
               skill, and a deep respect for the skies.
@@ -151,7 +143,7 @@ export default function FlightTrainingPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-navy-900 mb-12">
-            Why Choose Go Fly Texas
+            Why Choose GoFlyTexas
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -167,7 +159,7 @@ export default function FlightTrainingPage() {
               <div className="w-20 h-20 bg-navy-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-navy-100">
                 <Plane className="h-10 w-10 text-navy-900" />
               </div>
-              <h3 className="text-xl font-semibold text-navy-900 mb-3">Modern Fleet</h3>
+              <h3 className="text-xl font-semibold text-navy-900 mb-3">Modernized Fleet</h3>
               <p className="text-navy-600">Well-maintained Cessna 172N aircraft with updated avionics</p>
             </div>
 
@@ -193,10 +185,10 @@ export default function FlightTrainingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/discovery-flight"
+              href="/contact"
               className="inline-flex items-center justify-center px-8 py-3 bg-white text-navy-900 font-semibold rounded-full hover:bg-navy-100 transition-colors text-lg"
             >
-              Book Discovery Flight
+              Contact Us
             </Link>
             <a
               href="tel:+19409053090"

@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-white font-bold text-xl mb-4">Go Fly Texas</h3>
+            <h3 className="text-white font-bold text-xl mb-4">GoFlyTexas</h3>
             <p className="text-sm mb-4">
               Professional flight training at Aero Valley Airport in Roanoke, Texas.
               Your aviation journey starts here.
@@ -41,7 +41,6 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/discovery-flight" className="hover:text-white transition-colors">Discovery Flight</Link></li>
               <li><Link href="/flight-training" className="hover:text-white transition-colors">Flight Training</Link></li>
               <li><Link href="/aircraft" className="hover:text-white transition-colors">Our Aircraft</Link></li>
               <li><Link href="/our-team" className="hover:text-white transition-colors">Our Team</Link></li>
@@ -62,7 +61,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-navy-800 mt-8 pt-8 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Go Fly Texas. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} GoFlyTexas. All rights reserved.</p>
         </div>
       </div>
     </footer>

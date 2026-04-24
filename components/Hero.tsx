@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { ArrowRight, Star, Clock, MapPin } from 'lucide-react';
+import { ArrowRight, Star, MapPin } from 'lucide-react';
 import EditableImage from './EditableImage';
 
 export default function Hero() {
@@ -37,37 +37,31 @@ export default function Hero() {
               </h1>
 
               <p className="text-xl text-navy-200">
-                One-on-one pilot training at Aero Valley Airport. Discovery flights,
-                aircraft rentals, and flight training for pilots of all levels.
+                One-on-one pilot training at Aero Valley Airport.
+                Aircraft rentals and flight training for pilots of all levels.
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/discovery-flight"
+                href="/contact"
                 className="inline-flex items-center justify-center px-6 py-3 bg-white text-navy-900 font-semibold rounded-full hover:bg-navy-100 transition-colors group"
               >
-                Book Discovery Flight
+                Get in Touch
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              <Link
-                href="/contact"
+              <a
+                href="tel:+19409053090"
                 className="inline-flex items-center justify-center px-6 py-3 bg-transparent text-white font-semibold rounded-full border-2 border-white hover:bg-white/10 transition-colors"
               >
-                Learn More
-              </Link>
+                Call (940) 905-3090
+              </a>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 text-sm text-navy-300">
-              <div className="flex items-center space-x-2">
-                <Clock className="h-5 w-5 text-white" />
-                <span>30-60 min flights</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5 text-white" />
-                <span>Aero Valley Airport (52F) - Roanoke, TX</span>
-              </div>
+            <div className="flex items-center space-x-2 text-sm text-navy-300">
+              <MapPin className="h-5 w-5 text-white" />
+              <span>Aero Valley Airport (52F) - Roanoke, TX</span>
             </div>
           </div>
 

@@ -18,7 +18,7 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-xl text-navy-800 leading-relaxed">
-            At Go Fly Texas, we take immense pride in our one-on-one pilot training. We believe that personalized instruction is the key to developing confident, skilled pilots. Our experienced instructors work closely with each student to ensure they receive the individual attention and support they need to succeed in their aviation journey.
+            At GoFlyTexas, we take immense pride in our one-on-one pilot training. We believe that personalized instruction is the key to developing confident, skilled pilots. Our experienced instructors work closely with each student to ensure they receive the individual attention and support they need to succeed in their aviation journey.
           </p>
         </div>
       </section>
@@ -36,16 +36,6 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Link href="/discovery-flight" className="bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto">
-                  <Plane className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">Discovery Flight</h3>
-                <p className="text-navy-300">Experience the joy of flying with an introductory flight lesson</p>
-              </div>
-            </Link>
-
             <Link href="/private-pilot" className="bg-navy-800 p-8 rounded-lg border border-navy-700 hover:border-navy-500 hover:scale-105 transition-all duration-300 block">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto">
@@ -111,11 +101,12 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
+              { reg: "N4501E", desc: "Maroon stripe, proven trainer", img: "/4501E in T Hangar.jpg" },
               { reg: "N5217D", desc: "Brown/copper stripe, GPS equipped", img: "/IMG_4957.jpeg" },
               { reg: "N738UY", desc: "Blue stripe, advanced avionics", img: "/n738uy-ramp-front.jpg" },
-              { reg: "N737ET", desc: "Red stripe, dual controls", img: "/n737et-ramp-sunny.jpg" },
+              { reg: "N737ET", desc: "Red stripe, dual controls", img: "/IMG_4964.jpeg" },
             ].map((plane) => (
               <Link key={plane.reg} href="/aircraft" className="group bg-navy-50 rounded-lg overflow-hidden hover:shadow-xl transition-all">
                 <div className="relative h-48 overflow-hidden">
@@ -212,11 +203,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-navy-900 mb-8 text-center">
-              About Go Fly Texas
+              About GoFlyTexas
             </h2>
             <div className="bg-navy-50 rounded-lg p-8 border border-navy-100">
               <p className="text-lg text-navy-800 text-center leading-relaxed">
-                At Go Fly Texas, we take immense pride in our one-on-one pilot training,
+                At GoFlyTexas, we take immense pride in our one-on-one pilot training,
                 where every student receives personalized instruction tailored to their
                 unique learning style and pace. We believe that aviation is more than just
                 mastering controls—it's about building confidence, skill, and a deep respect
@@ -233,7 +224,7 @@ export default function Home() {
       <section className="py-16 bg-navy-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-white mb-12">
-            Why Choose Go Fly Texas
+            Why Choose GoFlyTexas
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -277,7 +268,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-navy-900 mb-4">Follow Our Journey</h2>
           <p className="text-lg text-navy-600 mb-8">
-            See what's happening at Go Fly Texas on Instagram
+            See what's happening at GoFlyTexas on Instagram
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
@@ -290,7 +281,7 @@ export default function Home() {
               >
                 <Image
                   src={`/instagram-${i}.jpeg`}
-                  alt={`Go Fly Texas Instagram post ${i}`}
+                  alt={`GoFlyTexas Instagram post ${i}`}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-300"
                 />
@@ -309,7 +300,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Discovery Flight CTA */}
+      {/* Get In Touch CTA */}
       <EditableBackground
         locationId="home-cta-background"
         className="py-20"
@@ -321,14 +312,14 @@ export default function Home() {
             Ready to Take Off?
           </h2>
           <p className="text-xl text-navy-200 mb-8">
-            Your first flight is just a click away. Experience the freedom of flight with our Discovery Flight program.
+            Reach out to talk through your goals — training, rentals, or anything aviation.
           </p>
           <div className="space-x-4">
             <Link
-              href="/discovery-flight"
+              href="/contact"
               className="inline-flex items-center px-8 py-3 bg-white text-navy-900 font-semibold rounded-full hover:bg-navy-100 transition-colors"
             >
-              Book Discovery Flight
+              Contact Us
             </Link>
             <a
               href="tel:+19409053090"

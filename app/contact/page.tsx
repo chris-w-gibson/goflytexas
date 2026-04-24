@@ -17,7 +17,6 @@ type FormData = {
   name: string;
   email: string;
   phone: string;
-  subject: string;
   message: string;
   preferredContact: 'email' | 'phone';
   flightInterest: string;
@@ -38,7 +37,6 @@ export default function ContactPage() {
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsSubmitted(true);
     reset();
-    setTimeout(() => setIsSubmitted(false), 5000);
   };
 
   return (
@@ -113,15 +111,6 @@ export default function ContactPage() {
                 Send Us a Message
               </h2>
 
-              {isSubmitted && (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
-                  <p className="text-green-800">
-                    Thank you! We've received your message and will get back to you soon.
-                  </p>
-                </div>
-              )}
-
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
@@ -168,14 +157,19 @@ export default function ContactPage() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-navy-900 mb-2">
-                      Phone Number
+                      Phone Number *
                     </label>
                     <input
                       type="tel"
                       id="phone"
-                      {...register('phone')}
-                      className="w-full px-4 py-2 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900"
+                      {...register('phone', { required: 'Phone number is required' })}
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900 ${
+                        errors.phone ? 'border-red-500' : 'border-navy-200'
+                      }`}
                     />
+                    {errors.phone && (
+                      <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                    )}
                   </div>
 
                   <div>
@@ -188,7 +182,6 @@ export default function ContactPage() {
                       className="w-full px-4 py-2 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900"
                     >
                       <option value="">Select an option</option>
-                      <option value="discovery">Discovery Flight</option>
                       <option value="private">Private Pilot License</option>
                       <option value="instrument">Instrument Rating</option>
                       <option value="commercial">Commercial License</option>
@@ -199,18 +192,6 @@ export default function ContactPage() {
                       <option value="other">Other</option>
                     </select>
                   </div>
-                </div>
-
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-navy-900 mb-2">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    {...register('subject')}
-                    className="w-full px-4 py-2 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900"
-                  />
                 </div>
 
                 <div>
@@ -271,6 +252,19 @@ export default function ContactPage() {
                     </>
                   )}
                 </button>
+
+                {isSubmitted && (
+                  <div
+                    role="status"
+                    aria-live="polite"
+                    className="bg-green-50 border border-green-200 rounded-lg p-4 mt-4 flex items-center"
+                  >
+                    <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0" />
+                    <p className="text-green-800">
+                      Thank you! We've received your message and will get back to you soon.
+                    </p>
+                  </div>
+                )}
               </form>
             </div>
 
@@ -282,19 +276,14 @@ export default function ContactPage() {
                   Hours of Operation
                 </h3>
                 <ul className="space-y-2 text-navy-700">
-                  <li>Monday - Friday: 8:00 AM - 6:00 PM</li>
-                  <li>Saturday: 8:00 AM - 5:00 PM</li>
-                  <li>Sunday: 9:00 AM - 4:00 PM</li>
+                  <li>Open daily: 8:00 AM - 5:00 PM</li>
+                  <li className="text-sm text-navy-500">Flights available 24/7 by appointment</li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-navy-900">Quick Info</h3>
                 <ul className="space-y-2 text-navy-700">
-                  <li className="flex items-start">
-                    <span className="text-navy-500 mr-2">•</span>
-                    Discovery flights available 7 days a week
-                  </li>
                   <li className="flex items-start">
                     <span className="text-navy-500 mr-2">•</span>
                     Walk-ins welcome (appointments preferred)
@@ -329,12 +318,26 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="h-96 bg-navy-100 relative">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <MapPin className="h-16 w-16 text-navy-400 mx-auto mb-4" />
-            <p className="text-navy-900 text-lg font-semibold">Aero Valley Airport (52F)</p>
-            <p className="text-navy-600">104 Boeing Way, Roanoke, TX 76272</p>
+      <section className="bg-navy-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-semibold text-navy-900 flex items-center justify-center">
+              <MapPin className="h-6 w-6 text-navy-700 mr-2" />
+              Find Us at Aero Valley Airport (52F)
+            </h2>
+            <p className="text-navy-600 mt-1">104 Boeing Way, Roanoke, TX 76272</p>
+          </div>
+          <div className="rounded-lg overflow-hidden shadow-lg border border-navy-200">
+            <iframe
+              title="Map to Aero Valley Airport (52F)"
+              src="https://www.google.com/maps?q=Aero+Valley+Airport+52F+104+Boeing+Way+Roanoke+TX+76272&output=embed"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
           </div>
         </div>
       </section>

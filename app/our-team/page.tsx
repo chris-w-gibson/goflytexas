@@ -57,7 +57,7 @@ export default function OurTeamPage() {
               Meet Our Team
             </h1>
             <p className="text-xl text-navy-200">
-              At Go Fly Texas, our instructors are more than just teachers—they're mentors,
+              At GoFlyTexas, our instructors are more than just teachers—they're mentors,
               aviators, and passionate advocates for your success in the skies.
             </p>
           </div>
@@ -73,7 +73,7 @@ export default function OurTeamPage() {
             </h2>
             <p className="text-lg text-navy-700 leading-relaxed mb-8">
               We believe in building lasting relationships with our students. When you train
-              with Go Fly Texas, you're not just another student in a large flight school—you're
+              with GoFlyTexas, you're not just another student in a large flight school—you're
               part of our aviation family. Our instructors take the time to understand your
               goals, learning style, and pace, creating a customized training experience that
               sets you up for success.
@@ -127,7 +127,7 @@ export default function OurTeamPage() {
                       <GraduationCap className="h-8 w-8 text-white" />
                     </div>
                     <h4 className="font-semibold text-white">Chief Pilot</h4>
-                    <p className="text-navy-300">Leading Go Fly Texas operations</p>
+                    <p className="text-navy-300">Leading GoFlyTexas operations</p>
                   </div>
                   <div className="text-center">
                     <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -139,9 +139,9 @@ export default function OurTeamPage() {
                 </div>
 
                 <p className="text-navy-200 leading-relaxed mb-4">
-                  As Chief Pilot and founder, Jim leads Go Fly Texas with a dedication to
+                  As Chief Pilot, Jim leads GoFlyTexas with a dedication to
                   personalized, safety-focused flight training. His passion for aviation
-                  and commitment to student success drives everything we do at Go Fly Texas.
+                  and commitment to student success drives everything we do at GoFlyTexas.
                 </p>
 
                 <div className="border-t border-navy-600 pt-4 mt-6">
@@ -242,10 +242,10 @@ export default function OurTeamPage() {
               Call (940) 905-3090
             </a>
             <Link
-              href="/discovery-flight"
+              href="/contact"
               className="inline-flex items-center justify-center px-8 py-3 bg-navy-700 text-white font-semibold rounded-full hover:bg-navy-600 transition-colors text-lg"
             >
-              Book Discovery Flight
+              Contact Us
             </Link>
           </div>
         </div>
