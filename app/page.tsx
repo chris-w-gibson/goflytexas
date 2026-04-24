@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Plane, Navigation2, Trophy, Shield, MapPin, Camera, Users, Award, Heart } from 'lucide-react';
 import EditableBackground from '@/components/EditableBackground';
+import FadeInSection from '@/components/FadeInSection';
 
 export default function Home() {
   return (
@@ -15,16 +16,16 @@ export default function Home() {
       <Hero />
 
       {/* Mission Statement Section */}
-      <section className="py-20 bg-white">
+      <FadeInSection><section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-xl text-navy-800 leading-relaxed">
             At GoFlyTexas, we take immense pride in our one-on-one pilot training. We believe that personalized instruction is the key to developing confident, skilled pilots. Our experienced instructors work closely with each student to ensure they receive the individual attention and support they need to succeed in their aviation journey.
           </p>
         </div>
-      </section>
+      </section></FadeInSection>
 
       {/* Flight Training Section */}
-      <section className="py-20 bg-navy-900">
+      <FadeInSection><section className="py-20 bg-navy-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
@@ -87,10 +88,10 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </section>
+      </section></FadeInSection>
 
       {/* Aircraft Fleet Preview */}
-      <section className="py-20 bg-white">
+      <FadeInSection><section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-navy-900 mb-4">
@@ -132,10 +133,10 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </section>
+      </section></FadeInSection>
 
       {/* Our Services Section */}
-      <section className="py-20 bg-navy-950">
+      <FadeInSection><section className="py-20 bg-navy-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
@@ -196,10 +197,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section></FadeInSection>
 
       {/* About Section */}
-      <section className="py-16 bg-white">
+      <FadeInSection><section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-navy-900 mb-8 text-center">
@@ -218,10 +219,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section></FadeInSection>
 
       {/* Why Choose GoFlyTexas */}
-      <section className="py-16 bg-navy-900">
+      <FadeInSection><section className="py-16 bg-navy-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-white mb-12">
             Why Choose GoFlyTexas
@@ -261,10 +262,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section></FadeInSection>
 
       {/* Instagram / Social Feed Section */}
-      <section className="py-16 bg-white">
+      <FadeInSection><section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-navy-900 mb-4">Follow Our Journey</h2>
           <p className="text-lg text-navy-600 mb-8">
@@ -298,10 +299,10 @@ export default function Home() {
             Follow @goflytx on Instagram
           </a>
         </div>
-      </section>
+      </section></FadeInSection>
 
       {/* Get In Touch CTA */}
-      <EditableBackground
+      <FadeInSection><EditableBackground
         locationId="home-cta-background"
         className="py-20"
         fallbackClassName="bg-gradient-to-r from-navy-900 to-navy-800"
@@ -329,7 +330,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </EditableBackground>
+      </EditableBackground></FadeInSection>
 
       <Footer />
     </main>

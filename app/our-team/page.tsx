@@ -1,13 +1,13 @@
 "use client";
 
+import Image from 'next/image';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import FadeInSection from '@/components/FadeInSection';
 import Link from 'next/link';
 import {
   Award,
   Clock,
-  Star,
-  Plane,
   GraduationCap,
   Users,
   Target,
@@ -20,27 +20,32 @@ const instructors = [
     name: "Jim Lewis",
     title: "Chief Pilot",
     certs: "CFI, CFII",
+    photo: "/team/jim-lewis.jpg",
     isChief: true,
   },
   {
     name: "Kristin Mader",
     title: "Flight Instructor",
     certs: "CFI, CFII",
+    photo: "/team/kristin-mader.jpg",
   },
   {
     name: "Austin McDonald",
     title: "Flight Instructor",
     certs: "CFI, CFII",
+    photo: "/team/austin-mcdonald.jpg",
   },
   {
     name: "Samuel Baeza",
     title: "Flight Instructor",
     certs: "CFI, CFII",
+    photo: "/team/samuel-baeza.jpg",
   },
   {
     name: "Trent Wilcox",
     title: "Flight Instructor",
     certs: "CFI, CFII",
+    photo: "/team/trent-wilcox.jpg",
   },
 ];
 
@@ -100,57 +105,67 @@ export default function OurTeamPage() {
       </section>
 
       {/* Instructors */}
-      <section className="py-16 bg-navy-900">
+      <FadeInSection><section className="py-16 bg-navy-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-white mb-12">
             Your Flight Instructors
           </h2>
 
           {/* Chief Pilot - Jim Lewis */}
-          <div className="max-w-4xl mx-auto mb-12">
+          <div className="max-w-5xl mx-auto mb-12">
             <div className="bg-navy-800 rounded-lg shadow-lg overflow-hidden border border-navy-700">
-              <div className="bg-gradient-to-r from-navy-700 to-navy-600 text-white p-6">
-                <h3 className="text-2xl font-bold mb-1">Jim Lewis</h3>
-                <p className="text-navy-200">Chief Pilot / CFI, CFII</p>
-              </div>
-              <div className="p-8">
-                <div className="grid md:grid-cols-3 gap-6 mb-6">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Clock className="h-8 w-8 text-white" />
-                    </div>
-                    <h4 className="font-semibold text-white">Experienced Leader</h4>
-                    <p className="text-navy-300">Thousands of flight hours</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <GraduationCap className="h-8 w-8 text-white" />
-                    </div>
-                    <h4 className="font-semibold text-white">Chief Pilot</h4>
-                    <p className="text-navy-300">Leading GoFlyTexas operations</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-navy-700 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Award className="h-8 w-8 text-white" />
-                    </div>
-                    <h4 className="font-semibold text-white">CFI & CFII</h4>
-                    <p className="text-navy-300">Certified Flight & Instrument Instructor</p>
-                  </div>
+              <div className="grid md:grid-cols-2">
+                <div className="relative aspect-square md:aspect-auto md:min-h-[420px] bg-navy-900">
+                  <Image
+                    src="/team/jim-lewis.jpg"
+                    alt="Jim Lewis, Chief Pilot at GoFlyTexas"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                    priority
+                  />
                 </div>
+                <div className="p-8 flex flex-col">
+                  <div className="bg-gradient-to-r from-navy-700 to-navy-600 -mx-8 -mt-8 px-8 py-6 mb-6">
+                    <h3 className="text-2xl font-bold text-white mb-1">Jim Lewis</h3>
+                    <p className="text-navy-200">Chief Pilot / CFI, CFII</p>
+                  </div>
 
-                <p className="text-navy-200 leading-relaxed mb-4">
-                  As Chief Pilot, Jim leads GoFlyTexas with a dedication to
-                  personalized, safety-focused flight training. His passion for aviation
-                  and commitment to student success drives everything we do at GoFlyTexas.
-                </p>
+                  <div className="grid grid-cols-3 gap-3 mb-6">
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-navy-700 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <Clock className="h-6 w-6 text-white" />
+                      </div>
+                      <p className="text-xs text-navy-300">Experienced Leader</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-navy-700 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <GraduationCap className="h-6 w-6 text-white" />
+                      </div>
+                      <p className="text-xs text-navy-300">Chief Pilot</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-navy-700 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <Award className="h-6 w-6 text-white" />
+                      </div>
+                      <p className="text-xs text-navy-300">CFI &amp; CFII</p>
+                    </div>
+                  </div>
 
-                <div className="border-t border-navy-600 pt-4 mt-6">
-                  <h4 className="font-semibold text-white mb-2">Specialties:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-navy-700 text-navy-200 rounded-full text-sm">Private Pilot</span>
-                    <span className="px-3 py-1 bg-navy-700 text-navy-200 rounded-full text-sm">Instrument Rating</span>
-                    <span className="px-3 py-1 bg-navy-700 text-navy-200 rounded-full text-sm">Commercial</span>
-                    <span className="px-3 py-1 bg-navy-700 text-navy-200 rounded-full text-sm">CFI Training</span>
+                  <p className="text-navy-200 leading-relaxed mb-4">
+                    As Chief Pilot, Jim leads GoFlyTexas with a dedication to personalized,
+                    safety-focused flight training. His passion for aviation and commitment
+                    to student success drives everything we do at GoFlyTexas.
+                  </p>
+
+                  <div className="border-t border-navy-600 pt-4 mt-auto">
+                    <h4 className="font-semibold text-white mb-2 text-sm">Specialties:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-3 py-1 bg-navy-700 text-navy-200 rounded-full text-xs">Private Pilot</span>
+                      <span className="px-3 py-1 bg-navy-700 text-navy-200 rounded-full text-xs">Instrument Rating</span>
+                      <span className="px-3 py-1 bg-navy-700 text-navy-200 rounded-full text-xs">Commercial</span>
+                      <span className="px-3 py-1 bg-navy-700 text-navy-200 rounded-full text-xs">CFI Training</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -158,28 +173,31 @@ export default function OurTeamPage() {
           </div>
 
           {/* Other Instructors */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {instructors.filter(i => !i.isChief).map((instructor) => (
-              <div key={instructor.name} className="bg-navy-800 rounded-lg shadow-lg p-6 border border-navy-700">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-navy-700 rounded-full flex items-center justify-center mr-4">
-                    <Plane className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white">{instructor.name}</h3>
-                    <p className="text-navy-300">{instructor.certs}</p>
-                  </div>
+              <div key={instructor.name} className="bg-navy-800 rounded-lg shadow-lg overflow-hidden border border-navy-700 group">
+                <div className="relative aspect-[4/5] bg-navy-900 overflow-hidden">
+                  <Image
+                    src={instructor.photo}
+                    alt={`${instructor.name}, ${instructor.title} at GoFlyTexas`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
-
-                <p className="text-navy-200 text-sm leading-relaxed">
-                  {instructor.title} dedicated to providing one-on-one instruction and
-                  helping students achieve their aviation goals with confidence and skill.
-                </p>
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-white">{instructor.name}</h3>
+                  <p className="text-navy-300 text-sm">{instructor.certs}</p>
+                  <p className="text-navy-200 text-sm leading-relaxed mt-3">
+                    {instructor.title} dedicated to one-on-one instruction and helping students
+                    reach their aviation goals.
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </section></FadeInSection>
 
       {/* Team Values */}
       <section className="py-16 bg-white">
