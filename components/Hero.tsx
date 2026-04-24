@@ -1,20 +1,33 @@
 "use client";
 
 import Link from 'next/link';
+import { useRef } from 'react';
 import { ArrowRight, Star, MapPin } from 'lucide-react';
 
+const LOOP_START_SECONDS = 5;
+
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const handleEnded = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.currentTime = LOOP_START_SECONDS;
+    void v.play();
+  };
+
   return (
     <div className="relative bg-navy-950 pt-16 overflow-hidden min-h-[80vh] flex items-center">
       <video
+        ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover"
         autoPlay
         muted
-        loop
         playsInline
         preload="metadata"
         poster="/IMG_4239.JPG"
         aria-hidden="true"
+        onEnded={handleEnded}
       >
         <source src="/hero-loop.mp4" type="video/mp4" />
       </video>
