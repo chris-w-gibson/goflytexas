@@ -16,10 +16,10 @@ export const defaultImageConfig: ImageConfig = {
   'aircraft-n4501e-3': '/IMG_4963.jpeg',
   'aircraft-n4501e-4': '/4501E GFT Logo in Background.jpg',
 
-  // Aircraft page - N5217D carousel (brown/copper stripe)
+  // Aircraft page - N5217D carousel (brown/copper stripe; tan/brown leather interior)
   'aircraft-n5217d-main': '/IMG_4957.jpeg',
-  'aircraft-n5217d-1': '/IMG_4960.jpeg',
-  'aircraft-n5217d-2': null,
+  'aircraft-n5217d-1': '/IMG_4958.jpeg',
+  'aircraft-n5217d-2': '/IMG_4960.jpeg',
   'aircraft-n5217d-3': null,
   'aircraft-n5217d-4': null,
 
@@ -33,14 +33,14 @@ export const defaultImageConfig: ImageConfig = {
   // Aircraft page - N737ET carousel (red stripe)
   'aircraft-n737et-main': '/IMG_4964.jpeg',
   'aircraft-n737et-1': '/N737ET-hangar.jpg',
-  'aircraft-n737et-2': '/n737et-hangar-angle.jpg',
+  'aircraft-n737et-2': '/n737et-ramp-sunny.jpg',
   'aircraft-n737et-3': '/IMG_4965.jpeg',
   'aircraft-n737et-4': null,
 
-  // Aircraft page - N5550J carousel
+  // Aircraft page - N5550J carousel (not on /aircraft page; legacy slots kept for reference)
   'aircraft-n5550j-main': '/5550J-in-Cali.png',
-  'aircraft-n5550j-1': '/IMG_4958.jpeg',
-  'aircraft-n5550j-2': '/B88773E1-BA65-43D1-A60C-355E8E7FE5D0.JPG',
+  'aircraft-n5550j-1': '/B88773E1-BA65-43D1-A60C-355E8E7FE5D0.JPG',
+  'aircraft-n5550j-2': null,
   'aircraft-n5550j-3': null,
   'aircraft-n5550j-4': null,
 

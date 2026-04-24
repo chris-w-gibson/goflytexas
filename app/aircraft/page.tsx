@@ -16,6 +16,28 @@ const aircraft = [
   {
     id: 1,
     model: "Cessna 172N Skyhawk",
+    registration: "N738UY",
+    image: "/IMG_4954.jpeg",
+    features: [
+      "Proven Training Platform",
+      "GPS Navigation",
+      "4-Seat Configuration",
+      "Dual Controls",
+      "High Wing Design",
+      "Excellent Visibility"
+    ],
+    specs: {
+      cruiseSpeed: "122 knots",
+      range: "640 nm",
+      ceiling: "13,500 ft",
+      fuelCapacity: "40 gal"
+    },
+    hourlyRate: "Competitive Rates",
+    description: "Blue stripe. Advanced avionics suite ensuring a consistent, modern training experience."
+  },
+  {
+    id: 2,
+    model: "Cessna 172N Skyhawk",
     registration: "N4501E",
     image: "/4501E in T Hangar.jpg",
     features: [
@@ -36,7 +58,7 @@ const aircraft = [
     description: "Reliable and proven trainer, perfect for all stages of flight training."
   },
   {
-    id: 2,
+    id: 3,
     model: "Cessna 172N Skyhawk",
     registration: "N5217D",
     image: "/IMG_4957.jpeg",
@@ -58,7 +80,7 @@ const aircraft = [
     description: "Brown/copper stripe. Reliable trainer with modern GPS navigation, perfect for all stages of flight training."
   },
   {
-    id: 3,
+    id: 4,
     model: "Cessna 172N Skyhawk",
     registration: "N737ET",
     image: "/N737ET-hangar.jpg",
@@ -78,28 +100,6 @@ const aircraft = [
     },
     hourlyRate: "Competitive Rates",
     description: "Red stripe. Well-equipped trainer maintained to the highest standards for safety and comfort."
-  },
-  {
-    id: 4,
-    model: "Cessna 172N Skyhawk",
-    registration: "N738UY",
-    image: "/IMG_4954.jpeg",
-    features: [
-      "Proven Training Platform",
-      "GPS Navigation",
-      "4-Seat Configuration",
-      "Dual Controls",
-      "High Wing Design",
-      "Excellent Visibility"
-    ],
-    specs: {
-      cruiseSpeed: "122 knots",
-      range: "640 nm",
-      ceiling: "13,500 ft",
-      fuelCapacity: "40 gal"
-    },
-    hourlyRate: "Competitive Rates",
-    description: "Blue stripe. Advanced avionics suite ensuring a consistent, modern training experience."
   }
 ];
 

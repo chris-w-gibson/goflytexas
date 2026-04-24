@@ -104,9 +104,9 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
+              { reg: "N738UY", desc: "Blue stripe, advanced avionics", img: "/n738uy-ramp-front.jpg" },
               { reg: "N4501E", desc: "Maroon stripe, proven trainer", img: "/4501E in T Hangar.jpg" },
               { reg: "N5217D", desc: "Brown/copper stripe, GPS equipped", img: "/IMG_4957.jpeg" },
-              { reg: "N738UY", desc: "Blue stripe, advanced avionics", img: "/n738uy-ramp-front.jpg" },
               { reg: "N737ET", desc: "Red stripe, dual controls", img: "/IMG_4964.jpeg" },
             ].map((plane) => (
               <Link key={plane.reg} href="/aircraft" className="group bg-navy-50 rounded-lg overflow-hidden hover:shadow-xl transition-all">

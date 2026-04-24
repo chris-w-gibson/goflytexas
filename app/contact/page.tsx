@@ -330,7 +330,7 @@ export default function ContactPage() {
           <div className="rounded-lg overflow-hidden shadow-lg border border-navy-200">
             <iframe
               title="Map to Aero Valley Airport (52F)"
-              src="https://www.google.com/maps?q=Aero+Valley+Airport+52F+104+Boeing+Way+Roanoke+TX+76272&output=embed"
+              src="https://www.google.com/maps?q=104+Boeing+Way+Roanoke+TX+76272&output=embed"
               width="100%"
               height="450"
               style={{ border: 0 }}
