@@ -96,14 +96,14 @@ export default function FlightTrainingPage() {
       {/* Training Programs Grid */}
       <section className="py-16 bg-navy-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-wrap justify-center gap-8">
             {trainingPrograms.map((program, index) => {
               const Icon = program.icon;
               return (
                 <Link
                   key={index}
                   href={program.href}
-                  className="group bg-navy-800 rounded-lg overflow-hidden border border-navy-700 hover:border-navy-500 transition-all duration-300 hover:scale-105"
+                  className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)] group bg-navy-800 rounded-lg overflow-hidden border border-navy-700 hover:border-navy-500 transition-all duration-300 hover:scale-105"
                 >
                   <div className={`h-2 bg-gradient-to-r ${program.color}`}></div>
                   <div className="p-6">
