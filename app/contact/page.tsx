@@ -33,8 +33,33 @@ export default function ContactPage() {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    console.log('Form submitted:', data);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const interestLabel: Record<string, string> = {
+      private: 'Private Pilot License',
+      instrument: 'Instrument Rating',
+      commercial: 'Commercial License',
+      rental: 'Aircraft Rental',
+      tour: 'Aerial Tour',
+      ferry: 'Ferry Flight',
+      insurance: 'Insurance Checkout',
+      other: 'Other',
+    };
+    const interest = data.flightInterest ? (interestLabel[data.flightInterest] ?? data.flightInterest) : 'Not specified';
+    const preferred = data.preferredContact === 'phone' ? 'Phone' : 'Email';
+
+    const subject = `GoFlyTexas Inquiry: ${interest} — ${data.name}`;
+    const body = [
+      `Name: ${data.name}`,
+      `Email: ${data.email}`,
+      `Phone: ${data.phone}`,
+      `Interested in: ${interest}`,
+      `Preferred contact method: ${preferred}`,
+      '',
+      'Message:',
+      data.message,
+    ].join('\n');
+
+    const mailto = `mailto:info@goflytexas.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
     setIsSubmitted(true);
     reset();
   };
@@ -243,25 +268,21 @@ export default function ContactPage() {
                   disabled={isSubmitting}
                   className="inline-flex items-center px-6 py-3 bg-navy-900 text-white font-semibold rounded-full hover:bg-navy-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? (
-                    <>Sending...</>
-                  ) : (
-                    <>
-                      <Send className="mr-2 h-5 w-5" />
-                      Send Message
-                    </>
-                  )}
+                  <Send className="mr-2 h-5 w-5" />
+                  Send via Email
                 </button>
 
                 {isSubmitted && (
                   <div
                     role="status"
                     aria-live="polite"
-                    className="bg-green-50 border border-green-200 rounded-lg p-4 mt-4 flex items-center"
+                    className="bg-green-50 border border-green-200 rounded-lg p-4 mt-4 flex items-start"
                   >
-                    <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
                     <p className="text-green-800">
-                      Thank you! We've received your message and will get back to you soon.
+                      Your default email app should have opened with your message ready to send to{' '}
+                      <a href="mailto:info@goflytexas.com" className="underline font-medium">info@goflytexas.com</a>.
+                      Click <strong>Send</strong> in your email client to finish. If nothing opened, you can email us directly at the address above.
                     </p>
                   </div>
                 )}
