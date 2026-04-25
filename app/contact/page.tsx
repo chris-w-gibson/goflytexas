@@ -346,7 +346,7 @@ export default function ContactPage() {
             <p className="text-navy-600 mt-1">104 Boeing Way, Roanoke, TX 76272</p>
           </div>
           <div className="rounded-lg overflow-hidden shadow-lg border border-navy-200">
-            <LocationMap />
+            <LocationMap imageSrc="/map-goflytexas.png" />
           </div>
         </div>
       </section>
