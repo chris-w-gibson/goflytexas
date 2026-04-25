@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import LocationMap from '@/components/LocationMap';
 import {
   Phone,
   Mail,
@@ -345,16 +346,7 @@ export default function ContactPage() {
             <p className="text-navy-600 mt-1">104 Boeing Way, Roanoke, TX 76272</p>
           </div>
           <div className="rounded-lg overflow-hidden shadow-lg border border-navy-200">
-            <iframe
-              title="Map to Aero Valley Airport (52F)"
-              src="https://www.google.com/maps?q=104+Boeing+Way+Roanoke+TX+76272&output=embed"
-              width="100%"
-              height="450"
-              style={{ border: 0 }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
+            <LocationMap />
           </div>
         </div>
       </section>
