@@ -311,10 +311,6 @@ export default function ContactPage() {
                   </li>
                   <li className="flex items-start">
                     <span className="text-navy-500 mr-2">•</span>
-                    Free parking at the airport
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-navy-500 mr-2">•</span>
                     Gift certificates available
                   </li>
                 </ul>
