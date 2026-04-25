@@ -1,8 +1,8 @@
 "use client";
 
 import Link from 'next/link';
-import { useRef, useEffect } from 'react';
-import { ArrowRight, Star, MapPin } from 'lucide-react';
+import { useRef, useEffect, useState } from 'react';
+import { ArrowRight, Star, MapPin, Volume2 } from 'lucide-react';
 
 const LOOP_START_SECONDS = 5.6;
 const LOOP_END_SECONDS = 6.65;
@@ -10,12 +10,12 @@ const FADE_START_SECONDS = 4.1;
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const introCompleteRef = useRef(false);
+  const [showSoundPrompt, setShowSoundPrompt] = useState(false);
 
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-
-    let introComplete = false;
 
     v.currentTime = 0;
     v.volume = 1;
@@ -25,15 +25,17 @@ export default function Hero() {
       tryUnmuted.catch(() => {
         v.muted = true;
         v.play().catch(() => {});
+        if (!introCompleteRef.current) setShowSoundPrompt(true);
       });
     }
 
     const onTimeUpdate = () => {
-      if (!introComplete) {
+      if (!introCompleteRef.current) {
         if (v.currentTime >= LOOP_START_SECONDS) {
           v.volume = 0;
           v.muted = true;
-          introComplete = true;
+          introCompleteRef.current = true;
+          setShowSoundPrompt(false);
         } else if (v.currentTime >= FADE_START_SECONDS) {
           const t = (v.currentTime - FADE_START_SECONDS) / (LOOP_START_SECONDS - FADE_START_SECONDS);
           v.volume = Math.max(0, 1 - t);
@@ -46,6 +48,16 @@ export default function Hero() {
     v.addEventListener('timeupdate', onTimeUpdate);
     return () => v.removeEventListener('timeupdate', onTimeUpdate);
   }, []);
+
+  const handleEnableSound = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = false;
+    v.volume = 1;
+    v.currentTime = 0;
+    v.play().catch(() => {});
+    setShowSoundPrompt(false);
+  };
 
   return (
     <div className="relative bg-navy-950 pt-16 overflow-hidden min-h-[80vh] flex items-center">
@@ -63,6 +75,18 @@ export default function Hero() {
       </video>
 
       <div className="absolute inset-0 bg-navy-950/60" aria-hidden="true" />
+
+      {showSoundPrompt && (
+        <button
+          type="button"
+          onClick={handleEnableSound}
+          className="absolute bottom-6 right-6 z-20 inline-flex items-center gap-2 bg-white/95 hover:bg-white text-navy-900 px-4 py-2 rounded-full shadow-lg text-sm font-medium transition-colors"
+          aria-label="Enable sound and replay intro"
+        >
+          <Volume2 className="h-4 w-4" />
+          Tap for sound
+        </button>
+      )}
 
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
         <div className="space-y-8 animate-[fadeIn_1s_ease-out]">
