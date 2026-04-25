@@ -200,14 +200,19 @@ export default function Home() {
       </section></FadeInSection>
 
       {/* About Section */}
-      <FadeInSection><section className="py-16 bg-white">
+      <FadeInSection><EditableBackground
+        locationId="home-about-background"
+        className="py-20"
+        fallbackClassName="bg-white"
+        overlayClassName="bg-navy-950/70"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy-900 mb-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center drop-shadow-lg">
               About GoFlyTexas
             </h2>
-            <div className="bg-navy-50 rounded-lg p-8 border border-navy-100">
-              <p className="text-lg text-navy-800 text-center leading-relaxed">
+            <div className="bg-navy-900/70 backdrop-blur-sm rounded-lg p-8 border border-white/10 shadow-xl">
+              <p className="text-lg text-white text-center leading-relaxed">
                 At GoFlyTexas, we take immense pride in our one-on-one pilot training,
                 where every student receives personalized instruction tailored to their
                 unique learning style and pace. We believe that aviation is more than just
@@ -219,7 +224,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section></FadeInSection>
+      </EditableBackground></FadeInSection>
 
       {/* Why Choose GoFlyTexas */}
       <FadeInSection><section className="py-16 bg-navy-900">

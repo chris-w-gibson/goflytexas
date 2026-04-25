@@ -28,7 +28,7 @@ export const defaultImageConfig: ImageConfig = {
   'aircraft-n738uy-1': '/n738uy-ramp.jpg',
   'aircraft-n738uy-2': '/IMG_4955.jpeg',
   'aircraft-n738uy-3': '/IMG_4956.jpeg',
-  'aircraft-n738uy-4': '/fleet-in-hangar.jpg',
+  'aircraft-n738uy-4': null,
 
   // Aircraft page - N737ET carousel (red stripe)
   'aircraft-n737et-main': '/IMG_4964.jpeg',
@@ -49,7 +49,7 @@ export const defaultImageConfig: ImageConfig = {
   // Homepage sections
   'home-cta-background': '/IMG_4239.JPG',
   'home-services-background': null,
-  'home-about-background': null,
+  'home-about-background': '/fleet-in-hangar.jpg',
 
   // Our Team
   'team-hero-background': '/solo-celebration.jpg',
