@@ -6,6 +6,7 @@ import { ArrowRight, Star, MapPin } from 'lucide-react';
 
 const LOOP_START_SECONDS = 5.6;
 const LOOP_END_SECONDS = 6.65;
+const FADE_START_SECONDS = 4.1;
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -14,8 +15,30 @@ export default function Hero() {
     const v = videoRef.current;
     if (!v) return;
 
+    let introComplete = false;
+
+    v.currentTime = 0;
+    v.volume = 1;
+    v.muted = false;
+    const tryUnmuted = v.play();
+    if (tryUnmuted && typeof tryUnmuted.catch === 'function') {
+      tryUnmuted.catch(() => {
+        v.muted = true;
+        v.play().catch(() => {});
+      });
+    }
+
     const onTimeUpdate = () => {
-      if (v.currentTime >= LOOP_END_SECONDS) {
+      if (!introComplete) {
+        if (v.currentTime >= LOOP_START_SECONDS) {
+          v.volume = 0;
+          v.muted = true;
+          introComplete = true;
+        } else if (v.currentTime >= FADE_START_SECONDS) {
+          const t = (v.currentTime - FADE_START_SECONDS) / (LOOP_START_SECONDS - FADE_START_SECONDS);
+          v.volume = Math.max(0, 1 - t);
+        }
+      } else if (v.currentTime >= LOOP_END_SECONDS) {
         v.currentTime = LOOP_START_SECONDS;
       }
     };
