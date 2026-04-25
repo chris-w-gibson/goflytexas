@@ -202,7 +202,7 @@ export default function Home() {
       {/* About Section */}
       <FadeInSection><EditableBackground
         locationId="home-about-background"
-        className="py-20"
+        className="py-40 md:py-56"
         fallbackClassName="bg-white"
         overlayClassName="bg-navy-950/70"
       >
