@@ -56,13 +56,14 @@ export async function sendAutoReply(lead: Lead): Promise<void> {
       <p style="font-size:11px;color:#9ca3af;">Don't want emails from us? <a href="${unsubLink(lead.unsubscribeToken)}" style="color:#9ca3af;">Unsubscribe</a>.</p>
     </div>
   `;
-  await getResend().emails.send({
+  const { error } = await getResend().emails.send({
     from: fromAddress(),
     to: lead.email,
     subject: `Thanks for reaching out to GoFlyTexas`,
     html,
     replyTo: adminAddress(),
   });
+  throwIfError(error);
 }
 
 export async function sendAdminNotification(lead: Lead): Promise<void> {
@@ -80,13 +81,14 @@ export async function sendAdminNotification(lead: Lead): Promise<void> {
       <p style="margin-top:16px;">Manage this lead in the admin console.</p>
     </div>
   `;
-  await getResend().emails.send({
+  const { error } = await getResend().emails.send({
     from: fromAddress(),
     to: adminAddress(),
     subject: `[Lead] ${lead.name} — ${interest}`,
     html,
     replyTo: lead.email,
   });
+  throwIfError(error);
 }
 
 export async function sendWeeklyFollowup(lead: Lead): Promise<void> {
@@ -106,13 +108,21 @@ export async function sendWeeklyFollowup(lead: Lead): Promise<void> {
       <p style="font-size:11px;color:#9ca3af;">Don't want these check-ins? <a href="${unsubLink(lead.unsubscribeToken)}" style="color:#9ca3af;">Unsubscribe anytime</a>.</p>
     </div>
   `;
-  await getResend().emails.send({
+  const { error } = await getResend().emails.send({
     from: fromAddress(),
     to: lead.email,
     subject: `Still thinking about that discovery flight?`,
     html,
     replyTo: adminAddress(),
   });
+  throwIfError(error);
+}
+
+function throwIfError(error: { name?: string; message?: string } | null): void {
+  if (error) {
+    const msg = error.message ?? error.name ?? 'Resend send failed';
+    throw new Error(`Resend: ${msg}`);
+  }
 }
 
 function escape(s: string): string {
