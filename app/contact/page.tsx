@@ -25,6 +25,7 @@ type FormData = {
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
@@ -34,35 +35,24 @@ export default function ContactPage() {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    const interestLabel: Record<string, string> = {
-      private: 'Private Pilot License',
-      instrument: 'Instrument Rating',
-      commercial: 'Commercial License',
-      rental: 'Aircraft Rental',
-      tour: 'Aerial Tour',
-      ferry: 'Ferry Flight',
-      insurance: 'Insurance Checkout',
-      other: 'Other',
-    };
-    const interest = data.flightInterest ? (interestLabel[data.flightInterest] ?? data.flightInterest) : 'Not specified';
-    const preferred = data.preferredContact === 'phone' ? 'Phone' : 'Email';
-
-    const subject = `GoFlyTexas Inquiry: ${interest} — ${data.name}`;
-    const body = [
-      `Name: ${data.name}`,
-      `Email: ${data.email}`,
-      `Phone: ${data.phone}`,
-      `Interested in: ${interest}`,
-      `Preferred contact method: ${preferred}`,
-      '',
-      'Message:',
-      data.message,
-    ].join('\n');
-
-    const mailto = `mailto:info@goflytexas.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-    setIsSubmitted(true);
-    reset();
+    setSubmitError(null);
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error ?? `Submission failed (${res.status})`);
+      }
+      setIsSubmitted(true);
+      reset();
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error ? err.message : 'Something went wrong. Please call us at (940) 905-3090.',
+      );
+    }
   };
 
   return (
@@ -270,7 +260,7 @@ export default function ContactPage() {
                   className="inline-flex items-center px-6 py-3 bg-navy-900 text-white font-semibold rounded-full hover:bg-navy-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send className="mr-2 h-5 w-5" />
-                  Send via Email
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
 
                 {isSubmitted && (
@@ -281,10 +271,20 @@ export default function ContactPage() {
                   >
                     <CheckCircle className="h-5 w-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
                     <p className="text-green-800">
-                      Your default email app should have opened with your message ready to send to{' '}
-                      <a href="mailto:info@goflytexas.com" className="underline font-medium">info@goflytexas.com</a>.
-                      Click <strong>Send</strong> in your email client to finish. If nothing opened, you can email us directly at the address above.
+                      Thanks &mdash; we got your message and sent a confirmation to your inbox.
+                      A real human at GoFlyTexas will be in touch within 24 hours. Need to talk sooner?
+                      Call <a href="tel:+19409053090" className="underline font-medium">(940) 905-3090</a>.
                     </p>
+                  </div>
+                )}
+
+                {submitError && (
+                  <div
+                    role="alert"
+                    aria-live="assertive"
+                    className="bg-red-50 border border-red-200 rounded-lg p-4 mt-4 text-red-800"
+                  >
+                    {submitError}
                   </div>
                 )}
               </form>
