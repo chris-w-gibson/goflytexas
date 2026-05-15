@@ -52,7 +52,7 @@ export async function sendAutoReply(lead: Lead): Promise<void> {
       <p>If you'd rather not wait, give us a call:</p>
       <p style="font-size:18px;"><strong><a href="tel:+19409053090" style="color:#0c2340;">(940) 905-3090</a></strong> &mdash; open daily 8a&ndash;5p, flights by appointment 24/7.</p>
       <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
-      <p style="font-size:13px;color:#6b7280;">Aero Valley Airport (52F) · 104 Boeing Way · Roanoke, TX 76272</p>
+      <p style="font-size:13px;color:#6b7280;">Aero Valley Airport (52F) · 104 Boeing Way · Roanoke, TX 76262</p>
       <p style="font-size:11px;color:#9ca3af;">Don't want emails from us? <a href="${unsubLink(lead.unsubscribeToken)}" style="color:#9ca3af;">Unsubscribe</a>.</p>
     </div>
   `;
@@ -104,7 +104,7 @@ export async function sendWeeklyFollowup(lead: Lead): Promise<void> {
       </ul>
       <p>No pressure either way. Blue skies,<br/>The GoFlyTexas team</p>
       <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
-      <p style="font-size:13px;color:#6b7280;">Aero Valley Airport (52F) · 104 Boeing Way · Roanoke, TX 76272</p>
+      <p style="font-size:13px;color:#6b7280;">Aero Valley Airport (52F) · 104 Boeing Way · Roanoke, TX 76262</p>
       <p style="font-size:11px;color:#9ca3af;">Don't want these check-ins? <a href="${unsubLink(lead.unsubscribeToken)}" style="color:#9ca3af;">Unsubscribe anytime</a>.</p>
     </div>
   `;

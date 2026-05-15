@@ -53,7 +53,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li>Aero Valley Airport (52F)</li>
               <li>104 Boeing Way</li>
-              <li>Roanoke, TX 76272</li>
+              <li>Roanoke, TX 76262</li>
               <li><a href="tel:+19409053090" className="hover:text-white transition-colors">(940) 905-3090</a></li>
               <li><a href="mailto:info@goflytexas.com" className="hover:text-white transition-colors">info@goflytexas.com</a></li>
             </ul>

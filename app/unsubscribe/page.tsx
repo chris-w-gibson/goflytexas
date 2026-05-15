@@ -60,7 +60,7 @@ function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <hr className="my-6 border-slate-200" />
         <p className="text-xs text-slate-500">
-          GoFlyTexas · Aero Valley Airport (52F) · 104 Boeing Way · Roanoke, TX 76272
+          GoFlyTexas · Aero Valley Airport (52F) · 104 Boeing Way · Roanoke, TX 76262
         </p>
       </div>
     </main>
