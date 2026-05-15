@@ -1,0 +1,27 @@
+name: Weekly Lead Follow-up
+
+on:
+  schedule:
+    # 14:00 UTC every Monday = 9:00 AM CT during CDT, 8:00 AM CT during CST
+    - cron: '0 14 * * 1'
+  workflow_dispatch: {}
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST /api/cron/weekly-followup
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          APP_URL: ${{ vars.APP_URL || 'https://goflytexas-production.up.railway.app' }}
+        run: |
+          set -e
+          response=$(curl -fsS -X POST \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            -w '\n%{http_code}' \
+            "$APP_URL/api/cron/weekly-followup")
+          body=$(printf '%s' "$response" | sed '$d')
+          code=$(printf '%s' "$response" | tail -n1)
+          echo "HTTP $code"
+          echo "$body"
+          if [ "$code" != "200" ]; then exit 1; fi
