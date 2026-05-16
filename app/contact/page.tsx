@@ -205,6 +205,7 @@ export default function ContactPage() {
                       <option value="tour">Aerial Tour</option>
                       <option value="ferry">Ferry Flight</option>
                       <option value="insurance">Insurance Checkout</option>
+                      <option value="biennial">Biannual Review (BFR)</option>
                       <option value="other">Other</option>
                     </select>
                   </div>

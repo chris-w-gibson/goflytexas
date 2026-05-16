@@ -24,6 +24,7 @@ const INTEREST_LABEL: Record<string, string> = {
   tour: 'Aerial Tour',
   ferry: 'Ferry Flight',
   insurance: 'Insurance Checkout',
+  biennial: 'Biannual Review (BFR)',
   other: 'Other',
 };
 
