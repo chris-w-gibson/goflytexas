@@ -119,6 +119,64 @@ export async function sendWeeklyFollowup(lead: Lead): Promise<void> {
   throwIfError(error);
 }
 
+export async function sendUserInvite(
+  toEmail: string,
+  toName: string,
+  tempPassword: string,
+): Promise<void> {
+  const html = `
+    <div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;max-width:600px;margin:auto;color:#1f2937;">
+      <h2 style="color:#0c2340;">You've been invited to GoFlyTexas Admin</h2>
+      <p>Hi ${escape(toName)} — an account was created for you on the GoFlyTexas admin console.</p>
+      <p>Your temporary password is below. You'll be asked to set a new one on first login.</p>
+      <div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin:16px 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:16px;letter-spacing:0.5px;">
+        ${escape(tempPassword)}
+      </div>
+      <p>
+        <a href="${SITE_URL}/login" style="display:inline-block;background:#0c2340;color:white;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;">Sign in &rarr;</a>
+      </p>
+      <p style="font-size:13px;color:#6b7280;">Email: ${escape(toEmail)}</p>
+      <p style="font-size:13px;color:#6b7280;">If you weren't expecting this, you can ignore the email.</p>
+    </div>
+  `;
+  const { error } = await getResend().emails.send({
+    from: fromAddress(),
+    to: toEmail,
+    subject: `You're invited to GoFlyTexas Admin`,
+    html,
+    replyTo: adminAddress(),
+  });
+  throwIfError(error);
+}
+
+export async function sendPasswordResetEmail(
+  toEmail: string,
+  toName: string,
+  resetToken: string,
+): Promise<void> {
+  const link = `${SITE_URL}/login/reset?token=${resetToken}`;
+  const html = `
+    <div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;max-width:600px;margin:auto;color:#1f2937;">
+      <h2 style="color:#0c2340;">Reset your GoFlyTexas Admin password</h2>
+      <p>Hi ${escape(toName)} — we got a request to reset the password for ${escape(toEmail)}.</p>
+      <p>Click the button below to choose a new password. The link expires in <strong>1 hour</strong>.</p>
+      <p>
+        <a href="${link}" style="display:inline-block;background:#0c2340;color:white;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;">Reset password &rarr;</a>
+      </p>
+      <p style="font-size:12px;color:#6b7280;word-break:break-all;">Or paste this link: ${link}</p>
+      <p style="font-size:13px;color:#6b7280;">If you didn't request this, you can safely ignore this email.</p>
+    </div>
+  `;
+  const { error } = await getResend().emails.send({
+    from: fromAddress(),
+    to: toEmail,
+    subject: `Reset your GoFlyTexas Admin password`,
+    html,
+    replyTo: adminAddress(),
+  });
+  throwIfError(error);
+}
+
 function throwIfError(error: { name?: string; message?: string } | null): void {
   if (error) {
     const msg = error.message ?? error.name ?? 'Resend send failed';
