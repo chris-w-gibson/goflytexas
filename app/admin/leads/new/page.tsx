@@ -14,7 +14,7 @@ export default function NewLeadPage() {
       <form action={createManualLeadAction} className="space-y-4 bg-white rounded-lg border border-slate-200 p-6">
         <Field label="Full name *" name="name" required />
         <Field label="Email *" name="email" type="email" required />
-        <Field label="Phone" name="phone" type="tel" />
+        <Field label="Phone" name="phone" type="tel" pattern="\d{3}-\d{3}-\d{4}" placeholder="940-905-3090" hint="Format: XXX-XXX-XXXX" />
 
         <div>
           <label htmlFor="flightInterest" className="block text-sm font-medium mb-1">Interested in</label>
@@ -73,11 +73,17 @@ function Field({
   name,
   type = 'text',
   required,
+  pattern,
+  placeholder,
+  hint,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
+  pattern?: string;
+  placeholder?: string;
+  hint?: string;
 }) {
   return (
     <div>
@@ -87,8 +93,12 @@ function Field({
         name={name}
         type={type}
         required={required}
+        pattern={pattern}
+        placeholder={placeholder}
+        title={hint}
         className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"
       />
+      {hint && <p className="mt-1 text-xs text-slate-500">{hint}</p>}
     </div>
   );
 }

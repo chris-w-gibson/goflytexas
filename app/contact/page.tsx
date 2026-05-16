@@ -178,7 +178,26 @@ export default function ContactPage() {
                     <input
                       type="tel"
                       id="phone"
-                      {...register('phone', { required: 'Phone number is required' })}
+                      inputMode="numeric"
+                      placeholder="940-905-3090"
+                      maxLength={12}
+                      {...register('phone', {
+                        required: 'Phone number is required',
+                        pattern: {
+                          value: /^\d{3}-\d{3}-\d{4}$/,
+                          message: 'Format must be XXX-XXX-XXXX (e.g. 940-905-3090)',
+                        },
+                        onChange: (e) => {
+                          const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                          let formatted = digits;
+                          if (digits.length > 6) {
+                            formatted = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+                          } else if (digits.length > 3) {
+                            formatted = `${digits.slice(0, 3)}-${digits.slice(3)}`;
+                          }
+                          e.target.value = formatted;
+                        },
+                      })}
                       className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900 ${
                         errors.phone ? 'border-red-500' : 'border-navy-200'
                       }`}
@@ -186,6 +205,7 @@ export default function ContactPage() {
                     {errors.phone && (
                       <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
                     )}
+                    <p className="mt-1 text-xs text-navy-500">Format: XXX-XXX-XXXX</p>
                   </div>
 
                   <div>
