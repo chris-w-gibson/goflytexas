@@ -1,3 +1,4 @@
+import { randomBytes } from 'node:crypto';
 import { eq } from 'drizzle-orm';
 import { db } from '../lib/db';
 import { users } from '../lib/db/schema';
@@ -19,8 +20,7 @@ function generateTempPassword(): string {
   // 12 chars, mixed case + digits, easy to read (no 0/O/1/l/I)
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
   let pw = '';
-  const bytes = new Uint8Array(12);
-  crypto.getRandomValues(bytes);
+  const bytes = randomBytes(12);
   for (let i = 0; i < bytes.length; i++) {
     pw += alphabet[bytes[i] % alphabet.length];
   }
