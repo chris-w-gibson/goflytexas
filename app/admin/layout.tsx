@@ -16,28 +16,33 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         </div>
       )}
       <header className="bg-navy-950 text-white">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-6">
-            <Link href="/admin" className="font-bold text-lg">GoFlyTexas Admin</Link>
-            <nav className="flex gap-4 text-sm text-navy-200">
-              <Link href="/admin" className="hover:text-white">Dashboard</Link>
-              <Link href="/admin/leads" className="hover:text-white">Leads</Link>
-              <Link href="/admin/leads/new" className="hover:text-white">+ Add lead</Link>
-            </nav>
+        <div className="max-w-6xl mx-auto px-4 py-3 sm:py-4">
+          {/* Row 1: brand + user/site links */}
+          <div className="flex items-center justify-between gap-3">
+            <Link href="/admin" className="font-bold text-base sm:text-lg whitespace-nowrap">
+              GoFlyTexas Admin
+            </Link>
+            <div className="flex items-center gap-3 text-xs sm:text-sm text-navy-200 min-w-0">
+              {session ? (
+                <>
+                  <span className="hidden sm:inline truncate">
+                    Signed in as <strong className="text-white">{session.name || session.email}</strong>
+                  </span>
+                  <span className="sm:hidden truncate text-white">{(session.name || session.email).split(' ')[0]}</span>
+                  <LogoutButton />
+                </>
+              ) : (
+                <span className="text-amber-300 text-xs">Break-glass</span>
+              )}
+              <Link href="/" className="hover:text-white whitespace-nowrap">← Site</Link>
+            </div>
           </div>
-          <div className="flex items-center gap-4 text-sm text-navy-200">
-            {session ? (
-              <>
-                <span>
-                  Signed in as <strong className="text-white">{session.name || session.email}</strong>
-                </span>
-                <LogoutButton />
-              </>
-            ) : (
-              <span className="text-amber-300">Break-glass session (no user)</span>
-            )}
-            <Link href="/" className="hover:text-white">← Site</Link>
-          </div>
+          {/* Row 2: nav links — own row so they never wrap awkwardly */}
+          <nav className="flex gap-4 sm:gap-5 text-sm text-navy-200 mt-2 sm:mt-3 overflow-x-auto -mx-1 px-1">
+            <Link href="/admin" className="hover:text-white whitespace-nowrap">Dashboard</Link>
+            <Link href="/admin/leads" className="hover:text-white whitespace-nowrap">Leads</Link>
+            <Link href="/admin/leads/new" className="hover:text-white whitespace-nowrap">+ Add lead</Link>
+          </nav>
         </div>
       </header>
       <main className="max-w-6xl mx-auto px-4 py-6">{children}</main>

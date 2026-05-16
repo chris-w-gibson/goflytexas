@@ -99,7 +99,7 @@ export default function Hero() {
             <span className="text-sm font-medium text-navy-100">Rated 5/5 by Students</span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg">
             Let&apos;s Go Fly!
             <span className="text-navy-100 block mt-2">Your DFW Flight Training</span>
           </h1>

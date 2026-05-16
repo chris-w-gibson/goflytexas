@@ -41,15 +41,15 @@ export default async function AdminDashboard() {
             No leads yet. They'll show up here as soon as someone submits the contact form.
           </div>
         ) : (
-          <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
-            <table className="w-full text-sm">
+          <div className="bg-white rounded-lg border border-slate-200 overflow-x-auto">
+            <table className="w-full text-sm min-w-[640px]">
               <thead className="bg-slate-100 text-left text-xs uppercase tracking-wide text-slate-600">
                 <tr>
                   <th className="px-4 py-2">Name</th>
                   <th className="px-4 py-2">Email</th>
                   <th className="px-4 py-2">Interest</th>
                   <th className="px-4 py-2">Status</th>
-                  <th className="px-4 py-2">When</th>
+                  <th className="px-4 py-2 whitespace-nowrap">When</th>
                 </tr>
               </thead>
               <tbody>

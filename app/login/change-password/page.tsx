@@ -36,8 +36,8 @@ export default function ChangePasswordPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-      <div className="bg-white rounded-lg shadow-sm border border-slate-200 w-full max-w-md p-8">
+    <main className="min-h-screen bg-slate-50 flex items-start sm:items-center justify-center px-4 pt-12 pb-6 sm:p-6">
+      <div className="bg-white rounded-lg shadow-sm border border-slate-200 w-full max-w-md p-6 sm:p-8">
         <h1 className="text-2xl font-bold mb-1">Set a new password</h1>
         <p className="text-sm text-slate-600 mb-6">
           You logged in with a temporary password. Choose a new one before continuing.
