@@ -12,7 +12,7 @@ interface LocationMapProps {
 export default function LocationMap({
   imageSrc = null,
   alt = 'Map showing GoFlyTexas at Aero Valley Airport',
-  directionsUrl = 'https://www.google.com/maps/dir/?api=1&destination=104+Boeing+Way+Roanoke+TX+76272',
+  directionsUrl = 'https://www.google.com/maps/dir/?api=1&destination=104+Boeing+Way+Roanoke+TX+76262',
 }: LocationMapProps) {
   return (
     <a
@@ -35,7 +35,7 @@ export default function LocationMap({
           <div className="text-center px-4">
             <MapPin className="h-12 w-12 text-navy-700 mx-auto mb-3" />
             <p className="text-navy-900 font-semibold text-lg">GoFlyTexas</p>
-            <p className="text-navy-700 text-sm">104 Boeing Way, Roanoke, TX 76272</p>
+            <p className="text-navy-700 text-sm">104 Boeing Way, Roanoke, TX 76262</p>
             <p className="text-navy-600 text-xs mt-2">Aero Valley Airport (52F)</p>
           </div>
         </div>

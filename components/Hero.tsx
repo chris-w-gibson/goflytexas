@@ -128,7 +128,7 @@ export default function Hero() {
 
           <div className="flex items-center justify-center space-x-2 text-sm text-navy-100">
             <MapPin className="h-5 w-5 text-white" />
-            <span>104 Boeing Way, Roanoke, TX 76272</span>
+            <span>104 Boeing Way, Roanoke, TX 76262</span>
           </div>
         </div>
       </div>

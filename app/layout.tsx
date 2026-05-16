@@ -77,7 +77,7 @@ export default function RootLayout({
                 "streetAddress": "104 Boeing Way",
                 "addressLocality": "Roanoke",
                 "addressRegion": "TX",
-                "postalCode": "76272",
+                "postalCode": "76262",
                 "addressCountry": "US"
               },
               "geo": {
