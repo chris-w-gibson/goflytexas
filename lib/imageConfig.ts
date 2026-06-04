@@ -27,7 +27,7 @@ export const defaultImageConfig: ImageConfig = {
   'aircraft-n738uy-main': '/IMG_4954.jpeg',
   'aircraft-n738uy-1': '/n738uy-ramp.jpg',
   'aircraft-n738uy-2': '/IMG_4955.jpeg',
-  'aircraft-n738uy-3': '/IMG_4956.jpeg',
+  'aircraft-n738uy-3': '/n738uy-panel.jpg',
   'aircraft-n738uy-4': null,
 
   // Aircraft page - N737ET carousel (red stripe)
@@ -94,7 +94,7 @@ export const availableImages = [
   // N738UY (blue stripe)
   { path: '/IMG_4954.jpeg', name: 'N738UY Exterior - In Hangar' },
   { path: '/IMG_4955.jpeg', name: 'N738UY Interior (Tan Seats)' },
-  { path: '/IMG_4956.jpeg', name: 'N738UY Cockpit Panel (Skyhawk II)' },
+  { path: '/n738uy-panel.jpg', name: 'N738UY Cockpit Panel (Skyhawk II)' },
 
   // N737ET (red stripe)
   { path: '/IMG_4964.jpeg', name: 'N737ET Exterior - Hangar w/ Texas Flag' },
