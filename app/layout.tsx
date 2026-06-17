@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ImageEditProvider } from "@/components/ImageEditContext";
 
@@ -124,6 +125,19 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} antialiased`}>
+        {/* Google Ads global site tag (gtag.js) — Conversion ID AW-986774654 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-986774654"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads-gtag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-986774654');
+          `}
+        </Script>
         <ImageEditProvider>
           {children}
         </ImageEditProvider>
