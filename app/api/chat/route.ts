@@ -138,21 +138,33 @@ export async function POST(req: NextRequest) {
   const encoder = new TextEncoder();
   const readable = new ReadableStream<Uint8Array>({
     start(controller) {
-      stream.on('text', (delta: string) => {
-        controller.enqueue(encoder.encode(delta));
-      });
+      let closed = false;
+      const safeEnqueue = (text: string) => {
+        if (closed) return;
+        try {
+          controller.enqueue(encoder.encode(text));
+        } catch {
+          closed = true;
+        }
+      };
+      const safeClose = () => {
+        if (closed) return;
+        closed = true;
+        try {
+          controller.close();
+        } catch {
+          // already closed by the runtime
+        }
+      };
+      stream.on('text', (delta: string) => safeEnqueue(delta));
       stream.on('error', (err: unknown) => {
         console.error('chat: stream error', err);
-        controller.enqueue(
-          encoder.encode(
-            '\n\nSorry — something went wrong on my end. Please try again or use the contact form.',
-          ),
+        safeEnqueue(
+          '\n\nSorry — something went wrong on my end. Please try again or use the contact form.',
         );
-        controller.close();
+        safeClose();
       });
-      stream.on('end', () => {
-        controller.close();
-      });
+      stream.on('end', () => safeClose());
     },
     cancel() {
       stream.abort();
