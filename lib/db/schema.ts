@@ -84,3 +84,19 @@ export const passwordResetTokens = pgTable('password_reset_tokens', {
 
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
+
+export const botDocuments = pgTable('bot_documents', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  title: text('title').notNull(),
+  filename: text('filename').notNull(),
+  mimeType: text('mime_type').notNull(),
+  content: text('content').notNull(),
+  isActive: boolean('is_active').notNull().default(true),
+  uploadedBy: uuid('uploaded_by').references(() => users.id, {
+    onDelete: 'set null',
+  }),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export type BotDocument = typeof botDocuments.$inferSelect;
+export type NewBotDocument = typeof botDocuments.$inferInsert;

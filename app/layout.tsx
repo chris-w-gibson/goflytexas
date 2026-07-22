@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ImageEditProvider } from "@/components/ImageEditContext";
+import { ChatWidget } from "@/components/ChatWidget";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -141,6 +142,7 @@ export default function RootLayout({
         <ImageEditProvider>
           {children}
         </ImageEditProvider>
+        <ChatWidget />
       </body>
     </html>
   );

@@ -15,6 +15,13 @@
       "when": 1778936975399,
       "tag": "0001_equal_shockwave",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1784701121260,
+      "tag": "0002_flowery_sheva_callister",
+      "breakpoints": true
     }
   ]
 }
