@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { reportLead } from '@/lib/gtag';
 
 type ChatMessage = { role: 'user' | 'assistant'; content: string };
 
@@ -114,6 +115,7 @@ export function ChatWidget() {
       });
       if (!res.ok) throw new Error(String(res.status));
       setLeadState('sent');
+      reportLead();
       form.reset();
     } catch {
       setLeadState('error');

@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { ImageEditProvider } from "@/components/ImageEditContext";
 import { ChatWidget } from "@/components/ChatWidget";
+import { ConversionListeners } from "@/components/ConversionListeners";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -143,6 +144,7 @@ export default function RootLayout({
           {children}
         </ImageEditProvider>
         <ChatWidget />
+        <ConversionListeners />
       </body>
     </html>
   );

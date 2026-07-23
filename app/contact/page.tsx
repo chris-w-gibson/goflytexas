@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { reportLead } from '@/lib/gtag';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import LocationMap from '@/components/LocationMap';
@@ -47,6 +48,7 @@ export default function ContactPage() {
         throw new Error(err?.error ?? `Submission failed (${res.status})`);
       }
       setIsSubmitted(true);
+      reportLead();
       reset();
     } catch (err) {
       setSubmitError(
