@@ -14,6 +14,16 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# NEXT_PUBLIC_* vars must be present at build time (Next.js inlines them into the
+# client bundle). Railway passes service variables as Docker build-args; declare
+# them here so `next build` sees them. Runtime-only server vars don't need this.
+ARG NEXT_PUBLIC_GADS_CONV_LEAD
+ARG NEXT_PUBLIC_GADS_CONV_CALL
+ARG NEXT_PUBLIC_SITE_URL
+ENV NEXT_PUBLIC_GADS_CONV_LEAD=$NEXT_PUBLIC_GADS_CONV_LEAD \
+    NEXT_PUBLIC_GADS_CONV_CALL=$NEXT_PUBLIC_GADS_CONV_CALL \
+    NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+
 RUN npm run build
 
 # Production image, copy all the files and run next
