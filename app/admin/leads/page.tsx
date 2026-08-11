@@ -29,12 +29,20 @@ export default async function LeadsPage({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Leads</h1>
-        <Link
-          href="/admin/leads/new"
-          className="bg-navy-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-navy-800"
-        >
-          + Add lead manually
-        </Link>
+        <div className="flex gap-2">
+          <a
+            href="/admin/leads/export"
+            className="border border-navy-900 text-navy-900 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50"
+          >
+            Download CSV
+          </a>
+          <Link
+            href="/admin/leads/new"
+            className="bg-navy-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-navy-800"
+          >
+            + Add lead manually
+          </Link>
+        </div>
       </div>
 
       <div className="flex gap-2 text-sm">

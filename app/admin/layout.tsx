@@ -43,6 +43,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
             <Link href="/admin/leads" className="hover:text-white whitespace-nowrap">Leads</Link>
             <Link href="/admin/leads/new" className="hover:text-white whitespace-nowrap">+ Add lead</Link>
             <Link href="/admin/bot-knowledge" className="hover:text-white whitespace-nowrap">Bot Knowledge</Link>
+            <Link href="/admin/chats" className="hover:text-white whitespace-nowrap">Chats</Link>
             <Link href="/admin/users" className="hover:text-white whitespace-nowrap">Users</Link>
           </nav>
         </div>

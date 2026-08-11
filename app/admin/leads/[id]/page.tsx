@@ -5,6 +5,7 @@ import {
   updateStatusAction,
 } from '@/app/admin/actions';
 import { getLeadById } from '@/lib/leads';
+import { NotesSection } from './NotesSection';
 
 export const dynamic = 'force-dynamic';
 
@@ -70,6 +71,8 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
           </button>
         </form>
       </div>
+
+      <NotesSection leadId={lead.id} />
     </div>
   );
 }

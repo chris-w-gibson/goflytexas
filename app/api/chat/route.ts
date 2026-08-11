@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
 import { getActiveKnowledge } from '@/lib/botKnowledge';
+import { logChatTurn } from '@/lib/chatLog';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -41,6 +42,7 @@ function rateLimited(ip: string): boolean {
 }
 
 const chatSchema = z.object({
+  sessionId: z.string().uuid().optional(),
   messages: z
     .array(
       z.object({
@@ -135,6 +137,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const lastUser = [...history].reverse().find((m) => m.role === 'user');
+  let assistantText = '';
+
   const encoder = new TextEncoder();
   const readable = new ReadableStream<Uint8Array>({
     start(controller) {
@@ -156,7 +161,10 @@ export async function POST(req: NextRequest) {
           // already closed by the runtime
         }
       };
-      stream.on('text', (delta: string) => safeEnqueue(delta));
+      stream.on('text', (delta: string) => {
+        assistantText += delta;
+        safeEnqueue(delta);
+      });
       stream.on('error', (err: unknown) => {
         console.error('chat: stream error', err);
         safeEnqueue(
@@ -164,7 +172,13 @@ export async function POST(req: NextRequest) {
         );
         safeClose();
       });
-      stream.on('end', () => safeClose());
+      stream.on('end', () => {
+        safeClose();
+        // Fire-and-forget transcript logging — never blocks the reply.
+        if (lastUser && assistantText) {
+          void logChatTurn(parsed.data.sessionId, lastUser.content, assistantText);
+        }
+      });
     },
     cancel() {
       stream.abort();

@@ -100,3 +100,39 @@ export const botDocuments = pgTable('bot_documents', {
 
 export type BotDocument = typeof botDocuments.$inferSelect;
 export type NewBotDocument = typeof botDocuments.$inferInsert;
+
+// Chat transcripts (Jim 8/11): every widget conversation is kept so owners
+// can see what visitors ask — unanswered questions are the roadmap for
+// which documents to upload next.
+export const chatSessions = pgTable('chat_sessions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  startedAt: timestamp('started_at', { withTimezone: true }).defaultNow().notNull(),
+  lastMessageAt: timestamp('last_message_at', { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});
+
+export const chatMessages = pgTable('chat_messages', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  sessionId: uuid('session_id')
+    .notNull()
+    .references(() => chatSessions.id, { onDelete: 'cascade' }),
+  role: text('role').notNull(), // 'user' | 'assistant'
+  content: text('content').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+// Free-text activity trail per lead ("called 8/12, left VM").
+export const leadNotes = pgTable('lead_notes', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  leadId: uuid('lead_id')
+    .notNull()
+    .references(() => leads.id, { onDelete: 'cascade' }),
+  authorName: text('author_name').notNull(),
+  body: text('body').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export type ChatSession = typeof chatSessions.$inferSelect;
+export type ChatMessage = typeof chatMessages.$inferSelect;
+export type LeadNote = typeof leadNotes.$inferSelect;

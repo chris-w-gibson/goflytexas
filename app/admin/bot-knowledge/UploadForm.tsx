@@ -34,7 +34,7 @@ export function UploadForm() {
     >
       <h2 className="font-semibold text-navy-900">Add a document</h2>
       <p className="text-sm text-slate-600">
-        Upload a PDF, .txt, or .md file. The bot answers visitor questions using only
+        Upload a PDF, Word (.docx), .txt, or .md file. The bot answers visitor questions using only
         these documents — public-safe info only.
       </p>
       <div className="grid md:grid-cols-2 gap-3">
@@ -50,7 +50,7 @@ export function UploadForm() {
           type="file"
           name="file"
           required
-          accept=".pdf,.txt,.md,application/pdf,text/plain,text/markdown"
+          accept=".pdf,.docx,.txt,.md,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/markdown"
           className="text-sm file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-sky-100 file:text-navy-900"
         />
       </div>

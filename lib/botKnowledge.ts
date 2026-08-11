@@ -10,8 +10,14 @@ export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 const TEXT_MIME_TYPES = new Set(['text/plain', 'text/markdown']);
 const TEXT_EXTENSIONS = ['.txt', '.md', '.markdown'];
 
+const DOCX_MIME =
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+
 export function isSupportedUpload(filename: string, mimeType: string): boolean {
   if (mimeType === 'application/pdf' || filename.toLowerCase().endsWith('.pdf')) {
+    return true;
+  }
+  if (mimeType === DOCX_MIME || filename.toLowerCase().endsWith('.docx')) {
     return true;
   }
   if (TEXT_MIME_TYPES.has(mimeType)) return true;
@@ -29,7 +35,7 @@ export async function extractText(
   mimeType: string,
 ): Promise<string> {
   if (!isSupportedUpload(filename, mimeType)) {
-    throw new Error('Unsupported file type. Upload a PDF, .txt, or .md file.');
+    throw new Error('Unsupported file type. Upload a PDF, Word (.docx), .txt, or .md file.');
   }
   if (buffer.byteLength > MAX_UPLOAD_BYTES) {
     throw new Error('File is too large (max 10 MB).');
@@ -45,6 +51,13 @@ export async function extractText(
     } finally {
       await parser.destroy();
     }
+  } else if (
+    mimeType === DOCX_MIME ||
+    filename.toLowerCase().endsWith('.docx')
+  ) {
+    const mammoth = await import('mammoth');
+    const result = await mammoth.extractRawText({ buffer });
+    text = result.value;
   } else {
     text = buffer.toString('utf-8');
   }

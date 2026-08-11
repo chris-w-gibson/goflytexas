@@ -3,6 +3,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { reportLead } from '@/lib/gtag';
 
+function getChatSessionId(): string | undefined {
+  if (typeof window === 'undefined') return undefined;
+  try {
+    let sid = window.sessionStorage.getItem('gft_chat_sid');
+    if (!sid) {
+      sid = window.crypto.randomUUID();
+      window.sessionStorage.setItem('gft_chat_sid', sid);
+    }
+    return sid;
+  } catch {
+    return undefined;
+  }
+}
+
 type ChatMessage = { role: 'user' | 'assistant'; content: string };
 
 const MAX_SESSION_MESSAGES = 30;
@@ -61,7 +75,7 @@ export function ChatWidget() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history }),
+        body: JSON.stringify({ messages: history, sessionId: getChatSessionId() }),
       });
 
       if (!res.ok || !res.body) {
