@@ -3,6 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { reportLead } from '@/lib/gtag';
 
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*\n]+)\*/g, '$1')
+    .replace(/^#{1,4}\s+/gm, '')
+    .replace(/^[-*]\s+/gm, '\u2022 ');
+}
+
 function getChatSessionId(): string | undefined {
   if (typeof window === 'undefined') return undefined;
   try {
@@ -205,7 +213,8 @@ export function ChatWidget() {
                     : 'mr-auto bg-slate-100 text-navy-900 rounded-bl-sm'
                 }`}
               >
-                {m.content || (busy && i === messages.length - 1 ? '…' : m.content)}
+                {(m.role === 'assistant' ? stripMarkdown(m.content) : m.content) ||
+                  (busy && i === messages.length - 1 ? '…' : '')}
               </div>
             ))}
 
