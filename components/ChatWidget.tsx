@@ -87,10 +87,17 @@ export function ChatWidget() {
       });
 
       if (!res.ok || !res.body) {
+        let serverMessage = '';
+        try {
+          serverMessage = (await res.json())?.error ?? '';
+        } catch {
+          // non-JSON error body — fall through to the defaults
+        }
         const fallback =
-          res.status === 429
+          serverMessage ||
+          (res.status === 429
             ? "You're sending messages a little fast — give it a few minutes and try again."
-            : 'Sorry, I had trouble answering. Please try again or leave your info via "Talk to a human".';
+            : 'Sorry, I had trouble answering. Please try again or leave your info via "Talk to a human".');
         setMessages([...history, { role: 'assistant', content: fallback }]);
         return;
       }

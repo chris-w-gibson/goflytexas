@@ -17,10 +17,40 @@ const MAX_SESSION_MESSAGES = 30;
 const RATE_LIMIT = 20;
 const RATE_WINDOW_MS = 5 * 60 * 1000;
 const MAX_BODY_BYTES = 32 * 1024;
+/** Spend harness: hard daily message budgets (UTC day). At Haiku pricing the
+ * site-wide cap bounds worst-case spend to a few dollars a day. */
+const GLOBAL_DAILY_LIMIT = Number(process.env.CHAT_DAILY_LIMIT ?? 2000);
+const IP_DAILY_LIMIT = Number(process.env.CHAT_IP_DAILY_LIMIT ?? 150);
 
 // In-memory per-IP limiter. Fine at this traffic on Railway's single instance;
 // swap for Redis if the app ever scales horizontally.
 const hits = new Map<string, number[]>();
+
+// Daily counters, keyed to the current UTC date so they roll over at midnight.
+let dailyDate = '';
+let dailyGlobal = 0;
+let dailyByIp = new Map<string, number>();
+
+/** Returns an at-capacity message if a daily budget is exhausted, else null.
+ * Counts the request against both budgets otherwise. */
+function dailyBudgetExceeded(ip: string): string | null {
+  const today = new Date().toISOString().slice(0, 10);
+  if (today !== dailyDate) {
+    dailyDate = today;
+    dailyGlobal = 0;
+    dailyByIp = new Map();
+  }
+  if (dailyGlobal >= GLOBAL_DAILY_LIMIT) {
+    return "The assistant has hit its daily capacity — please try again tomorrow, or call (940) 905-3090.";
+  }
+  const ipCount = dailyByIp.get(ip) ?? 0;
+  if (ipCount >= IP_DAILY_LIMIT) {
+    return "You've reached today's message limit — please try again tomorrow, or call (940) 905-3090.";
+  }
+  dailyGlobal += 1;
+  dailyByIp.set(ip, ipCount + 1);
+  return null;
+}
 
 function rateLimited(ip: string): boolean {
   const now = Date.now();
@@ -83,6 +113,11 @@ export async function POST(req: NextRequest) {
       { error: 'Too many messages — please wait a few minutes.' },
       { status: 429 },
     );
+  }
+
+  const budgetMessage = dailyBudgetExceeded(ip);
+  if (budgetMessage) {
+    return NextResponse.json({ error: budgetMessage }, { status: 429 });
   }
 
   const raw = await req.text();
