@@ -5,11 +5,12 @@ import "./globals.css";
 import { ImageEditProvider } from "@/components/ImageEditContext";
 import { ChatWidget } from "@/components/ChatWidget";
 import { ConversionListeners } from "@/components/ConversionListeners";
+import AttributionCapture from "@/components/AttributionCapture";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://goflytexas.com'),
+  metadataBase: new URL('https://www.goflytexas.com'),
   title: {
     default: "GoFlyTexas - Flight Training at Aero Valley Airport | Roanoke, TX",
     template: "%s | GoFlyTexas"
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://goflytexas.com',
+    url: 'https://www.goflytexas.com',
     siteName: 'GoFlyTexas',
     title: 'GoFlyTexas - Flight Training at Aero Valley Airport',
     description: 'One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Aircraft rentals and pilot training for all levels.',
@@ -51,7 +52,10 @@ export const metadata: Metadata = {
     images: ['/og-image.jpg'],
   },
   alternates: {
-    canonical: 'https://goflytexas.com',
+    canonical: 'https://www.goflytexas.com',
+  },
+  verification: {
+    google: 'M6YjYE63qGY1cy9W5b1m9e4vXFcU2gIMRjVJdgMg0V8',
   },
 };
 
@@ -72,7 +76,7 @@ export default function RootLayout({
               "@type": "FlightSchool",
               "name": "GoFlyTexas",
               "description": "One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Aircraft rentals, aerial tours, and pilot training.",
-              "url": "https://goflytexas.com",
+              "url": "https://www.goflytexas.com",
               "telephone": "+1-940-905-3090",
               "email": "info@goflytexas.com",
               "address": {
@@ -145,6 +149,7 @@ export default function RootLayout({
         </ImageEditProvider>
         <ChatWidget />
         <ConversionListeners />
+        <AttributionCapture />
       </body>
     </html>
   );

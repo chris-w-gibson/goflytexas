@@ -22,6 +22,21 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // First-touch attribution captured client-side into a cookie (see
+  // components/AttributionCapture.tsx); absent for direct/organic visitors.
+  let attribution: Record<string, string> | null = null;
+  const attrCookie = req.cookies.get('gft_attr')?.value;
+  if (attrCookie) {
+    try {
+      const parsedAttr: unknown = JSON.parse(decodeURIComponent(attrCookie));
+      if (parsedAttr && typeof parsedAttr === 'object' && !Array.isArray(parsedAttr)) {
+        attribution = parsedAttr as Record<string, string>;
+      }
+    } catch {
+      // malformed cookie — ignore
+    }
+  }
+
   const data = parsed.data;
   const lead = await createLead({
     name: data.name,
@@ -31,6 +46,7 @@ export async function POST(req: NextRequest) {
     preferredContact: data.preferredContact ?? 'email',
     message: data.message || null,
     source: 'web',
+    attribution,
   });
 
   // Fire emails in the background — don't block the response on Resend

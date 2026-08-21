@@ -5,6 +5,7 @@ import {
   text,
   timestamp,
   boolean,
+  jsonb,
 } from 'drizzle-orm/pg-core';
 
 export const leadStatus = pgEnum('lead_status', [
@@ -27,6 +28,8 @@ export const leads = pgTable('leads', {
 
   status: leadStatus('status').notNull().default('new'),
   source: leadSource('source').notNull().default('web'),
+  // First-touch channel attribution (gclid/utm_*), read from the gft_attr cookie
+  attribution: jsonb('attribution'),
 
   unsubscribeToken: uuid('unsubscribe_token').defaultRandom().notNull(),
   unsubscribed: boolean('unsubscribed').notNull().default(false),
