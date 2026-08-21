@@ -60,8 +60,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-navy-800 mt-8 pt-8 text-center text-sm">
+        <div className="border-t border-navy-800 mt-8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm">
           <p>&copy; {new Date().getFullYear()} GoFlyTexas. All rights reserved.</p>
+          <Link
+            href="/login"
+            className="text-xs text-navy-500 hover:text-white transition-colors"
+          >
+            Owner Login
+          </Link>
         </div>
       </div>
     </footer>

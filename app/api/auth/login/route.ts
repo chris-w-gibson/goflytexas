@@ -10,12 +10,37 @@ import {
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// In-memory per-IP throttle: 10 attempts per 15 minutes. Same
+// single-instance caveat as the chat widget's limiter — swap for Redis
+// if the app ever scales horizontally.
+const ATTEMPT_LIMIT = 10;
+const ATTEMPT_WINDOW_MS = 15 * 60 * 1000;
+const attempts = new Map<string, number[]>();
+
+function throttled(ip: string): boolean {
+  const windowStart = Date.now() - ATTEMPT_WINDOW_MS;
+  const recent = (attempts.get(ip) ?? []).filter((t) => t > windowStart);
+  attempts.set(ip, recent);
+  if (recent.length >= ATTEMPT_LIMIT) return true;
+  recent.push(Date.now());
+  return false;
+}
+
 const inputSchema = z.object({
   email: z.string().trim().email().max(200),
   password: z.string().min(1).max(200),
 });
 
 export async function POST(req: NextRequest) {
+  const ip =
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+  if (throttled(ip)) {
+    return NextResponse.json(
+      { error: 'Too many attempts — please wait a few minutes and try again.' },
+      { status: 429 }
+    );
+  }
+
   let body: unknown;
   try {
     body = await req.json();
