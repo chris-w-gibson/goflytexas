@@ -191,7 +191,7 @@ agent → auto-booking) that later rolls over to PServo.
 
 ## Open questions
 
-1. Glass-panel rate: $190 or $195? Jim said both in one breath [29:14].
+1. ~~Glass-panel rate: $190 or $195? Jim said both in one breath [29:14].~~ **Resolved 2026-08-28 (Chris): $195/hr.**
 2. Which email/phone should lead notifications and voice-agent summaries go to (partner vs Jim)?
 3. Follow-up cadence — confirm 7/14/21 or let Chris's research set it; what was decided before the
    recording started?

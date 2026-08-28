@@ -41,7 +41,7 @@ export default async function UnsubscribePage({
     <Layout>
       <h1 className="text-2xl font-bold mb-2 text-green-800">You&rsquo;re unsubscribed</h1>
       <p className="text-slate-700 mb-4">
-        We&rsquo;ve removed <strong>{lead.email}</strong> from our follow-up emails. You won&rsquo;t
+        We&rsquo;ve removed <strong>{lead.email ?? 'your address'}</strong> from our follow-up emails. You won&rsquo;t
         hear from us again unless you reach out first.
       </p>
       <p className="text-slate-500 text-sm">

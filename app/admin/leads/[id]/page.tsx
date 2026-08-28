@@ -7,6 +7,7 @@ import {
 import { getLeadById } from '@/lib/leads';
 import { formatDuration, responseState } from '@/lib/followup';
 import { NotesSection } from './NotesSection';
+import { CallsSection } from './CallsSection';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,7 +28,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
       </div>
 
       <div className="bg-white rounded-lg border border-slate-200 p-6 space-y-3 text-sm">
-        <Row label="Email"><a href={`mailto:${lead.email}`} className="text-sky-700 hover:underline">{lead.email}</a></Row>
+        <Row label="Email">{lead.email ? <a href={`mailto:${lead.email}`} className="text-sky-700 hover:underline">{lead.email}</a> : <span className="text-slate-400">— (phone only)</span>}</Row>
         <Row label="Phone">{lead.phone ? <a href={`tel:${lead.phone}`} className="text-sky-700 hover:underline">{lead.phone}</a> : '—'}</Row>
         <Row label="Interest">{lead.flightInterest ?? '—'}</Row>
         <Row label="Preferred contact">{lead.preferredContact ?? 'email'}</Row>
@@ -75,6 +76,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
       </div>
 
       <NotesSection leadId={lead.id} />
+      <CallsSection leadId={lead.id} />
     </div>
   );
 }

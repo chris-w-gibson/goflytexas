@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
-import { getActiveKnowledge } from '@/lib/botKnowledge';
+import { buildKnowledgeBlock } from '@/lib/botKnowledge';
 import { logChatTurn } from '@/lib/chatLog';
 
 export const runtime = 'nodejs';
@@ -139,13 +139,9 @@ export async function POST(req: NextRequest) {
 
   const history = parsed.data.messages.slice(-MAX_HISTORY);
 
-  const knowledge = await getActiveKnowledge();
-  const knowledgeText =
-    knowledge.length === 0
-      ? 'No reference documents have been uploaded yet. Tell the visitor you cannot answer detailed questions right now and point them to the contact options.'
-      : knowledge
-          .map((doc) => `<document title="${doc.title}">\n${doc.content}\n</document>`)
-          .join('\n\n');
+  // Shared with the voice agent (lib/botKnowledge.ts) so both brains see the
+  // identical, byte-stable knowledge block.
+  const knowledgeBlock = await buildKnowledgeBlock();
 
   let stream: ReturnType<Anthropic['messages']['stream']>;
   try {
@@ -155,14 +151,7 @@ export async function POST(req: NextRequest) {
     stream = getClient().messages.stream({
       model: CHAT_MODEL,
       max_tokens: MAX_TOKENS,
-      system: [
-        { type: 'text', text: PERSONA },
-        {
-          type: 'text',
-          text: `Reference documents:\n\n${knowledgeText}`,
-          cache_control: { type: 'ephemeral' },
-        },
-      ],
+      system: [{ type: 'text', text: PERSONA }, knowledgeBlock],
       messages: history,
     });
   } catch (err) {

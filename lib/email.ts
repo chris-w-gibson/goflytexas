@@ -18,6 +18,7 @@ function getResend(): Resend {
 }
 
 const INTEREST_LABEL: Record<string, string> = {
+  discovery: 'Discovery Flight',
   private: 'Private Pilot License',
   instrument: 'Instrument Rating',
   commercial: 'Commercial License',
@@ -65,6 +66,7 @@ function wrap(inner: string): string {
  * human follow-up and gives them a way to skip the wait.
  */
 export async function sendAutoReply(lead: Lead): Promise<void> {
+  if (!lead.email) throw new Error('sendAutoReply: lead has no email');
   const wantsCall = lead.preferredContact === 'phone' && !!lead.phone;
   const interest = interestLabel(lead.flightInterest);
   const isDiscovery = /discovery/i.test(lead.flightInterest ?? '');
@@ -106,32 +108,75 @@ function attributionLabel(attr: unknown): string | null {
   return null;
 }
 
+/** Extra context when the lead came from the AI phone agent. */
+export type CallEmailContext = {
+  id: string;
+  durationSec: number | null;
+  fromNumber: string | null;
+  summary: string | null;
+  recordingUrl: string | null;
+  /** Same caller within 24 h — appended to an existing lead. */
+  repeat: boolean;
+};
+
+function callDuration(sec: number | null): string {
+  if (sec == null) return '—';
+  const m = Math.floor(sec / 60);
+  const s = Math.round(sec % 60);
+  return m ? `${m}m ${s}s` : `${s}s`;
+}
+
 /**
  * Owner alert. Goes to ADMIN_EMAIL plus LEAD_NOTIFY_EMAILS. Built to be acted
  * on from a phone: tap-to-call, tap-to-email, and a one-click "I've reached
  * out" button that stamps the first-response time (no login needed).
+ * With `opts.call` it becomes the "Missed call · AI answered" variant.
  */
-export async function sendAdminNotification(lead: Lead): Promise<void> {
+export async function sendAdminNotification(
+  lead: Lead,
+  opts?: { call?: CallEmailContext },
+): Promise<void> {
+  const call = opts?.call;
   const interest = interestLabel(lead.flightInterest);
   const ackUrl = `${SITE_URL}/ack?token=${lead.contactToken}`;
   const adminUrl = `${SITE_URL}/admin/leads/${lead.id}`;
   const source = attributionLabel(lead.attribution);
   const phoneDigits = lead.phone ? lead.phone.replace(/\D/g, '') : '';
+  const eyebrow = call
+    ? call.repeat
+      ? 'Missed call &mdash; called again &mdash; reply within 10 minutes'
+      : 'Missed call &mdash; AI answered &mdash; reply within 10 minutes'
+    : 'New lead &mdash; reply within 10 minutes';
   const html = wrap(`
-      <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#b91c1c;font-weight:700;">New lead &mdash; reply within 10 minutes</p>
+      <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#b91c1c;font-weight:700;">${eyebrow}</p>
       <h2 style="color:#0c2340;margin:0 0 12px;">${escape(lead.name)} &middot; ${escape(interest)}</h2>
       ${
         lead.phone
           ? `<p style="margin:0 0 8px;"><a href="tel:+1${phoneDigits}" style="display:inline-block;background:#0c2340;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;font-size:16px;">&#128222; Call ${escape(lead.phone)}</a></p>`
           : ''
       }
-      <p style="margin:0 0 16px;"><a href="mailto:${escape(lead.email)}" style="display:inline-block;border:1px solid #0c2340;color:#0c2340;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;">&#9993; Email ${escape(lead.email)}</a></p>
+      ${
+        lead.email
+          ? `<p style="margin:0 0 16px;"><a href="mailto:${escape(lead.email)}" style="display:inline-block;border:1px solid #0c2340;color:#0c2340;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;">&#9993; Email ${escape(lead.email)}</a></p>`
+          : '<p style="margin:0 0 16px;font-size:13px;color:#6b7280;">No email given &mdash; phone only.</p>'
+      }
       <table style="border-collapse:collapse;width:100%;font-size:14px;">
-        <tr><td style="padding:4px 0;color:#6b7280;width:140px;">Prefers</td><td>${escape(lead.preferredContact ?? 'email')}</td></tr>
+        ${
+          call
+            ? `<tr><td style="padding:4px 0;color:#6b7280;width:140px;">Call length</td><td>${escape(callDuration(call.durationSec))}</td></tr>
+        <tr><td style="padding:4px 0;color:#6b7280;">Caller ID</td><td>${escape(call.fromNumber ?? 'withheld')}</td></tr>
+        ${call.summary ? `<tr><td style="padding:4px 0;color:#6b7280;vertical-align:top;">Summary</td><td style="white-space:pre-wrap;">${escape(call.summary)}</td></tr>` : ''}`
+            : `<tr><td style="padding:4px 0;color:#6b7280;width:140px;">Prefers</td><td>${escape(lead.preferredContact ?? 'email')}</td></tr>`
+        }
         <tr><td style="padding:4px 0;color:#6b7280;">Came from</td><td>${escape(source ?? 'Direct / organic')}</td></tr>
-        <tr><td style="padding:4px 0;color:#6b7280;">Submitted</td><td>${escape(new Date(lead.createdAt).toLocaleString('en-US', { timeZone: 'America/Chicago' }))} CT</td></tr>
-        ${lead.message ? `<tr><td style="padding:4px 0;color:#6b7280;vertical-align:top;">Message</td><td style="white-space:pre-wrap;">${escape(lead.message)}</td></tr>` : ''}
+        <tr><td style="padding:4px 0;color:#6b7280;">${call ? 'Call ended' : 'Submitted'}</td><td>${escape(new Date(lead.createdAt).toLocaleString('en-US', { timeZone: 'America/Chicago' }))} CT</td></tr>
+        ${!call && lead.message ? `<tr><td style="padding:4px 0;color:#6b7280;vertical-align:top;">Message</td><td style="white-space:pre-wrap;">${escape(lead.message)}</td></tr>` : ''}
       </table>
+      ${
+        call
+          ? `<p style="margin:12px 0 0;font-size:14px;"><a href="${SITE_URL}/admin/calls?focus=${call.id}" style="color:#0c2340;font-weight:600;">Read the transcript</a>${call.recordingUrl ? ` &middot; <a href="${escape(call.recordingUrl)}" style="color:#0c2340;font-weight:600;">Listen to the recording</a>` : ''}</p>`
+          : ''
+      }
       <p style="margin:20px 0 6px;"><a href="${ackUrl}" style="display:inline-block;background:#15803d;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;">&#10003; I've reached out</a></p>
       <p style="margin:0;font-size:12px;color:#6b7280;">Tap after you call or email &mdash; it records the response time so we can see how fast leads get handled. Or <a href="${adminUrl}" style="color:#0c2340;">open the lead in admin</a>.</p>
       ${FOOTER_HTML}
@@ -139,12 +184,15 @@ export async function sendAdminNotification(lead: Lead): Promise<void> {
   const recipients = Array.from(
     new Set([adminAddress(), ...parseEmailList(process.env.LEAD_NOTIFY_EMAILS)]),
   );
+  const contact = lead.phone ?? lead.email ?? 'no contact';
   const { error } = await getResend().emails.send({
     from: fromAddress(),
     to: recipients,
-    subject: `New lead · ${lead.name} · ${lead.phone ?? lead.email} · ${interest}`,
+    subject: call
+      ? `Missed call · ${lead.name} · ${contact} · ${interest}`
+      : `New lead · ${lead.name} · ${contact} · ${interest}`,
     html,
-    replyTo: lead.email,
+    ...(lead.email ? { replyTo: lead.email } : {}),
   });
   throwIfError(error);
 }
@@ -155,6 +203,7 @@ export async function sendAdminNotification(lead: Lead): Promise<void> {
  * weekly nag; step 3 is a graceful last touch that leaves the door open.
  */
 export async function sendFollowup(lead: Lead, step: number): Promise<void> {
+  if (!lead.email) throw new Error('sendFollowup: lead has no email');
   const name = escape(firstName(lead.name));
   const unsub = `<p style="font-size:11px;color:#9ca3af;">Don't want these check-ins? <a href="${unsubLink(lead.unsubscribeToken)}" style="color:#9ca3af;">Unsubscribe anytime</a>.</p>`;
   let subject: string;

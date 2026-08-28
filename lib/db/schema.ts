@@ -6,7 +6,9 @@ import {
   timestamp,
   boolean,
   jsonb,
+  integer,
 } from 'drizzle-orm/pg-core';
+import type { CallExtraction, TranscriptTurn } from '../voice/types';
 
 export const leadStatus = pgEnum('lead_status', [
   'new',
@@ -15,12 +17,14 @@ export const leadStatus = pgEnum('lead_status', [
   'unsubscribed',
 ]);
 
-export const leadSource = pgEnum('lead_source', ['web', 'manual']);
+export const leadSource = pgEnum('lead_source', ['web', 'manual', 'phone']);
 
 export const leads = pgTable('leads', {
   id: uuid('id').defaultRandom().primaryKey(),
   name: text('name').notNull(),
-  email: text('email').notNull(),
+  // Nullable since 0006: phone-only callers usually give no email. Never
+  // auto-reply or drip a lead without one.
+  email: text('email'),
   phone: text('phone'),
   flightInterest: text('flight_interest'),
   preferredContact: text('preferred_contact'),
@@ -144,3 +148,31 @@ export const leadNotes = pgTable('lead_notes', {
 export type ChatSession = typeof chatSessions.$inferSelect;
 export type ChatMessage = typeof chatMessages.$inferSelect;
 export type LeadNote = typeof leadNotes.$inferSelect;
+
+// AI phone agent (missed calls). One row per platform call; the transcript
+// arrives as a blob at call end, so it lives on the row rather than in a child
+// table. platform_call_id is the idempotency key for webhook retries.
+export const calls = pgTable('calls', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  platform: text('platform').notNull(),
+  platformCallId: text('platform_call_id').notNull().unique(),
+  leadId: uuid('lead_id').references(() => leads.id, { onDelete: 'set null' }),
+  fromNumber: text('from_number'),
+  toNumber: text('to_number'),
+  forwardedFrom: text('forwarded_from'),
+  startedAt: timestamp('started_at', { withTimezone: true }),
+  endedAt: timestamp('ended_at', { withTimezone: true }),
+  durationSec: integer('duration_sec'),
+  status: text('status').notNull().default('received'),
+  endedReason: text('ended_reason'),
+  recordingUrl: text('recording_url'),
+  transcript: jsonb('transcript').$type<TranscriptTurn[]>(),
+  summary: text('summary'),
+  extracted: jsonb('extracted').$type<CallExtraction | null>(),
+  rawPayload: jsonb('raw_payload'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export type Call = typeof calls.$inferSelect;
+export type NewCall = typeof calls.$inferInsert;

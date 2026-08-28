@@ -98,7 +98,7 @@ export default async function AdminDashboard() {
                         {l.name}
                       </Link>
                     </td>
-                    <td className="px-4 py-2 text-slate-600">{l.email}</td>
+                    <td className="px-4 py-2 text-slate-600">{l.email ?? l.phone ?? '—'}</td>
                     <td className="px-4 py-2 text-slate-600">{l.flightInterest ?? '—'}</td>
                     <td className="px-4 py-2"><StatusBadge status={l.status} /></td>
                     <td className="px-4 py-2 text-slate-500">{new Date(l.createdAt).toLocaleString()}</td>
