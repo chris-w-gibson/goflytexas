@@ -15,6 +15,21 @@ after-hours calls to an **unpublished Twilio number** imported into **Vapi**. Va
 Claude, create a `leads` row (`source = phone`), and send the same owner alert web leads get
 (tap-to-call + "I've reached out" ack). Transcripts: `/admin/calls`.
 
+## 0. What exists (configured 2026-08-28 via API — ids in `~/.config/goflytexas/voice.env`, mode 600)
+
+| Thing | Value |
+|---|---|
+| Vapi org | `cginsa12@gmail.com's Org`, Google sign-in, PAYG (5 free credits to start) |
+| Vapi assistant | **GoFly missed-call assistant** `fbf16989-54b9-4d29-ba57-ba18b1a90c19` — custom-LLM `https://www.goflytexas.com/api/voice/llm` (Bearer header), Deepgram `nova-3` STT w/ keyterm boost, Deepgram Aura `asteria` voice, `endCallPhrases` = goodbye sentence, 300 s max, background sound off, recording on, server URL `/api/voice/webhook` with `x-vapi-secret` header, `serverMessages: [end-of-call-report]` |
+| **Forwarding target** | **+1 (940) 242-3072** (Justin, TX) — Twilio-owned, SID `PN18bb67eb537d15c63f0cf790f5997de9`, imported into Vapi as `e3e2448e-ec30-47e3-9cea-2f56a7f46ccc`, attached to the assistant, `smsEnabled=false`. Never published; this is what Jim forwards to. |
+| Backup number | **+1 (940) 291-7613** — Vapi-provisioned (free), id `70951724-9c0d-4ab9-8f9f-386af6bc690b`, same assistant. Keep for testing or release later. |
+| Twilio | Existing upgraded account "My first Twilio account" (`AC9b44…`, SMS MFA → phone …4908, ~$16 balance). Pre-existing numbers 817-670-4011 and 855-592-9472 were left untouched. |
+| Railway env | `VOICE_LLM_SECRET`, `VOICE_WEBHOOK_SECRET` (64-hex, generated), `VOICE_MAX_TURNS=16`, `VOICE_DAILY_CALL_LIMIT=60`, `VOICE_NOTIFY_NO_MESSAGE=0` — set 2026-08-28 |
+
+Gotchas hit: Vapi's API sits behind Cloudflare and rejects Python `urllib` (error 1010) — use `curl`.
+Deepgram voice ids must be the Aura-1 names (`asteria`, `luna`, …); the spec's Aura-2 names (`thalia`) are rejected.
+`silenceTimeoutSeconds` is not on the current CreateAssistantDTO; Vapi's default silence handling applies.
+
 ## 1. Railway (web service) — env vars
 
 | Var | Value |
