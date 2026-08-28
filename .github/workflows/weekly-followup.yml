@@ -2,8 +2,10 @@ name: Weekly Lead Follow-up
 
 on:
   schedule:
-    # 14:00 UTC every Monday = 9:00 AM CT during CDT, 8:00 AM CT during CST
-    - cron: '0 14 * * 1'
+    # Daily at 14:00 UTC = 9:00 AM CT during CDT, 8:00 AM CT during CST.
+    # The endpoint runs the staggered drip (day 7 / 14 / 21 after the lead came
+    # in, see FOLLOWUP_DAYS); each step sends once per lead, so daily is safe.
+    - cron: '0 14 * * *'
   workflow_dispatch: {}
 
 jobs:

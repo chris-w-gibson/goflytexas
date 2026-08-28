@@ -5,6 +5,7 @@ import {
   updateStatusAction,
 } from '@/app/admin/actions';
 import { getLeadById } from '@/lib/leads';
+import { formatDuration, responseState } from '@/lib/followup';
 import { NotesSection } from './NotesSection';
 
 export const dynamic = 'force-dynamic';
@@ -34,6 +35,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
           <span className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${badge(lead.status)}`}>{lead.status}</span>
         </Row>
         <Row label="Unsubscribed">{lead.unsubscribed ? 'Yes' : 'No'}</Row>
+        <Row label="First response"><FirstResponse lead={lead} /></Row>
         <Row label="Last contacted">{lead.lastContactedAt ? new Date(lead.lastContactedAt).toLocaleString() : '—'}</Row>
         <div className="pt-3 border-t border-slate-100">
           <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">Message</div>
@@ -52,7 +54,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
           >
             Mark contacted (now)
           </button>
-          <span className="text-xs text-slate-500">Sets status &rarr; contacted and updates last-contacted timestamp. Pauses weekly follow-up for 7 days.</span>
+          <span className="text-xs text-slate-500">Records that a person reached out: stamps first-response time (once), updates last-contacted, and moves a new lead to contacted.</span>
         </form>
 
         <form action={updateStatusAction} className="flex items-center gap-3">
@@ -75,6 +77,22 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
       <NotesSection leadId={lead.id} />
     </div>
   );
+}
+
+function FirstResponse({ lead }: { lead: NonNullable<Awaited<ReturnType<typeof getLeadById>>> }) {
+  const s = responseState(lead);
+  if (s.kind === 'responded') {
+    return (
+      <span className={s.slow ? 'text-amber-700' : 'text-green-700'}>
+        {formatDuration(s.ms)} after submission
+        {lead.firstContactedAt ? ` (${new Date(lead.firstContactedAt).toLocaleString()})` : ''}
+      </span>
+    );
+  }
+  if (s.kind === 'waiting') {
+    return <span className={s.slow ? 'text-red-700 font-semibold' : ''}>Waiting {formatDuration(s.ms)} — nobody has reached out yet</span>;
+  }
+  return <span className="text-slate-400">Not recorded (only automated follow-ups)</span>;
 }
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {

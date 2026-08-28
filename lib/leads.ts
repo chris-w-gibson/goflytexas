@@ -1,6 +1,11 @@
-import { and, desc, eq, isNull, lt, or, sql } from 'drizzle-orm';
+import { and, desc, eq, gt, or, sql } from 'drizzle-orm';
 import { db } from './db';
 import { emailEvents, leads, type Lead, type NewLead } from './db/schema';
+import {
+  dueFollowupStep,
+  FOLLOWUP_MAX_AGE_DAYS,
+  parseFollowupSchedule,
+} from './followup';
 
 export type LeadStatus = Lead['status'];
 
@@ -41,30 +46,74 @@ export async function getLeadByUnsubscribeToken(
   return row;
 }
 
+export async function getLeadByContactToken(
+  token: string,
+): Promise<Lead | undefined> {
+  const [row] = await db
+    .select()
+    .from(leads)
+    .where(eq(leads.contactToken, token))
+    .limit(1);
+  return row;
+}
+
 export async function updateLeadStatus(
   id: string,
   status: LeadStatus,
 ): Promise<Lead | undefined> {
+  const now = new Date();
+  // A human moving a lead to contacted/converted counts as the first touch.
+  const humanTouch = status === 'contacted' || status === 'converted';
   const [row] = await db
     .update(leads)
-    .set({ status, updatedAt: new Date() })
+    .set({
+      status,
+      updatedAt: now,
+      ...(humanTouch
+        ? { firstContactedAt: sql`coalesce(${leads.firstContactedAt}, ${now})` }
+        : {}),
+    })
     .where(eq(leads.id, id))
     .returning();
   return row;
 }
 
+/**
+ * Record a HUMAN contact: sets first_contacted_at (once), last_contacted_at,
+ * and moves a `new` lead to `contacted`. Converted/unsubscribed are left alone.
+ */
 export async function markContacted(id: string): Promise<Lead | undefined> {
   const now = new Date();
   const [row] = await db
     .update(leads)
     .set({
-      status: 'contacted',
+      status: sql`case when ${leads.status} = 'new' then 'contacted'::lead_status else ${leads.status} end`,
+      firstContactedAt: sql`coalesce(${leads.firstContactedAt}, ${now})`,
       lastContactedAt: now,
       updatedAt: now,
     })
     .where(eq(leads.id, id))
     .returning();
   return row;
+}
+
+/** Same as markContacted, addressed by the token from the notification email. */
+export async function markContactedByToken(token: string): Promise<Lead | undefined> {
+  const lead = await getLeadByContactToken(token);
+  if (!lead) return undefined;
+  return markContacted(lead.id);
+}
+
+/**
+ * Automated touch (drip email). Only bumps last_contacted_at — never status or
+ * first_contacted_at, so the drip can't masquerade as a human response.
+ */
+export async function touchLastContacted(id: string): Promise<void> {
+  const now = new Date();
+  await db
+    .update(leads)
+    .set({ lastContactedAt: now, updatedAt: now })
+    .where(eq(leads.id, id));
 }
 
 export async function unsubscribeLead(token: string): Promise<Lead | undefined> {
@@ -80,25 +129,46 @@ export async function unsubscribeLead(token: string): Promise<Lead | undefined> 
   return row;
 }
 
-export async function findWeeklyFollowupCandidates(opts?: {
-  intervalDays?: number;
+export type FollowupCandidate = { lead: Lead; step: number; sentCount: number };
+
+/**
+ * Open leads (new/contacted, not unsubscribed, younger than the max age) with
+ * the follow-up step that is due right now, per the staggered schedule.
+ */
+export async function findFollowupCandidates(opts?: {
+  schedule?: number[];
+  now?: Date;
   limit?: number;
-}): Promise<Lead[]> {
-  const days = opts?.intervalDays ?? 7;
-  const limit = opts?.limit ?? 100;
-  const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
-  return db
-    .select()
+}): Promise<FollowupCandidate[]> {
+  const schedule = opts?.schedule ?? parseFollowupSchedule(process.env.FOLLOWUP_DAYS);
+  const now = opts?.now ?? new Date();
+  const limit = opts?.limit ?? 200;
+  const oldest = new Date(now.getTime() - FOLLOWUP_MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
+
+  const sentCount = sql<number>`(
+    select count(*)::int from ${emailEvents} e
+    where e.lead_id = ${leads.id} and e.kind = 'weekly_followup' and e.error is null
+  )`;
+
+  const rows = await db
+    .select({ lead: leads, sentCount })
     .from(leads)
     .where(
       and(
         eq(leads.unsubscribed, false),
         or(eq(leads.status, 'new'), eq(leads.status, 'contacted')),
-        or(isNull(leads.lastContactedAt), lt(leads.lastContactedAt, cutoff)),
+        gt(leads.createdAt, oldest),
       ),
     )
     .orderBy(desc(leads.createdAt))
     .limit(limit);
+
+  const due: FollowupCandidate[] = [];
+  for (const { lead, sentCount: n } of rows) {
+    const step = dueFollowupStep({ createdAt: lead.createdAt, sentCount: n, schedule, now });
+    if (step) due.push({ lead, step, sentCount: n });
+  }
+  return due;
 }
 
 export async function recordEmailEvent(input: {
@@ -130,4 +200,34 @@ export async function countLeads(): Promise<{
     })
     .from(leads);
   return row;
+}
+
+/** Response-time KPIs for the dashboard (last 30 days). */
+export async function getResponseStats(): Promise<{
+  waiting: number;
+  waitingOverHour: number;
+  responded30d: number;
+  medianResponseMs: number | null;
+  withinHourPct: number | null;
+}> {
+  const [row] = await db
+    .select({
+      waiting: sql<number>`count(*) filter (where status = 'new' and first_contacted_at is null)::int`,
+      waitingOverHour: sql<number>`count(*) filter (where status = 'new' and first_contacted_at is null and created_at < now() - interval '1 hour')::int`,
+      responded30d: sql<number>`count(*) filter (where first_contacted_at is not null and created_at > now() - interval '30 days')::int`,
+      medianResponseMs: sql<number | null>`(
+        percentile_cont(0.5) within group (order by extract(epoch from (first_contacted_at - created_at)))
+        filter (where first_contacted_at is not null and created_at > now() - interval '30 days')
+      ) * 1000`,
+      withinHour: sql<number>`count(*) filter (where first_contacted_at is not null and created_at > now() - interval '30 days' and first_contacted_at - created_at <= interval '1 hour')::int`,
+    })
+    .from(leads);
+  const median = row.medianResponseMs === null ? null : Number(row.medianResponseMs);
+  return {
+    waiting: row.waiting,
+    waitingOverHour: row.waitingOverHour,
+    responded30d: row.responded30d,
+    medianResponseMs: median,
+    withinHourPct: row.responded30d ? Math.round((row.withinHour / row.responded30d) * 100) : null,
+  };
 }

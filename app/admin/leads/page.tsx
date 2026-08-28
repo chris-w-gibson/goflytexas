@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { listLeads, type LeadStatus } from '@/lib/leads';
+import { formatDuration, responseState } from '@/lib/followup';
 
 export const dynamic = 'force-dynamic';
 
@@ -79,6 +80,7 @@ export default async function LeadsPage({
                 <th className="px-4 py-2">Interest</th>
                 <th className="px-4 py-2">Source</th>
                 <th className="px-4 py-2">Status</th>
+                <th className="px-4 py-2">Response</th>
                 <th className="px-4 py-2">Last contact</th>
               </tr>
             </thead>
@@ -102,6 +104,9 @@ export default async function LeadsPage({
                       {l.status}
                     </span>
                   </td>
+                  <td className="px-4 py-2">
+                    <ResponseCell lead={l} />
+                  </td>
                   <td className="px-4 py-2 text-slate-500">
                     {l.lastContactedAt ? new Date(l.lastContactedAt).toLocaleDateString() : '—'}
                   </td>
@@ -113,6 +118,25 @@ export default async function LeadsPage({
       )}
     </div>
   );
+}
+
+function ResponseCell({ lead }: { lead: (typeof import('@/lib/db/schema'))['leads']['$inferSelect'] }) {
+  const s = responseState(lead);
+  if (s.kind === 'responded') {
+    return (
+      <span className={`text-xs font-medium ${s.slow ? 'text-amber-700' : 'text-green-700'}`}>
+        {formatDuration(s.ms)}
+      </span>
+    );
+  }
+  if (s.kind === 'waiting') {
+    return (
+      <span className={`text-xs font-semibold ${s.slow ? 'text-red-700' : 'text-slate-700'}`}>
+        waiting {formatDuration(s.ms)}
+      </span>
+    );
+  }
+  return <span className="text-xs text-slate-400">—</span>;
 }
 
 function badge(status: string): string {

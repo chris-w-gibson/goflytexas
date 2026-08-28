@@ -3,6 +3,7 @@ import { desc, eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { leadNotes } from '@/lib/db/schema';
 import { getSessionFromCookies } from '@/lib/auth';
+import { markContacted } from '@/lib/leads';
 
 async function addNoteAction(formData: FormData) {
   'use server';
@@ -16,7 +17,11 @@ async function addNoteAction(formData: FormData) {
     body: body.slice(0, 4000),
     authorName: session.name ?? session.email ?? 'Staff',
   });
+  // A note ("called, left VM") is a human touch — stamp first response if unset.
+  await markContacted(leadId);
   revalidatePath(`/admin/leads/${leadId}`);
+  revalidatePath('/admin/leads');
+  revalidatePath('/admin');
 }
 
 export async function NotesSection({ leadId }: { leadId: string }) {

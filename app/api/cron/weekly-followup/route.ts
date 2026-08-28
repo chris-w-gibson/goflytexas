@@ -1,7 +1,10 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { findWeeklyFollowupCandidates, markContacted, recordEmailEvent } from '@/lib/leads';
-import { sendWeeklyFollowup } from '@/lib/email';
+import { findFollowupCandidates, recordEmailEvent, touchLastContacted } from '@/lib/leads';
+import { sendFollowup } from '@/lib/email';
 
+// Staggered follow-up drip (default day 7 / 14 / 21 via FOLLOWUP_DAYS).
+// Safe to run daily or hourly: a step is only sent once per lead and steps
+// never skip. Route path kept for the existing Railway cron pinger.
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
@@ -19,29 +22,32 @@ async function runFollowup(): Promise<{
   considered: number;
   sent: number;
   failed: number;
-  errors: Array<{ leadId: string; error: string }>;
+  byStep: Record<string, number>;
+  errors: Array<{ leadId: string; step: number; error: string }>;
 }> {
-  const candidates = await findWeeklyFollowupCandidates();
+  const candidates = await findFollowupCandidates();
   let sent = 0;
   let failed = 0;
-  const errors: Array<{ leadId: string; error: string }> = [];
+  const byStep: Record<string, number> = {};
+  const errors: Array<{ leadId: string; step: number; error: string }> = [];
 
-  for (const lead of candidates) {
+  for (const { lead, step } of candidates) {
     try {
-      await sendWeeklyFollowup(lead);
+      await sendFollowup(lead, step);
       await recordEmailEvent({ leadId: lead.id, kind: 'weekly_followup' });
-      // Update last_contacted so we don't re-send for 7 days. Don't flip status if already 'contacted'.
-      await markContacted(lead.id);
+      // Automated touch only — never flips status or first_contacted_at.
+      await touchLastContacted(lead.id);
       sent++;
+      byStep[step] = (byStep[step] ?? 0) + 1;
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       failed++;
-      errors.push({ leadId: lead.id, error: message });
+      errors.push({ leadId: lead.id, step, error: message });
       await recordEmailEvent({ leadId: lead.id, kind: 'weekly_followup', error: message });
     }
   }
 
-  return { considered: candidates.length, sent, failed, errors };
+  return { considered: candidates.length, sent, failed, byStep, errors };
 }
 
 export async function GET(req: NextRequest) {
