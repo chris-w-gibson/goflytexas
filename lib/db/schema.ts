@@ -33,7 +33,12 @@ export const leads = pgTable('leads', {
 
   unsubscribeToken: uuid('unsubscribe_token').defaultRandom().notNull(),
   unsubscribed: boolean('unsubscribed').notNull().default(false),
+  // One-click "I've reached out" link in the owner notification email (no login).
+  contactToken: uuid('contact_token').defaultRandom().notNull(),
 
+  // First HUMAN touch (mark-contacted, note, or ack link). Never set by the
+  // automated drip — that's what makes response time honest.
+  firstContactedAt: timestamp('first_contacted_at', { withTimezone: true }),
   lastContactedAt: timestamp('last_contacted_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),

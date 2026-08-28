@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import type { Lead } from './db/schema';
+import { parseEmailList } from './followup';
 
 const FROM_DEFAULT = 'GoFlyTexas <info@goflytexas.com>';
 const ADMIN_DEFAULT = 'info@goflytexas.com';
@@ -45,75 +46,150 @@ function adminAddress(): string {
   return process.env.ADMIN_EMAIL ?? ADMIN_DEFAULT;
 }
 
-export async function sendAutoReply(lead: Lead): Promise<void> {
-  const html = `
-    <div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;max-width:600px;margin:auto;color:#1f2937;">
-      <h2 style="color:#0c2340;">Thanks for reaching out, ${escape(lead.name)}!</h2>
-      <p>We got your message about <strong>${escape(interestLabel(lead.flightInterest))}</strong> and a real human at GoFlyTexas will be in touch within 24 hours.</p>
-      <p>If you'd rather not wait, give us a call:</p>
-      <p style="font-size:18px;"><strong><a href="tel:+19409053090" style="color:#0c2340;">(940) 905-3090</a></strong> &mdash; open daily 8a&ndash;5p, flights by appointment 24/7.</p>
+const PHONE_HTML = `<a href="tel:+19409053090" style="color:#0c2340;"><strong>(940) 905-3090</strong></a>`;
+const FOOTER_HTML = `
       <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
-      <p style="font-size:13px;color:#6b7280;">Aero Valley Airport (52F) · 104 Boeing Way · Roanoke, TX 76262</p>
+      <p style="font-size:13px;color:#6b7280;">Aero Valley Airport (52F) · 104 Boeing Way · Roanoke, TX 76262</p>`;
+
+function firstName(name: string): string {
+  return name.trim().split(/\s+/)[0] || name;
+}
+
+function wrap(inner: string): string {
+  return `<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;max-width:600px;margin:auto;color:#1f2937;line-height:1.5;">${inner}</div>`;
+}
+
+/**
+ * Instant acknowledgement to the prospect. Jim's rule (8/27): people talk to
+ * three other schools if they don't hear back fast, so this promises a quick
+ * human follow-up and gives them a way to skip the wait.
+ */
+export async function sendAutoReply(lead: Lead): Promise<void> {
+  const wantsCall = lead.preferredContact === 'phone' && !!lead.phone;
+  const interest = interestLabel(lead.flightInterest);
+  const isDiscovery = /discovery/i.test(lead.flightInterest ?? '');
+  const html = wrap(`
+      <h2 style="color:#0c2340;">Got it, ${escape(firstName(lead.name))} &mdash; we're on it.</h2>
+      <p>Thanks for reaching out about <strong>${escape(interest)}</strong>.
+      ${
+        wantsCall
+          ? `One of our instructors will <strong>call you at ${escape(lead.phone!)}</strong> shortly &mdash; usually within the hour during the day.`
+          : `One of our instructors will <strong>reply to this email</strong> shortly &mdash; usually within the hour during the day.`
+      }</p>
+      <p>Don't want to wait? Call us now at ${PHONE_HTML}. Open daily 8a&ndash;5p, flights by appointment 24/7.</p>
+      ${
+        isDiscovery
+          ? `<p>Quick preview of what you booked: a <strong>discovery flight</strong> is one hour in the left seat of a Cessna 172 with a certified instructor beside you. You'll taxi, take off and fly the airplane yourself &mdash; no experience needed. We confirm the day and time by phone.</p>`
+          : `<p>Not sure where to start? The easiest first step is a <strong>discovery flight</strong> &mdash; one hour flying a Cessna 172 yourself with an instructor beside you. Just reply "discovery flight" and we'll set it up.</p>`
+      }
+      <p>Blue skies,<br/>The GoFlyTexas team</p>
+      ${FOOTER_HTML}
       <p style="font-size:11px;color:#9ca3af;">Don't want emails from us? <a href="${unsubLink(lead.unsubscribeToken)}" style="color:#9ca3af;">Unsubscribe</a>.</p>
-    </div>
-  `;
+  `);
   const { error } = await getResend().emails.send({
     from: fromAddress(),
     to: lead.email,
-    subject: `Thanks for reaching out to GoFlyTexas`,
+    subject: wantsCall
+      ? `Got it, ${firstName(lead.name)} — GoFlyTexas will call you shortly`
+      : `Got your message, ${firstName(lead.name)} — here's what happens next`,
     html,
     replyTo: adminAddress(),
   });
   throwIfError(error);
 }
 
+function attributionLabel(attr: unknown): string | null {
+  if (!attr || typeof attr !== 'object') return null;
+  const a = attr as Record<string, string>;
+  if (a.gclid) return 'Google Ads';
+  if (a.utm_source) return `${a.utm_source}${a.utm_campaign ? ` / ${a.utm_campaign}` : ''}`;
+  return null;
+}
+
+/**
+ * Owner alert. Goes to ADMIN_EMAIL plus LEAD_NOTIFY_EMAILS. Built to be acted
+ * on from a phone: tap-to-call, tap-to-email, and a one-click "I've reached
+ * out" button that stamps the first-response time (no login needed).
+ */
 export async function sendAdminNotification(lead: Lead): Promise<void> {
   const interest = interestLabel(lead.flightInterest);
-  const html = `
-    <div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;max-width:600px;margin:auto;color:#1f2937;">
-      <h2 style="color:#0c2340;">New lead: ${escape(lead.name)}</h2>
+  const ackUrl = `${SITE_URL}/ack?token=${lead.contactToken}`;
+  const adminUrl = `${SITE_URL}/admin/leads/${lead.id}`;
+  const source = attributionLabel(lead.attribution);
+  const phoneDigits = lead.phone ? lead.phone.replace(/\D/g, '') : '';
+  const html = wrap(`
+      <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#b91c1c;font-weight:700;">New lead &mdash; reply within 10 minutes</p>
+      <h2 style="color:#0c2340;margin:0 0 12px;">${escape(lead.name)} &middot; ${escape(interest)}</h2>
+      ${
+        lead.phone
+          ? `<p style="margin:0 0 8px;"><a href="tel:+1${phoneDigits}" style="display:inline-block;background:#0c2340;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;font-size:16px;">&#128222; Call ${escape(lead.phone)}</a></p>`
+          : ''
+      }
+      <p style="margin:0 0 16px;"><a href="mailto:${escape(lead.email)}" style="display:inline-block;border:1px solid #0c2340;color:#0c2340;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;">&#9993; Email ${escape(lead.email)}</a></p>
       <table style="border-collapse:collapse;width:100%;font-size:14px;">
-        <tr><td style="padding:6px 0;color:#6b7280;width:140px;">Email</td><td><a href="mailto:${escape(lead.email)}">${escape(lead.email)}</a></td></tr>
-        <tr><td style="padding:6px 0;color:#6b7280;">Phone</td><td>${escape(lead.phone ?? '—')}</td></tr>
-        <tr><td style="padding:6px 0;color:#6b7280;">Interested in</td><td>${escape(interest)}</td></tr>
-        <tr><td style="padding:6px 0;color:#6b7280;">Preferred contact</td><td>${escape(lead.preferredContact ?? 'email')}</td></tr>
-        <tr><td style="padding:6px 0;color:#6b7280;vertical-align:top;">Message</td><td style="white-space:pre-wrap;">${escape(lead.message ?? '')}</td></tr>
+        <tr><td style="padding:4px 0;color:#6b7280;width:140px;">Prefers</td><td>${escape(lead.preferredContact ?? 'email')}</td></tr>
+        <tr><td style="padding:4px 0;color:#6b7280;">Came from</td><td>${escape(source ?? 'Direct / organic')}</td></tr>
+        <tr><td style="padding:4px 0;color:#6b7280;">Submitted</td><td>${escape(new Date(lead.createdAt).toLocaleString('en-US', { timeZone: 'America/Chicago' }))} CT</td></tr>
+        ${lead.message ? `<tr><td style="padding:4px 0;color:#6b7280;vertical-align:top;">Message</td><td style="white-space:pre-wrap;">${escape(lead.message)}</td></tr>` : ''}
       </table>
-      <p style="margin-top:16px;">Manage this lead in the admin console.</p>
-    </div>
-  `;
+      <p style="margin:20px 0 6px;"><a href="${ackUrl}" style="display:inline-block;background:#15803d;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;">&#10003; I've reached out</a></p>
+      <p style="margin:0;font-size:12px;color:#6b7280;">Tap after you call or email &mdash; it records the response time so we can see how fast leads get handled. Or <a href="${adminUrl}" style="color:#0c2340;">open the lead in admin</a>.</p>
+      ${FOOTER_HTML}
+  `);
+  const recipients = Array.from(
+    new Set([adminAddress(), ...parseEmailList(process.env.LEAD_NOTIFY_EMAILS)]),
+  );
   const { error } = await getResend().emails.send({
     from: fromAddress(),
-    to: adminAddress(),
-    subject: `[Lead] ${lead.name} — ${interest}`,
+    to: recipients,
+    subject: `New lead · ${lead.name} · ${lead.phone ?? lead.email} · ${interest}`,
     html,
     replyTo: lead.email,
   });
   throwIfError(error);
 }
 
-export async function sendWeeklyFollowup(lead: Lead): Promise<void> {
-  const html = `
-    <div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;max-width:600px;margin:auto;color:#1f2937;">
-      <h2 style="color:#0c2340;">Still curious about flying, ${escape(lead.name)}?</h2>
-      <p>Just a friendly check-in from the GoFlyTexas team. We saw you reached out about <strong>${escape(interestLabel(lead.flightInterest))}</strong> and wanted to make sure you didn't fall through the cracks.</p>
-      <p>A few ways to take the next step whenever you're ready:</p>
-      <ul>
-        <li>Book a <strong>discovery flight</strong> &mdash; the easiest way to see if flying clicks for you.</li>
-        <li>Reply to this email with questions and we'll get back same-day.</li>
-        <li>Call <a href="tel:+19409053090" style="color:#0c2340;"><strong>(940) 905-3090</strong></a> and talk to a real instructor.</li>
-      </ul>
-      <p>No pressure either way. Blue skies,<br/>The GoFlyTexas team</p>
-      <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
-      <p style="font-size:13px;color:#6b7280;">Aero Valley Airport (52F) · 104 Boeing Way · Roanoke, TX 76262</p>
-      <p style="font-size:11px;color:#9ca3af;">Don't want these check-ins? <a href="${unsubLink(lead.unsubscribeToken)}" style="color:#9ca3af;">Unsubscribe anytime</a>.</p>
-    </div>
-  `;
+/**
+ * Staggered follow-up drip, one distinct message per step (default day 7 / 14 /
+ * 21). Copy per Jim (8/27): curiosity and low-friction next steps rather than a
+ * weekly nag; step 3 is a graceful last touch that leaves the door open.
+ */
+export async function sendFollowup(lead: Lead, step: number): Promise<void> {
+  const name = escape(firstName(lead.name));
+  const unsub = `<p style="font-size:11px;color:#9ca3af;">Don't want these check-ins? <a href="${unsubLink(lead.unsubscribeToken)}" style="color:#9ca3af;">Unsubscribe anytime</a>.</p>`;
+  let subject: string;
+  let body: string;
+
+  if (step === 1) {
+    subject = `Still curious about flying, ${firstName(lead.name)}?`;
+    body = `
+      <h2 style="color:#0c2340;">Still curious, ${name}?</h2>
+      <p>You reached out to us about <strong>${escape(interestLabel(lead.flightInterest))}</strong> last week and we wanted to make sure a busy week didn't bury it.</p>
+      <p>Here's the part most people don't expect: on a <strong>discovery flight</strong> you're not a passenger. You taxi, you take off, and you fly the Cessna 172 yourself for an hour with an instructor right beside you. No experience, no commitment, no paperwork beyond a signature.</p>
+      <p>We're at Aero Valley (52F) in Roanoke and can fit you in most days &mdash; you pick the day and time. Just reply with a day that works, or call ${PHONE_HTML}.</p>
+      <p>Blue skies,<br/>The GoFlyTexas team</p>`;
+  } else if (step === 2) {
+    subject = `The first hour changes people`;
+    body = `
+      <h2 style="color:#0c2340;">Every pilot at 52F started with one hour, ${name}.</h2>
+      <p>Private pilots, instrument students, the instructors who teach here &mdash; all of them took that first flight not knowing if it was for them. Nobody comes back from it neutral.</p>
+      <p>If something's holding you back, tell us honestly. Reply with one word &mdash; <em>cost</em>, <em>time</em>, <em>nerves</em>, <em>later</em> &mdash; and we'll give you a straight answer, not a pitch. (Cost is the usual one, and the block-time math is friendlier than most people expect.)</p>
+      <p>Or skip the questions and just book the hour: call ${PHONE_HTML} or reply to this email.</p>
+      <p>Blue skies,<br/>The GoFlyTexas team</p>`;
+  } else {
+    subject = `Last one from us, ${firstName(lead.name)}`;
+    body = `
+      <h2 style="color:#0c2340;">We'll stop here, ${name}.</h2>
+      <p>This is the last check-in we'll send &mdash; nobody likes an inbox full of follow-ups. The door stays open as long as you like.</p>
+      <p>When the timing's right, the fastest way in is a call to ${PHONE_HTML}, or a reply to this email. If "not now, but maybe next month" is closer to the truth, reply with <em>next month</em> and we'll check in once, then.</p>
+      <p>Thanks for looking us up. Blue skies,<br/>The GoFlyTexas team</p>`;
+  }
+
   const { error } = await getResend().emails.send({
     from: fromAddress(),
     to: lead.email,
-    subject: `Still thinking about that discovery flight?`,
-    html,
+    subject,
+    html: wrap(`${body}${FOOTER_HTML}${unsub}`),
     replyTo: adminAddress(),
   });
   throwIfError(error);

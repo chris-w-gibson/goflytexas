@@ -1,13 +1,42 @@
 import Link from 'next/link';
-import { countLeads, listLeads } from '@/lib/leads';
+import { countLeads, getResponseStats, listLeads } from '@/lib/leads';
+import { formatDuration } from '@/lib/followup';
 
 export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboard() {
-  const [counts, recent] = await Promise.all([
+  const [counts, recent, response] = await Promise.all([
     countLeads(),
     listLeads({ limit: 10 }),
+    getResponseStats(),
   ]);
+
+  const waitingColor =
+    response.waitingOverHour > 0
+      ? 'bg-red-100 text-red-900'
+      : response.waiting > 0
+        ? 'bg-amber-100 text-amber-900'
+        : 'bg-green-100 text-green-900';
+  const responseStats = [
+    {
+      label: 'Awaiting first reply',
+      value: String(response.waiting),
+      hint: response.waitingOverHour > 0 ? `${response.waitingOverHour} waiting over an hour` : 'nobody waiting over an hour',
+      color: waitingColor,
+    },
+    {
+      label: 'Median response (30d)',
+      value: response.medianResponseMs === null ? '—' : formatDuration(response.medianResponseMs),
+      hint: `${response.responded30d} leads answered by a person`,
+      color: 'bg-slate-100 text-slate-900',
+    },
+    {
+      label: 'Answered within 1h',
+      value: response.withinHourPct === null ? '—' : `${response.withinHourPct}%`,
+      hint: 'goal: every lead, every time',
+      color: 'bg-slate-100 text-slate-900',
+    },
+  ];
 
   const stats = [
     { label: 'Total', value: counts.total, color: 'bg-slate-100 text-slate-900' },
@@ -21,6 +50,15 @@ export default async function AdminDashboard() {
     <div className="space-y-8">
       <section>
         <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+          {responseStats.map((s) => (
+            <div key={s.label} className={`rounded-lg p-4 ${s.color}`}>
+              <div className="text-xs uppercase tracking-wide opacity-70">{s.label}</div>
+              <div className="text-3xl font-bold">{s.value}</div>
+              <div className="text-xs opacity-70 mt-1">{s.hint}</div>
+            </div>
+          ))}
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {stats.map((s) => (
             <div key={s.label} className={`rounded-lg p-4 ${s.color}`}>

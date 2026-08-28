@@ -1,0 +1,1078 @@
+Yeah, no, I got it.
+Um, what, uh, I mean, should it back off a little bit?
+Should it go like 7, 14, 21?
+Uh, we can do like a staggering, I can look at social science stuff and find out kind of
+what we want to do there.
+Yeah.
+Good call.
+Because if you just do every week and they're going to like, yeah, if you wanted to really
+get in, like, social science selling, like we can get into verbiage or wording that kind
+of plays around and gets people a little more intrigued.
+Oh, yeah.
+Yeah.
+We'll get real.
+Hockey with it.
+Oh, yeah.
+Look at that.
+Everyone looking at this stuff, everyone's really is coming in at later hours.
+It's four, six, 10, eight, four, like everyone's in the PM, so that kind of just puts my head
+to the grind acts and like when these ads should be running at their strongest, if it's
+in the afternoon.
+Yeah.
+But the ads aren't doing that.
+The ads aren't doing that.
+I know, but make adapting the ads that now that we're seeing that, you know, adapting the
+ads to be more targeted to the afternoon, since people are kind of coming in after work
+almost.
+Well, I know.
+But what I'm saying is in the ads, we're not getting the hit at those times.
+The ads are getting hit like mid-day, earlier.
+I saw, yeah, I need to track the ad difference and the lead difference, now that I'm able to
+track leads.
+Yeah.
+And they're probably semi-associated to some of you, right?
+Yeah.
+Like, hey, you send it to the website.
+They didn't.
+Well, the ads couldn't be triggering the responses from the calls.
+Well, hold on just a second.
+So what kind of tracking did we get set up with the ads to know when they click on?
+Does it drop a cookie and follow them through the website?
+It catches them when they click on the, like, sends them to the page, sends that user to the
+page and they click on, no, click on it.
+I think it opens a chat box in our books.
+It sends them to the leads page.
+Look at your website.
+I can tease myself anymore.
+I didn't send them to the home page.
+No, no.
+It sends them directly to, like, contact, because it's like how to track if they, like, submit
+the form.
+Well, because I, on the back end, I'm seeing when the user goes in and when the leads generate
+it to track if it's coming from Google Ads, that's how we bridge that gap.
+Yeah.
+So they don't have something where you, you know, I thought that was the stuff you're
+just building on the page to where it can track if they click the phone number or click
+the email or.
+Well, it can track that, but when it comes to the submissions, because they have to do all
+that and then they have to still submit it.
+So there's like a lot, there's like, there's 30 seconds to a minute of information that goes
+in.
+So that's where I, on the back end, I just to guarantee, I know who the fuck it is.
+I track when the IP goes into your site and verified against who came in at what time.
+So when the IP confirms the lead, I can track that against when they came to the site from
+the ad itself.
+Yeah, but if it doesn't go to a lead and they just click on the email and email it or they
+just click on the phone number and call it, it's not tracking that?
+No, well, it is because I'm tracking, like, when someone from the ad clicks on it, so that
+I can tell, like, they're on the side of this certain time.
+And then whenever I get the lead from them, putting in information, I can, like, collaborate,
+collaborate, or whatever that word is, those two points.
+Yeah.
+But you're guessing.
+Well, I mean, it's in within like a minute.
+It's when, and whenever this user goes in at this time to, like, whenever there's a lead
+that's been submitted.
+So like, you don't know about phone calls or emails.
+Phone calls or email.
+Well, I don't know if they're calling, yes.
+I do know if they are getting or requesting through the site itself.
+I can track, though, if they click on the email or phone, I just don't know, like, what your
+email, like, emails you're getting in the phone.
+I don't know.
+I don't have access to those two, you know, to, like, confirm, like, that's been, like, booked.
+I think I got a false understanding of what that was wanting us to program into our website.
+I thought it was, like, to know what they are clicking on.
+Yeah, I know what they click on, but, like, to confirm that they actually called, like, they
+may have clicked on the phone number.
+I don't know if they called you.
+Yeah.
+Yeah, I got you.
+But it'll say they clicked on that, right?
+Yes.
+Yeah.
+Yeah.
+Yeah.
+Yeah.
+Well, I mean, yeah, you're not going to know if they didn't fucking hung up after the first
+ring or not.
+Yeah.
+You know that they clicked that.
+Yeah.
+I mean, likely that they called because we could have a voice agent answering the shit for
+you.
+Yeah.
+Damn.
+I just ran into a bad ass one the other day for a roofer.
+Mm hmm.
+I mean, I was like, are you fucking kidding me right now?
+Pretty good.
+It was a pretty damn good.
+Oh, it was fucking unbelievable.
+And as a matter of fact, I tried to fuck it up a little bit here and there.
+You didn't just to test it.
+I was like, are you fucking kidding me?
+You know, he had his name.
+Hey, this is Matt.
+Hey, Matt, you want to go on a date with me?
+No, I was like saying this shit and I'm like, Matt, you're AI, aren't you?
+That is correct.
+I'm AI.
+But I'm here to blah blah blah.
+And I was like, holy fuck.
+Great response.
+Yeah.
+I was like, hey, at the end of it, I was like, or no, actually I thought about it after I got
+a phone.
+I'm like, dude, that was so fucking good.
+I need to know what company that is.
+I was like, that was actually fucking amazing.
+That's the best AI should ever talk to my audience.
+It's gotten so it's gotten so fucking good.
+All of it's open source now.
+That's what I'm saying.
+Like we can set it up.
+We can already use our cloud credits since we're paying for it on the website.
+Yeah.
+So they hired a third party, it's 750 a month, which I'm like, that's free, it's fucking
+expensive, kind of.
+Well, yeah.
+Well, that's because they're paying all these services on top of that.
+We can build it ourselves, see what you say, because like the agent voice itself, there's
+a lot of different ways to get the voice and get the like the quickness, because like you
+said, like the best thing about that agent was it was just very well rounded.
+Around handling turnaround questions, I'm sure.
+I had to literally ask them to build a, I mean, I'm like, I'm pretty sure it is.
+But at the same time, dude, this, maybe this motherfuckers is so like professional
+wish type that he's just like, or he's an answering service and he's just like, you know
+what I mean?
+Yeah.
+Yeah.
+But I was like, I'm pretty sure it is.
+But anyways, enough for me to ask actually, yeah, so I called it back to check this shit
+out.
+And I said, Hey, man, you are a I correct.
+Like I asked for a yes, I am and I'm like, no going into details on that.
+I told me it is.
+It said, you know, I'm here to keep things on task or whatever, blah, blah, blah.
+And when I'm straight back to it, and I'm like, damn, okay.
+And then I said, Hey, I'm interested in using this for my own company.
+What's the name of your service?
+Who's providing this and said, well, while I'm here to do what I appreciated or something
+like that.
+And we need this, I'm going to stick to the task at hand and I need to do my business here.
+Like, I need to, I need to talk about their business and that because it's good, but generally
+those guys that do it, they go out and they get these leads themselves to kind of do what
+I do a little bit where it comes to just going out and finding these clients because it's a
+pretty fruitful service to set up as an engineer.
+Cause it's like, Hey, dude, you can lock up seven, 800 bucks worth of, you know, a client.
+And it takes about maybe, sputter bucks, a credit tops on top of all the services you're
+providing.
+So like you're getting some pretty damn good margins that you're doing this yourself.
+Hey, what do you mean?
+Like it's a lot of like small end dudes doing this because I think on TikTok, they're a
+big thing on TikTok now where they go in and they get their leads.
+So I was like, if you want to, I mean, you got to get somebody to call that fucking number
+first.
+You know what I mean?
+Mm hmm.
+Well, their perspective on it, cause I talked to the owner afterwards, I was like, dude, I
+got to tell you that.
+Yeah, I think you got pretty fucking solid piece like, dude, I know, and every time I call
+it, I try, he goes, I tested still in the first week, I tested it like a motherfucker.
+Oh, yeah.
+I was like, dude, this shit's going to blow ass, whatever.
+And he's like, now he's like, dude, I look at it from how much would it cost me that has
+to my answer in that fucking phone.
+Literally.
+It matters.
+I'm sitting on it.
+Thank you for having me.
+Be able to speak knowledgeably.
+Like this thing can.
+And he's like, dude, I've done this shit some fucking ringers and it's just, it's shot me.
+And he goes, I will tell you the first week I stumbled into a couple of times.
+Yeah.
+He goes, but now I can't, I've tried everything.
+I can't fucking get it stumbled.
+It's learned so much shit.
+And we fed it more and more, but yeah, more it spends time training on your shit, the better
+it gets.
+Yeah.
+It's a very fucking impressive.
+I wrote the name down somewhere, I guess it wasn't that important, but I was like, holy
+shit.
+I think when he told me 750 a month, I was like, yeah, I think I'm fucking out.
+Yeah.
+See, that's where it's like, I was telling people, I've always had this little bit of concern
+with the go flat Texas, because I'm not doing it.
+All right.
+Mm hmm.
+And I don't really have a good tool to manage it and be able to see that it's being managed or
+given the tool to do and I kind of like, it's kind of weird with this business partner.
+I'm like, so I'm just going to send them all to Jim and he's like, yeah, okay, yeah, yeah.
+And then he comes back and he's like, I don't think he's doing very good with that.
+I don't think he's returning all the calls from when this is not blah, blah, blah.
+And I'm like, dude, prompt is the name of the game that we'll talk to three other competitors
+before you get back to him if you don't call him back within 10 minutes.
+Yeah.
+And so I'm kind of in the same boat as he was with the other guy.
+I'm kind of like, are you?
+I mean, like I'm watching the email, we both use that same email, right?
+Right.
+And I'm like, this fucking thing's been sitting on here for 14 hours.
+Like, I don't know the dude's doing shit, he's busy, but I'm like, that, that lead is going
+to fucking waste.
+Like, they literally filled out the contact shit on our website and it's sitting there in a
+fucking email for that long.
+Now they don't know always, but there's, but for example, it sounds like fucking three
+hours.
+That's not good.
+So maybe this chat thing was a good solution to, well, no, that's not going to help responding
+to the fucking email, but yeah, at least have automated ones.
+Well, that's why, like, if we think about it as letting us test out ideas that we have
+with how we would manage and virus or a preservo, maybe you want to spend some time
+doing it here and then like, spelling it off to him to send the money on it.
+Yeah, I think actually it would be way, we don't get that many calls for a virus or, like,
+lead time.
+Yeah, I meant to say preservo.
+Oh, servo.
+Oh, yeah.
+Absolutely.
+I think actually it'd be probably advantageous for go flat Texas that way they feel like that.
+Okay.
+Look, this one was so good that most, I would bet over 50% of people don't even know it's
+fucking AI.
+Oh, yeah.
+No, maybe even higher than that.
+If you weren't exposed to my net job ass, I'm sure, like that also, you know, the bullshit
+of the game.
+Yeah, if you're like over like 50, the probability of you knowing is probably like low, low,
+low.
+Yeah.
+Like the younger or the tech people or the stuff like that or people that are a little
+bit more in the know of like automation and shit, they're probably like 50 50.
+Yeah.
+Well, no, they're probably like 25 and the rest of everybody between those two are probably
+like 50 50.
+Yeah.
+But either way, you know, it was fucking solid.
+And you know, it records everything.
+He can go back and read what he answered this and that.
+And I'm like, well, I wouldn't want to waste so much time doing that but he can, he's like,
+well, where that's helpful for me is before I call you back, I can review and see what
+you're already kind of answered and asked and shit like that.
+So yeah, let's get you like sells notes ready for how you're going to pitch it.
+Right.
+You know, it's pretty solid.
+So okay, so now I understand that a little bit better.
+How are we doing on that?
+Yeah.
+You did change up the numbers where we're not paying the crazy shit anymore.
+Uh-huh.
+Yeah.
+But it down.
+So it's not because that advice has been, let's say, Jim's $1.
+Yeah, that was, that was learning, you know, after what you told me about, I'm like, uh-huh.
+Let's see what we got here.
+Um, God, this looks weird on my computer campaigns to, I don't even know how to fucking
+find what I'm looking for right now, clicks, metrics, what the fuck am I looking for?
+Joe Flock, Texas, 82 day.
+Okay.
+Here's the clicks.
+The time, what's the time today?
+I know we did not get, okay, the fuck are the clicks, can't find it.
+I go this easier on the fucking phone.
+I know.
+I see impressions, 1400, I see 48, what the fuck is this?
+Where the fuck do you click to see clicks?
+I swear they could lay this fucking thing out better.
+It's fucking, I found it retarded.
+It's like this dude, all that garment shit, how fancy and the technology and all that shit
+in my playing and just garment in general, right?
+Like they're pretty fucking tech savvy.
+The interface of shit is beautiful, right?
+Right.
+Well, to program in custom checklist in the panel and that thing, use an old ass SD card
+and then you download this super arcade fucking program they have.
+And to write the checklist is so fucking, oh my God, I'm like, dude, this is the programming,
+this reminds me of that programming shit when they in sixth grade, we had to go to computer
+class.
+I'm like, what the fuck is this?
+This is so, it looks like DOS crap, and I'm like, all this just to fucking put a checklist
+in.
+And then now I found out my file was corrupted and then AI said, upload that fucking file.
+No, it's not corrupted.
+You had a couple blanks in here.
+I filled them in for you now open that bitch up.
+I'm like, wow, I can't find where the fuck can hit clicks.
+This is stupid.
+I'm launching in my mind so I can help.
+If I'm gonna share your screen, I can take a look.
+Dude, I can do this on my phone and fucking the heartache, just crazy.
+I don't know why I can't see them on the fucking computer.
+Let's see, logging in on them, there it is, right there clicks, 183 in the last seven days.
+That's pretty good.
+It's kind of melted down a little bit.
+I feel like they, like if you don't do something in here, do some updates or change, they're like,
+yeah, we're gonna drop it down a little bit, let their little attention orders or something.
+We've got 20 today from 6 a.m. to 6 p.m., time was about one o'clock.
+Then I'd say about eight, nine was pretty second peak.
+First peak was about one o'clock and that's, yeah, that's kind of what I've been noticing
+and as a matter of fact, if I go back to a date range, let's say last 14 days, well, that's
+not gonna tell me the fucking hours.
+That's kind of stupid.
+That tells me all of them per day.
+So we're probably averaging not to hear about what, 30 minutes, about 25 a day.
+What about clay question is, what's the conversion on those?
+And that's where we have to have the metrics of meat tracking when they go into the site.
+Yeah, sometimes they're gonna catch like the phone calls or the emails.
+And what's the part, I know this thing has the capability of tracking to at least click,
+then contact information clicked until the number clicked on the email, right?
+Well, it's tracking.
+Look, since I've lowered that money, my search auction insights a little, come down quite a bit,
+but it's all right.
+I mean, we're paying fucking a lot less.
+Jim, from third, slightly is worth more than that, as he was still unanswered, blah, blah,
+or she still leads roughly very, very, very.
+In July, I think it's July 29.
+I don't think that's when we had that.
+We were paying the whole lot.
+We had July 29.
+Oh, wasted money.
+It's calling out.
+Recommendations auto applies, fucking us.
+What is?
+Recommendations auto apply is fighting us.
+Google's auto apply feature makes changes, and as nobody asked him for ends leading to
+zero leads on $86 of clicks.
+Uh-huh.
+That's right, so I'm not click.
+No, I think it's just something that's already on because Google tries doing their thing first.
+So we went from $3.78 for nine leads, we went to $3.78 a lead, because it was $3,400 spin on
+nine leads, and that was leading to, yeah, and it went from $1,800 for 10 leads, so it's
+a 180 a lead instead of $3.78, and then since $8.21, which is our call wall back, we're down
+to $1.38 a lead.
+$8.21 six days ago?
+Yeah, so from $8.21, we're at $130 a lead.
+So we brought it down from cost of $3,378, a lead down to $1.38 a lead, so that's effective.
+Yeah, but it's still crazy.
+Still crazy.
+Yeah.
+Lead.
+They went to our website.
+Yeah.
+They didn't necessarily do anything else.
+They just went to the website.
+Went to the website.
+Let me verify exactly what it's catalytic.
+What the fuck?
+Click is.
+That's what the click is.
+Got to be more than that, isn't that?
+Yeah, they clicked on the ad.
+It went to the what they had on the website, right?
+Yeah.
+And it goes to the contact page for us, like to sign up for, I think it goes to the contact,
+that contact us page, and then also opens up the chatbot so they can either chat with
+the chatbot in or talk and get a lead or like submit contact information.
+I'm double checking right now.
+I'm looking at what our SEO is.
+Yeah.
+See, that's not even a customer acquisition.
+For customer acquisition alone, that's still pretty.
+Yes, it knows.
+Mm-hmm.
+I mean, that would convert out to like a thousand, something fucking dollars to get the customer
+probably.
+So I think that's a little bit more.
+I think there's a little more into it than just got into our website number.
+I think that's what clicks are.
+And I don't know, but I'm just assuming that's what a click is.
+Is it they clicked on your ad?
+Well, the ad's already fucking displayed, isn't it?
+Yeah.
+So the click on the ad, and I think it's them going into the ad and then taking action within
+the ad is how they're dignifying a lead.
+Yeah.
+But basically they're going to your website, but may not put that's a fucking click.
+The click is just going to it.
+The lead is there's action taking place afterwards.
+What's in there?
+They didn't just back out.
+They didn't just say, all right, and shit.
+Yeah, yeah.
+So they either sent the contact or they, yeah, or hit the email or hit the phone number.
+Yeah.
+So that makes a little more sense, but even still, even if they actually fucking signed
+up at 130 person, it's still a little bit steep.
+I mean, if I knew they bought a fucking 100 hour block of time and they sent me $20.
+Yeah.
+Then perfect.
+Yeah.
+Yeah, that fucking, or yeah, that fucking makes sense, but that's a maybe schedule of discovery
+flight for whatever will charge only, you know, 250 or whatever that amount is.
+That's like, that's upside down.
+And also the discovery flight is a leader too, right?
+It's like, we don't make a lot of money off it by any means is to get you enticed to
+come and sign up and go through school and get your license, you know, spend that 15
+grand or whatever.
+And then hopefully you'll go on and get transferred rating.
+You want to be a sea of thai.
+Oh, you want to go fly for the big boys, so can you watch the fly for an airliner and
+then you take a plane, you're hijacking flying on the world traits and hopefully you go
+all the way.
+Yeah.
+Yeah.
+Hopefully you go.
+Yeah.
+Absolutely.
+And you're probably going to end up spending like spending five grand with me.
+Yeah.
+Yeah.
+Maybe about maybe 10 out of it, but or my angle on this whole thing is, hey, go fly, make a
+little money.
+That's awesome.
+Yeah.
+Just plain values.
+Keep fucking going up.
+Yeah.
+Plain values go up.
+And then let's make money along.
+Right.
+And let's practice with our SEO shit marketing and get like the chat bot, the fucking voice
+spot stuff.
+Like let's get all this.
+All these agents looking nice, just doing to roll that over to Preservo.
+And then you can offload those costs over to your partner.
+There's other SEO bullshit other than this fucking click bull crap with God, they got
+to be making fucking shit, load of money off this by the way.
+Oh, I mean, how many companies are doing this?
+Oh, I was like, is there a booking service for people to go in and book this stuff that
+we'd like for them to have on the front end?
+Because I assume you already have that.
+Well, okay.
+So I have the scheduling app, right?
+It's a management tool.
+It's not a schedule.
+Right.
+And I think they actually have some kind of capability of doing something similar to
+that.
+Here's the, here's the catch or at least needs to be, what's the work around?
+How do we figure this thing out?
+I got to assign it to a CFI.
+And that's what the lead pilots doing, right?
+Right.
+She's picking the people to, hey, I got you a discovery flight.
+You're doing it on this day.
+Blah, blah, blah.
+Right.
+Some people don't want them.
+Some people want them.
+Whatever.
+Okay.
+So the nobody's denying them.
+Put it that way.
+But the camera won't.
+So there's that and also the scheduling, you know, like, can you go?
+Can you not do it?
+Right.
+When can they do it?
+And then there is also the roadblocks.
+Well, I guess not really on the scrubber plots.
+They don't have to get insurance all that.
+Not even student pilot, but like other, like, hey, you want to come do a buying a fly and
+or whatever.
+Not even that one.
+If you want to start, if you want to start training and start flying and say, you just
+want to get your instrument right, you've got to go by.
+We've got to get that checked off and you've got to sign the contract.
+We've got to get that checked off, like, there's some people that can, could possibly meet
+the criteria to just come in and schedule it.
+But then how are we going to get other people?
+I guess we could just put them with someone else.
+Good.
+There's a lot.
+I'm just trying to think.
+It's a schedule.
+Mm hmm.
+Because I can send out requests to those pots for them to confirm it and an automated fashion
+in the emails where it's like, hey, do you want this XYZ and it goes on a rotation or
+if you want to send it to certain people for certain things.
+And then just clicking the email or text confirms it just so we don't have to have anyone communicating
+all this shit.
+Yeah.
+There's probably something to be had there for sure.
+I just kind of got to think that out a little bit.
+I need their brain power just a little bit.
+And the problem with the rotations is we're going to have to continually be updating that.
+Yeah.
+Just because see if I just come and go, you know, oh, I got a job flying, whatever bullshit.
+Okay.
+Next.
+Next.
+I mean, we probably go through.
+I'm just guessing.
+I mean, we don't have a lot to begin with, but I'd say new in or out.
+Maybe two months, one and a half.
+Maybe not that many.
+Maybe not that many.
+This is called one a month.
+So like the list has to be updated every month.
+So I mean, we could probably build something into the little owner log in thing and yeah,
+like sort of pipeline.
+Do that.
+Yeah.
+Like here's actually, actually, the fucking system I'm saying the login to that management
+tool there to do the scheduling has all the currency files in it, once they go inactive
+and it would just have to go in and read it every so often to make sure the list is updated.
+Hmm.
+Yeah.
+I think that might be a possibility and discovery flights are easy to buy annual flight things
+are easy.
+Like they literally can fucking do that.
+Say when you want it.
+When you want it.
+I mean, we've got it.
+It's open.
+You know what I mean?
+We've got enough planes and not so much business that you pick a day, we can fucking accommodate
+you.
+We can almost accommodate right down to you name the fucking time.
+Doesn't say like I can build.
+Yeah.
+It'll be fun in the sense of like, I think it would spin your brain on seeing what it does
+as we play around with like what we would do for the consulting pipeline and other things.
+Just something that, you know, when you get time and you want to play around with it, I'm
+not saying overly prioritize it.
+I just think it'd be a fun little brain activity.
+Yeah.
+I think there's a real possibility of doing that now, but it's kind of brainstorming it out.
+What else are we going to talk about?
+Really just nailing down go fly.
+I think you said you're sending me the marketing emails or whatever.
+So that works for me.
+Yeah.
+I already sent those.
+Yeah.
+So I'll sort of that really.
+That's all I wanted to.
+Because we just keep putting that bitch off and I'm like, all right, well, look, I got
+a little bit of brainpower left.
+Take it.
+Yeah.
+Um, so I don't really mind sharing well, there's a, it's a marching thing right here, right?
+I don't mind sharing with the bot.
+Like what, what do you charge for our, well, there's two different prices.
+There's one 95 or 190 and that's a pain.
+That's the three planes that are have like glass in the panel, like technology in the panel.
+And then we have an old school round gauge, team gauge that's like a plane.
+Right.
+One's 180.
+You know, so take your pick.
+You want to be cheap and fly this one or you want to stick?
+You want to learn the round gauges because you've never flown round gauges or buys first
+hook.
+You don't want to do the other one because I've never done the one with all that glass in
+the technology or, um, but I will say this.
+So you have that caveat, there's two different, two different, uh, rates, but then you also
+have a market build marketing comes in and says, Hey, you want to be the cheap guy.
+You want to fly first?
+You can't?
+Okay.
+Well, then the rates really 155.
+Yeah, you're going to have to go over here and fucking buy or it's 152.
+You're going to have to go over here and buy a block time of 50 hours.
+You're going to have to fly the cheap is fine.
+Yeah.
+You know what I mean?
+Yeah.
+That's what I'm saying.
+Like I want to capture all that logic and create like a little sales agent inside the chat
+box, like all these little nifty things that you would want.
+If you could, if you knew everything and you could scheme it all out and you're like both
+you and a sales agent, let's do a real simple test record.
+So I'm going to go, I have a lot of this already saved in the system for like customers
+so they can like, Oh, let's see, where's that log in?
+Flight circle.
+Okay.
+Welcome back.
+Man, I should put you on a recording.
+So you can see this actually, I mean, I don't know if you want to spend 10, 15 minutes
+on this.
+Yeah.
+Yeah.
+Yeah.
+Yeah.
+Could I get inside of it?
+Yeah.
+Well, that's where we're going.
+I was going to say, because I can have like I said, I can have our agent go inside of
+these puppies too, to like learn it.
+Mm hmm.
+A little bit of your screen.
+How do I start with me now, me was myself?
+No.
+What the fuck?
+What do you do to yourself?
+Okay.
+Ah, I got to be connecting, turn that motherfucking camera off.
+Wait, now you're hitting me at the same time I'm hitting you or hurting each other.
+I need to turn my camera off.
+All right, guys, I'm not sure that screen away.
+Oh, can you see me?
+I can see your screen.
+Yeah.
+Yeah.
+Okay.
+So this is a flat circle right there, right?
+Yep.
+Actually, I was just going to view their pitch here.
+That's our beautiful app.
+Google calendar, sync and shit.
+You got to be up.
+This thing just keeps becoming more and more and more when I started, it was pretty basic.
+I know the guy is nice to get some developers on the back of him with some cloud code and
+he's going crazy on that bit.
+The owners.
+Yep.
+And I don't think that's what they were doing five years ago.
+I don't know.
+Like, just fucking right by hand, but now they take that or they always have every suggestion
+I ever do.
+They fucking have implemented it, except for one, I'm still waiting on that one.
+I'm like, come on, you motherfuckers, you know what I like.
+So these are all fucking color coded, which you could come up with one that's color coded
+for like, man, they got all kinds of color code bullshit going on on this motherfucker
+now.
+But you could do one specific color for AI scheduled that bull killer or something.
+Yeah.
+Something where we know it's an agent booking it.
+Yeah.
+That'd be really cool.
+When I log in the submission, I said, God damn, look at all these magenta's fucking AI
+Yeah.
+That's what I'm saying.
+Yeah.
+Okay.
+Taking notes.
+Let's go back to this real quick on the list is elementary.
+Welcome back.
+Fuck.
+I don't know.
+It's my logging credentials.
+You know, that's some elementary shit right here.
+I'm not sure.
+Man, this is bypassing my bio with that cookie, isn't it?
+It says, let it be free.
+I'm like trying to figure out what my login is.
+I don't worry about it.
+I trust you.
+Come on in.
+You think it'd be secure.
+My account.
+Seven.
+Log in credentials.
+You want to type in their teams.
+One of my email.
+Oh, yeah.
+Got it.
+Sir.
+You captured it.
+And I can have it like you said, like where every time it puts in like a lead or puts in a whatever,
+it'll be notified that it came from the slave.
+Yeah.
+And you can, well, it's going to, the slides going to use my account.
+So it's going to say I did it too.
+But yeah, we set up a color code for me, schedule.
+Mm hmm.
+Where is my schedules?
+Schedule settings.
+There you go.
+I'm not sure.
+Some people.
+Connect your whole account.
+There's already some shit built in here.
+You know what I mean?
+Yeah.
+Yeah.
+Like everything we just talked about is probably fucking.
+There's some level of it, but luckily I can connect the dots and all these bitches.
+So there's schedule.
+Let's go to.
+I haven't done this in a while.
+So.
+Where is it?
+You think about this dashboard?
+I'm looking for dash.
+So within the dashboard is a shit, some of this information.
+What we kind of been talking about.
+Mm hmm.
+These are checklists.
+Not there.
+Never.
+Feeds do not do lists.
+Yeah.
+But I wrote this a long time ago.
+Actually, I've been meaning to check something.
+Failure to check in the flag.
+If you measure flight.
+Where is that motherfucker?
+Move cancellation.
+I lost that.
+Cancellation is actually about 50.
+I don't know.
+It's good.
+I'm going to do this.
+So every flight procedures.
+Oh, here you go.
+Rates and block time.
+So I'll tell you this, like all the, this is kind of interesting.
+This is not spelled out here.
+Are you recording by the way?
+Yeah.
+Okay.
+Good.
+Because this needs to be captured for sure.
+Regarding the rates and all that bullshit.
+Yeah.
+Yeah.
+Yeah.
+Yeah.
+At 1900.
+That's 10 hours.
+You get one hour free.
+So it's really 11 divided in the 1900 gives your new rate.
+Right?
+Okay.
+You pay for 10 hours at 190.
+You get it for 19.
+Well, wait.
+I said you had a cheaper plane for 180.
+That's right.
+You still pay the same amount.
+But for each hour that you fly when you're done, if you fly one
+hour.
+It's going to take one of these credits right here, but it's going
+to give you the $10.
+As a credit on the account.
+Okay.
+So, in other words, you're going to get 11 hours with this.
+You can fly the cheaper ones the whole time.
+You're going to have 110 bucks toward another 180 hour.
+So you're going to get like what?
+A little over 11 and a half hours.
+I see what you're saying.
+We used to have a broken out crazy where it was a block time for
+each one and we had three different rates and it was like,
+fuck all that.
+Yeah.
+It's doing one.
+One easy thing.
+What rates an important factor?
+It doesn't matter.
+Most everybody does that.
+But some of these flying schools are flying clubs.
+They're like, Hey, it's only $120 an hour.
+Oh, man, that's fucking amazing.
+And then it's like, well, you pay for the field.
+Yeah.
+Gotcha.
+That's $7 an hour plus.
+It's burning 15 an hour.
+Oh, that's not.
+That's another one.
+It made us 250 bucks.
+You know what I mean?
+Yeah.
+Hidden fees as they say.
+I don't know that there's a bunch in here for it to learn.
+What the fuck?
+I did this.
+So I came in and jacked.
+How much of the.
+Can't read that.
+No, man.
+That's a common procedure that.
+So, yeah, and some I came in here and jacked with my stuff,
+but anyone's doing that.
+I'm going to try.
+Yeah.
+So anyway, there's some information there in the dashboard.
+Right.
+Instructors.
+Here's your current instructor.
+Now this guy, I would say, don't, don't book him.
+He's the chief power guy.
+But everybody else is getting.
+Okay.
+And then.
+Yeah.
+And if they don't, if they don't like it and then work out,
+you just switch it to someone else.
+Oh, yeah.
+He's also not going to give both.
+I don't know why he's in here as a instructor.
+That's my business for me.
+Fuck him.
+I'm here too.
+Yeah.
+It's also here probably too.
+Yeah.
+There's a lot of shit here.
+I'm not getting a very good job of showcasing what might help us.
+I'll be able to play around with it.
+Because it gives me at least an idea of what's going on at least.
+Yeah.
+Yeah.
+These three guys should not be booked.
+Auto books or anything.
+Unless it's like just not going to fit anybody else's skin.
+But at the same time, I'm saying both that shit and we can accommodate.
+At the right.
+We're not so fucking busy that we can't accommodate.
+Any time, any day.
+Someone, someone will pick that shit up.
+And if not, we can call him back and say, Hey, I'm sorry.
+That's not work out.
+Can you do like an hour later?
+Yeah.
+And just reschedule.
+Yeah.
+Well, I wonder if my rates, right?
+Can't remember which one you like it's done.
+One 70.
+Fuck.
+Okay.
+I'm sitting there.
+I'm sitting there.
+These guys actually will make them charge them more.
+I didn't know we were doing that either.
+Anyways, that's still.
+Now, all these should be 190.
+Let's see if I have some cells that are flying for.
+So we give them a discount.
+Okay.
+One hour discover one 50.
+See the numbers that we're in that thing include the instructor or you missed them.
+Other shit.
+Right.
+No.
+The H.S.
+High school.
+Oh, we may come up.
+We're really trying to get in this.
+Home school.
+My high school.
+It's home school.
+So anyway, that's the log into this.
+It can go in there and start learning.
+We do use training.
+A built-in training.
+It's kind of.
+Kind of interesting.
+I don't know shit about it.
+Right.
+But each time they complete the course or they check it off and then you can't go do this until you've done your school work and like when you're actually learning the fly.
+I don't know.
+The whole thing.
+I just don't know anything about it.
+Manage.
+Schedule.
+Training.
+All right.
+Message was sushi.
+Think about this.
+Beat the heat.
+Nothing beaten.
+Heat.
+Get 30 hour.
+$30 credit every hour.
+You fly.
+It's not hot at night.
+It's less traffic.
+Like there's all kinds of.
+Fly down.
+First.
+See what I do.
+So I'm not going to give you a $30 discount.
+I'm going to give $30 credit.
+You can spend on future.
+So that was kind of a thing.
+Kind of came up with the head.
+I kind of held the scripted out a little bit.
+Yeah.
+And then they are the one.
+Go.
+Flow fixes.
+Reviews.
+We need your fucking reviews.
+I think I'm looking like six reviews out of this.
+I'm like, what the fuck.
+No, I got to throw you all bone.
+Like I'm going to have a.
+Free gallon of gas.
+Yeah.
+But they don't pay for gas.
+They just put for rental, which includes gas.
+When it cools down a little bit, I'm going to have a hot dog.
+Can burger day.
+Okay.
+You want to focus on hamburger?
+Go on.
+Give us a review.
+Now go on Apple.
+Give us a review.
+Now go on Facebook.
+Give us a photo.
+Yeah.
+Yeah.
+Well, I don't pay for gas.
+I don't pay for gas.
+I don't pay for gas.
+I don't pay for gas.
+I don't pay for gas.
+I don't pay for gas.
+I'm going to have a hot dog.
+Let's try it.
+Go on Facebook.
+Give us a fucking review.
+Follow us there.
+Okay.
+Here's your hamburger.
+I know it's just a fucking frozen patty.
+It tastes like shit, but just be happy.
+Shut up next.
+How proactive is the business partner with us kind of stuff.
+Or just more you.
+The marketing stuff?
+Is all me.
+Very well.
+No, no, no, no, no.
+I take that.
+From the digital side,
+only.
+He's more or the mouse.
+that and he is he's the one responding to all the incoming calls and emails and all that bullshit.
+No, but if you were to take that over where we are lacking a little bit, I don't think we're paying
+all this money on the front and the get all this shit coming to us and I think we're stumbling a
+little bit. Yeah, and quite honestly, I think we've just never had a lot. We did it at some
+points in time when I was doing this before and he's got other responsibilities. So it's like,
+hey, I got to change the oil on this fucking plane so they can fly tonight or go do a check ride or
+whatever. And it's like, that shit's waiting. This is money now. Yeah, you know what I mean? So it's
+kind of sucks. But what I was saying on the marketing front is between him and the CFIs,
+they are doing like first hand marketing as far as like putting together a cloth thing that goes
+on a table and go into the high school and meeting kids during lunch or the little banner
+things that go up like you see it shows and shit like that that they do out there. And so and
+having a dude, we had a great turnout on this homeschooling thing. They literally expected like maybe 10,
+12 parents to show up and like 60 or 70 fucking showed up. I think you're telling me about this.
+Yeah, and it was like, holy shit, like we don't have room in here. Let's just do it out in the
+hanger fuck. Yeah, holy crap. Like, okay, we're going to move this out here. It's getting a little
+full one when you see there's 20 more people coming. So let's do that out here. That's so good. So that
+was great. Yeah, on that end. So good for them and their showing house. Yeah. And these are like the
+homeschool kids where the parents are really actively like trying to be like,
+the reason our homeschoolers, I want the best for my kid. Yeah. Like fuck the school system and all
+that bullshit. Like, you know, I don't want them sitting in their house learning all day in books.
+I want them, we're going out and doing activities and learning how to do it. Relax shit. Yeah. Yeah,
+real shit. Not talking retard shit. George Washington had a fucking and Rolex pocket watch in his pocket
+that he brought from England, didn't that? You know what I mean? Like congrats on
+before that. That's ironic. Why is this on the test? Just real real life goes. Yeah,
+exactly what shit you'll use for a Russia like can at least. So anyways, that's the kind of
+shit they're doing. You know what I mean? I've just always done the social because well,
+it interests me a little bit more. And I don't have the dedication of time to do that stuff.
+And I'm the one who initially started this fucking Google ads bullshit back in the day, which I think
+was a big contributor early on of bringing us a pretty good amount of business. I had a, we had a
+way different business plan back then, too, which kind of miss it. But now we're able to
+rather the right or wrong decision. Now we're able to make money off to see if I was by being
+a legit polite school before I was just running planes. And I'm like, Hey, you're a CFI. Hey,
+quick getting ripped off of these schools over here. Yeah, come over here.
+Hey, over here. And instead of charging, you know, $75 an hour like these schools are just charged
+fucking 40 3550. You'll make way more money. The student wins. Everybody wins. And so they,
+I had CFI independent CFI's flying my plane along with just renters and it really appealed to
+the renters a lot too. So I don't weigh more just renters. And they are able to fly a plane
+shouldn't use it. And I went into school, but then we converted to actually being in school, which
+it's got frozen cons. The other way was just I've all in fucking low drag. Let's go.
+But then it's kind of like, man, there's a little bit more liability. Like we don't really have
+that. But we need to ultimately become a school. Yeah.
+Well, I'm like, okay, I kind of see where the bottlenecks like you're saying on the performance
+side of tracking. Because again, it's not like they're maybe they're not doing a bad job.
+And it's all that stuff. It just, like you said, it's a follow up. The performance is getting this
+shit. That's right. And today, today, I mean, literally, I fucking know it. You don't even have to go
+fool the fucking research on it. I know I am. I am one that does this too. And a lot of people do.
+It's the day today, everybody wants to shit down with very few exceptions. Like, Oh, okay,
+I'm gonna wait on and call me. Well, while I'm waiting on, I call fucking three others.
+You know, all right. If I got if I got a fucking time, why not? Right.
+And I think you hear bullshit from those people. And then when you get back to them,
+now they're loaded with fucking bullshit. And then you got to try to overcome those hurdles because
+some other motherfucker told them some well, now when you go to another school, you know,
+if they're not doing this and they don't have this program, oh, watch it. Scary, scary.
+Okay, hold on. That's not quite true. That's not accurate. Let me explain. And then instead of
+trying to get them locked up, you're just trying to debunk bullshit. You know what I mean? Yeah,
+you're just having to prove it through the wrong to run into. Yeah, that's the fucking
+kind of problems you run into by waiting plus a third of those people may have already committed
+to somebody else. Yeah, because you said like two fucking hours, it's idle hands. You don't want
+it. You don't want people to think and just get them to commit. Yeah, sell one on one to make
+commitment. If they are, if they, if they have that nature in them, if I want it now, I want it now.
+Well, when something sounds good that crosses them, they're going to fucking pick it because they want
+it now. Go with it. Exactly. I'm sorry, man. I already went with someone else. Fuck.
+Fuck. Literally. Now, Mark, you know, and his said, well, I'm just fucking spinning my wheels.
+So now every fucking two out of three, I call they've already fucking done something. So I'm
+just my time fucking calling. Yeah. So that's, that's, you know, the whole debacle behind that.
+It's like, yeah, it's got to be brought, man. It's got to be quick.
+You're going to be quick here. And that's why, like, yeah, I think we need to speed that up.
+Like I said, yeah, I know you like don't want to like overly like prioritize this situation.
+And like you want your business partner to pick up that effort, but I think taking on some of it
+would be nice for the sake of preservo shit. I'm just training up a digital shit. I'm all on it.
+Want to see other shit. I can contribute to it, but I can be more of a driving force and
+like the other shit, I can be like, Hey, if we, if you're going to our guy high school,
+or you're not going flat man, Lewisville, Northwest, yeah, like, yeah, what do you do?
+Let's fucking do it. It's others. Yeah, there's a lot of yeah, there's a lot of other ones.
+There's a lot of other avenues. So I can ask them to do some of those things as well.
+You don't want to be on the digital shit. I can kind of form that accident.
+And I'm, I'm more than willing to be the driving force behind it and say, Hey, I need you
+else help. This is what we're going to fucking do. Here's the results.
+Otherwise, awesome. Yeah. And that's what I want. I like results and awesome.
+Yeah, I need, I do need, I need go fly to be doing more. I mean, what are we out on that
+reports? Don't get me wrong, we're doing way better when we worked three months ago,
+but it's still not. No, I can always be better. Give it your goddamn fight school.
+The plane, what do we got four more days?
+Some more flights today, but we are at two hundred and two hours available. I don't know
+what this is probably some maintenance bullshit. That's, I mean, that's not terrible. Maybe we'll
+cap out at 225. Maybe it's we got good weather. Oh, you know, another thing that fucking sucks
+these planes. You can't fly them over a hundred and four degrees. Oh, really?
+Oh, that's that? That's, that's talked, blocked us a little bit this week, this month.
+Yeah, we've had this fucking month is stupid. Yeah, we've definitely had some cancellations,
+especially that day problem. Was this the hundred and fucking eight day or something?
+The hundred and eight days crazy. I think it was fucking decent.
+Or whatever fucking day it says, I don't even know what day it says.
+I think I was down in San Antonio was cooler in San Antonio than Dallas,
+first time I've ever seen something like that. Tuesday, I think it was fucking Tuesday.
+But yeah, and you know, this day was hot as fuck two. Plus, it's just fucking miserable in these
+planes, hundred fucking degrees. So dude, I wouldn't do it. Just to go fucking do an hour and a half
+train, fuck that. You're not going high or it's cool. Just get melted in the sky. Yeah,
+let's go blaze our fucking balls off.
+Do you want me to learn something with swamp ass,
+man? Swamped that over here.
+Just don't ever get over us coming in. I think one of the times we're coming in from Florida,
+one of the lifts we get is so fucking hot.
+Especially going down in Florida. Yeah, I think that's what it was.
+You get down to about under 5,000 and you're like, holy fucking humidity,
+when you hit that humidity line, because up there are ten, it's dries.
+Bone drop. Yeah. And it's way cooler. So that even feels cooler when it's dry.
+And then you get down and it adds about 20 degrees.
+So fast. Yeah, it's so fast.
+So this is what hell is like, yay.
+Yes, sir. I actually may have an air conditioner. I'm going to put in that
+bearing. Well, so that's making this warm. I was trying to get right before COVID.
+It's a it's a simplistic thing. Like you buy this bitch, you wire up some fucking electrical
+and put that motherfucker in the back and it just blows cold ass air up front.
+Anyways, they quit. Well, during COVID, I was like, hey, what the fuck? Like, I want to order one of these,
+you know, and they're like, yeah, we're not taking orders right now. I'm like, what kind of
+fuck am I taking orders? So I mean, it's backlog, like, I mean, backboard or whatever. I don't
+want how long is the fucking wait six months? Like, come on, nobody does this.
+Yeah, well, we're having problems getting parts now with the COVID and this and I'm like, oh my god.
+COVID's made the part sick. We can't do it. Yeah. And so for literally like two and a half years,
+I'm trying to get it. Hey, when you all know, well, you know, we just feared, yeah, we're not doing
+anymore. Finally, in like 2020 or something like that, they finally just told them, we're not doing
+them any. We're not building them anymore. And I'm like, man, losers fucking give up like that.
+Fuck y'all. Why don't you give me the fucking direction on how to build these bitches
