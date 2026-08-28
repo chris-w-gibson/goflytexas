@@ -1,0 +1,30 @@
+{
+  "message": {
+    "type": "end-of-call-report",
+    "timestamp": 1787950000000,
+    "endedReason": "customer-ended-call",
+    "durationSeconds": 102.4,
+    "startedAt": "2026-08-28T20:31:10.000Z",
+    "endedAt": "2026-08-28T20:32:52.000Z",
+    "summary": "Caller asked about discovery flights and left a callback number.",
+    "call": {
+      "id": "vapi-call-fixture-001",
+      "orgId": "org_fixture",
+      "type": "inboundPhoneCall",
+      "customer": { "number": "+18175550142" },
+      "phoneNumber": { "number": "+19405550199", "provider": "twilio" }
+    },
+    "artifact": {
+      "transcript": "AI: Hi, thanks for calling GoFlyTexas.\nUser: Hi, I'm Sarah Mitchell.",
+      "recordingUrl": "https://storage.example.com/recordings/vapi-call-fixture-001.wav",
+      "messages": [
+        { "role": "system", "message": "persona", "time": 0, "secondsFromStart": 0 },
+        { "role": "bot", "message": "Hi, thanks for calling GoFlyTexas. Sorry we missed you. I'm the school's automated assistant, an AI. What can I help with?", "time": 1, "secondsFromStart": 1.2 },
+        { "role": "user", "message": "Hi, yeah, I'm Sarah Mitchell. I wanted to ask about a discovery flight for my husband, he's been wanting to try flying forever.", "secondsFromStart": 9.8 },
+        { "role": "bot", "message": "That's a great gift. A discovery flight is one hour in a Cessna 172 with an instructor, and it's one fifty right now, confirmed when you book. Can I get the best number to call you back?", "secondsFromStart": 16.0 },
+        { "role": "user", "message": "This number is fine. Tuesday afternoon after three works best for me.", "secondsFromStart": 27.5 },
+        { "role": "bot", "message": "Got it, Sarah. An instructor will call you back Tuesday after three. Thanks for calling GoFlyTexas. Goodbye.", "secondsFromStart": 34.0 }
+      ]
+    }
+  }
+}

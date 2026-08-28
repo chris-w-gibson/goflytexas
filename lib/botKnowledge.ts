@@ -1,3 +1,4 @@
+import type Anthropic from '@anthropic-ai/sdk';
 import { desc, asc, eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { botDocuments, type BotDocument } from '@/lib/db/schema';
@@ -126,4 +127,30 @@ export async function getActiveKnowledge(): Promise<
     .from(botDocuments)
     .where(eq(botDocuments.isActive, true))
     .orderBy(asc(botDocuments.id));
+}
+
+export const NO_KNOWLEDGE_FALLBACK =
+  'No reference documents have been uploaded yet. Say you cannot answer detailed questions right now and offer the contact options.';
+
+/** Pure: the exact <document> wrapping both the chat and voice brains use. */
+export function formatKnowledgeText(
+  docs: Array<Pick<BotDocument, 'title' | 'content'>>,
+): string {
+  if (docs.length === 0) return NO_KNOWLEDGE_FALLBACK;
+  return docs
+    .map((doc) => `<document title="${doc.title}">\n${doc.content}\n</document>`)
+    .join('\n\n');
+}
+
+/**
+ * The system block that carries the prompt-cache breakpoint. Identical content
+ * for every request until a document changes — keep it byte-stable.
+ */
+export async function buildKnowledgeBlock(): Promise<Anthropic.TextBlockParam> {
+  const docs = await getActiveKnowledge();
+  return {
+    type: 'text',
+    text: `Reference documents:\n\n${formatKnowledgeText(docs)}`,
+    cache_control: { type: 'ephemeral' },
+  };
 }

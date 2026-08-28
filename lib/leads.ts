@@ -1,4 +1,4 @@
-import { and, desc, eq, gt, or, sql } from 'drizzle-orm';
+import { and, desc, eq, gt, isNotNull, ne, or, sql } from 'drizzle-orm';
 import { db } from './db';
 import { emailEvents, leads, type Lead, type NewLead } from './db/schema';
 import {
@@ -156,6 +156,8 @@ export async function findFollowupCandidates(opts?: {
     .where(
       and(
         eq(leads.unsubscribed, false),
+        // Phone-only leads (no email) never enter the email drip.
+        isNotNull(leads.email),
         or(eq(leads.status, 'new'), eq(leads.status, 'contacted')),
         gt(leads.createdAt, oldest),
       ),
@@ -169,6 +171,22 @@ export async function findFollowupCandidates(opts?: {
     if (step) due.push({ lead, step, sentCount: n });
   }
   return due;
+}
+
+/** Most recent open lead with this display phone (XXX-XXX-XXXX) — for call dedupe. */
+export async function findRecentLeadByPhone(
+  phone: string,
+  since: Date = new Date(Date.now() - 24 * 60 * 60 * 1000),
+): Promise<Lead | undefined> {
+  const [row] = await db
+    .select()
+    .from(leads)
+    .where(
+      and(eq(leads.phone, phone), gt(leads.createdAt, since), ne(leads.status, 'unsubscribed')),
+    )
+    .orderBy(desc(leads.createdAt))
+    .limit(1);
+  return row;
 }
 
 export async function recordEmailEvent(input: {

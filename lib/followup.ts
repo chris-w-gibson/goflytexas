@@ -66,6 +66,16 @@ export function formatDuration(ms: number): string {
   return h % 24 ? `${d}d ${h % 24}h` : `${d}d`;
 }
 
+/** "0s", "48s", "1m 42s", "12m" — second-granular, for call lengths. */
+export function formatCallDuration(sec: number | null | undefined): string {
+  if (sec == null || !Number.isFinite(sec) || sec < 0) return '—';
+  const s = Math.round(sec);
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return r ? `${m}m ${r}s` : `${m}m`;
+}
+
 export type ResponseState =
   | { kind: 'responded'; ms: number; slow: boolean }
   | { kind: 'waiting'; ms: number; slow: boolean }
