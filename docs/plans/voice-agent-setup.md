@@ -26,7 +26,11 @@ Claude, create a `leads` row (`source = phone`), and send the same owner alert w
 | Twilio | Existing upgraded account "My first Twilio account" (`AC9b44…`, SMS MFA → phone …4908, ~$16 balance). Pre-existing numbers 817-670-4011 and 855-592-9472 were left untouched. |
 | Railway env | `VOICE_LLM_SECRET`, `VOICE_WEBHOOK_SECRET` (64-hex, generated), `VOICE_MAX_TURNS=16`, `VOICE_DAILY_CALL_LIMIT=60`, `VOICE_NOTIFY_NO_MESSAGE=0` — set 2026-08-28 |
 
-Gotchas hit: Vapi's API sits behind Cloudflare and rejects Python `urllib` (error 1010) — use `curl`.
+Gotchas hit: Vapi's custom-LLM request body is only `model, temperature, max_tokens, stream, messages` —
+**no call id or caller number**. Fix that works (verified 8/29): put template variables in
+`model.headers` — `x-call-id: {{call.id}}`, `x-customer-number: {{customer.number}}` — Vapi renders
+them per call; the route reads those headers (and ignores un-rendered `{{…}}`).
+Vapi's API sits behind Cloudflare and rejects Python `urllib` (error 1010) — use `curl`.
 Deepgram voice ids must be the Aura-1 names (`asteria`, `luna`, …); the spec's Aura-2 names (`thalia`) are rejected.
 `silenceTimeoutSeconds` is not on the current CreateAssistantDTO; Vapi's default silence handling applies.
 

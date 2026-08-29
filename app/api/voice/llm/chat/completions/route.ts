@@ -99,6 +99,7 @@ function fixedResponse(text: string, streaming: boolean, id: string): Response {
 }
 
 export async function POST(req: NextRequest) {
+  const t0 = Date.now();
   if (!authorized(req)) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
@@ -234,7 +235,13 @@ export async function POST(req: NextRequest) {
           // already closed by the runtime
         }
       };
+      let firstDelta = true;
       stream.on('text', (delta: string) => {
+        if (firstDelta) {
+          firstDelta = false;
+          // Our share of the caller-perceived delay: request received → first token.
+          console.log('voice llm ttft_ms', callId, turn, Date.now() - t0);
+        }
         safeEnqueue(sseChunk(id, MODEL_NAME, delta, null));
       });
       stream.on('error', (err: unknown) => {

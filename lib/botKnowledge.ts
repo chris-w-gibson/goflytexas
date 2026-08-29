@@ -142,15 +142,29 @@ export function formatKnowledgeText(
     .join('\n\n');
 }
 
+const KNOWLEDGE_CACHE_MS = 60 * 1000;
+let knowledgeCache: { at: number; block: Anthropic.TextBlockParam } | null = null;
+
+/** Call after any bot_documents change so the next turn sees it immediately. */
+export function invalidateKnowledgeCache(): void {
+  knowledgeCache = null;
+}
+
 /**
  * The system block that carries the prompt-cache breakpoint. Identical content
  * for every request until a document changes — keep it byte-stable.
+ * Cached in-process for 60 s: the voice agent calls this on every spoken turn
+ * and the Postgres round trip was pure added latency.
  */
 export async function buildKnowledgeBlock(): Promise<Anthropic.TextBlockParam> {
+  const now = Date.now();
+  if (knowledgeCache && now - knowledgeCache.at < KNOWLEDGE_CACHE_MS) return knowledgeCache.block;
   const docs = await getActiveKnowledge();
-  return {
+  const block: Anthropic.TextBlockParam = {
     type: 'text',
     text: `Reference documents:\n\n${formatKnowledgeText(docs)}`,
     cache_control: { type: 'ephemeral' },
   };
+  knowledgeCache = { at: now, block };
+  return block;
 }
