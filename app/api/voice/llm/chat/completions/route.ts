@@ -29,7 +29,6 @@ export const maxDuration = 60;
 const MAX_BODY_BYTES = 256 * 1024;
 const MAX_TOKENS = 300;
 const MODEL_NAME = 'goflytexas-voice';
-const TURN_TTL_MS = 15 * 60 * 1000;
 
 function voiceModel(): string {
   return process.env.VOICE_MODEL ?? process.env.CHAT_MODEL ?? 'claude-haiku-4-5';
@@ -50,35 +49,31 @@ function authorized(req: NextRequest): boolean {
   return secretMatches(bearer, expected) || secretMatches(req.headers.get('x-vapi-secret'), expected);
 }
 
-// In-memory guards (single Railway instance — same trade-off as the chat route).
-const turnsByCall = new Map<string, { count: number; lastSeen: number }>();
-let dailyDate = '';
-let dailyCalls = new Set<string>();
-
-function noteTurn(callId: string): number {
-  const now = Date.now();
-  if (turnsByCall.size > 5_000) {
-    turnsByCall.forEach((v, k) => {
-      if (now - v.lastSeen > TURN_TTL_MS) turnsByCall.delete(k);
-    });
-  }
-  const entry = turnsByCall.get(callId) ?? { count: 0, lastSeen: now };
-  entry.count += 1;
-  entry.lastSeen = now;
-  turnsByCall.set(callId, entry);
-  return entry.count;
+// Vapi resends the FULL conversation on every request and (as observed live)
+// sends no call id, so per-call state is derived from the history itself:
+// the turn number is "assistant turns so far + 1", and a request with zero
+// assistant turns beyond the spoken greeting is the first turn of a new call.
+function turnNumber(history: Array<{ role: 'user' | 'assistant' }>): number {
+  return history.filter((m) => m.role === 'assistant').length; // greeting counts as turn 0's reply
 }
 
-function dailyCapExceeded(callId: string): boolean {
+// Daily cap: count first-turn requests (exactly one per call). In-memory —
+// single Railway instance, same trade-off as the chat route.
+let dailyDate = '';
+let dailyFirstTurns = 0;
+
+function dailyCapExceeded(isFirstTurn: boolean): boolean {
   const today = new Date().toISOString().slice(0, 10);
   if (today !== dailyDate) {
     dailyDate = today;
-    dailyCalls = new Set();
+    dailyFirstTurns = 0;
   }
-  if (dailyCalls.has(callId)) return false;
   const limit = Number(process.env.VOICE_DAILY_CALL_LIMIT ?? 60);
-  if (dailyCalls.size >= (Number.isFinite(limit) && limit > 0 ? limit : 60)) return true;
-  dailyCalls.add(callId);
+  const cap = Number.isFinite(limit) && limit > 0 ? limit : 60;
+  if (isFirstTurn) {
+    if (dailyFirstTurns >= cap) return true;
+    dailyFirstTurns += 1;
+  }
   return false;
 }
 
@@ -126,21 +121,28 @@ export async function POST(req: NextRequest) {
   const streaming = body.stream !== false;
   const loose = json as Record<string, unknown>;
   const meta = (loose.metadata ?? {}) as Record<string, unknown>;
+  // Vapi's request carries no call id by default; the assistant's model.headers
+  // are configured with template variables ({{call.id}}, {{customer.number}})
+  // in the hope Vapi interpolates them — the route works either way.
+  const templated = (v: string | null) => (v && !/^\{\{.*\}\}$/.test(v) ? v : null);
   const callId =
     body.call?.id ??
     (typeof meta.callId === 'string' ? meta.callId : null) ??
-    req.headers.get('x-vapi-call-id') ??
-    req.headers.get('x-call-id') ??
+    templated(req.headers.get('x-vapi-call-id')) ??
+    templated(req.headers.get('x-call-id')) ??
     'unknown';
-  const id = `chatcmpl-${callId}-${Date.now()}`;
+  const id = `chatcmpl-${callId === 'unknown' ? 'call' : callId}-${Date.now()}`;
   const customer = (loose.customer ?? {}) as Record<string, unknown>;
   const callerE164 = toE164(
-    body.call?.customer?.number ?? (typeof customer.number === 'string' ? customer.number : null),
+    body.call?.customer?.number ??
+      (typeof customer.number === 'string' ? customer.number : null) ??
+      templated(req.headers.get('x-customer-number')),
   );
 
   const maxTurns = voiceMaxTurns();
-  const turn = noteTurn(callId);
-  if (turn === 1) {
+  const history = toAnthropicMessages(body.messages, { maxMessages: 2 * maxTurns });
+  const turn = turnNumber(history);
+  if (turn <= 1) {
     // Diagnostic: what Vapi actually sends besides messages (names only, no content).
     console.log(
       'voice llm request shape',
@@ -152,21 +154,20 @@ export async function POST(req: NextRequest) {
         hasCaller: !!callerE164,
       }),
     );
+    if (callId !== 'unknown') {
+      // Make the call visible in admin even if the end-of-call webhook never lands.
+      void upsertCallStarted({
+        platform: 'vapi',
+        platformCallId: callId,
+        fromNumber: callerE164,
+        toNumber: toE164(body.call?.phoneNumber?.number ?? null),
+      }).catch((err) => console.error('voice llm: upsertCallStarted failed', err));
+    }
   }
-  if (turn === 1 && callId !== 'unknown') {
-    // Make the call visible in admin even if the end-of-call webhook never lands.
-    void upsertCallStarted({
-      platform: 'vapi',
-      platformCallId: callId,
-      fromNumber: callerE164,
-      toNumber: toE164(body.call?.phoneNumber?.number ?? null),
-    }).catch((err) => console.error('voice llm: upsertCallStarted failed', err));
-  }
-  if (dailyCapExceeded(callId)) {
+  if (dailyCapExceeded(turn <= 1)) {
     return fixedResponse(VOICE_CAP_MESSAGE, streaming, id);
   }
 
-  const history = toAnthropicMessages(body.messages, { maxMessages: 2 * maxTurns });
   if (history.length === 0 || history[history.length - 1].role !== 'user') {
     return fixedResponse("Sorry, I didn't catch that. What can I help you with?", streaming, id);
   }
