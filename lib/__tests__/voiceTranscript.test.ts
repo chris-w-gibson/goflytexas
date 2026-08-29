@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  CALL_CONNECTED,
   classifyCall,
   flattenContent,
   hasMeaningfulSpeech,
@@ -8,14 +9,18 @@ import {
 } from '../voice/transcript';
 
 describe('toAnthropicMessages', () => {
-  it('drops system/tool roles and the leading assistant greeting', () => {
+  it('drops system/tool roles and keeps the spoken greeting behind a synthetic user turn', () => {
     const out = toAnthropicMessages([
       { role: 'system', content: 'ignored' },
       { role: 'assistant', content: 'Hi, thanks for calling.' },
       { role: 'user', content: 'Hello there' },
       { role: 'tool', content: 'x' },
     ]);
-    expect(out).toEqual([{ role: 'user', content: 'Hello there' }]);
+    expect(out).toEqual([
+      { role: 'user', content: CALL_CONNECTED },
+      { role: 'assistant', content: 'Hi, thanks for calling.' },
+      { role: 'user', content: 'Hello there' },
+    ]);
   });
   it('merges consecutive same-role turns and flattens content parts', () => {
     const out = toAnthropicMessages([

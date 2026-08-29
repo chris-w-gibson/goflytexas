@@ -27,11 +27,16 @@ export function flattenContent(content: OpenAiMessage['content']): string {
   return '';
 }
 
+/** Synthetic first turn so the platform's spoken greeting stays in context. */
+export const CALL_CONNECTED = '[Call connected.]';
+
 /**
  * OpenAI-shaped history → Anthropic messages.
  * - drops system/tool/function roles (we bring our own system prompt)
  * - merges consecutive same-role turns
- * - drops a leading assistant turn (the platform's spoken greeting)
+ * - keeps the platform's spoken greeting (a leading assistant turn) by
+ *   prepending a synthetic "[Call connected.]" user turn — otherwise the model
+ *   doesn't know it already greeted and says hello twice
  * - keeps the last `maxMessages`, still starting with a user turn
  */
 export function toAnthropicMessages(
@@ -50,6 +55,9 @@ export function toAnthropicMessages(
     } else {
       merged.push({ role: m.role, content: text });
     }
+  }
+  if (merged.length && merged[0].role === 'assistant') {
+    merged.unshift({ role: 'user', content: CALL_CONNECTED });
   }
   let out = merged.slice(-max);
   while (out.length && out[0].role !== 'user') out = out.slice(1);

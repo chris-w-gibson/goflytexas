@@ -124,12 +124,35 @@ export async function POST(req: NextRequest) {
   }
   const body = parsed.data;
   const streaming = body.stream !== false;
-  const callId = body.call?.id ?? req.headers.get('x-call-id') ?? 'unknown';
+  const loose = json as Record<string, unknown>;
+  const meta = (loose.metadata ?? {}) as Record<string, unknown>;
+  const callId =
+    body.call?.id ??
+    (typeof meta.callId === 'string' ? meta.callId : null) ??
+    req.headers.get('x-vapi-call-id') ??
+    req.headers.get('x-call-id') ??
+    'unknown';
   const id = `chatcmpl-${callId}-${Date.now()}`;
-  const callerE164 = toE164(body.call?.customer?.number ?? null);
+  const customer = (loose.customer ?? {}) as Record<string, unknown>;
+  const callerE164 = toE164(
+    body.call?.customer?.number ?? (typeof customer.number === 'string' ? customer.number : null),
+  );
 
   const maxTurns = voiceMaxTurns();
   const turn = noteTurn(callId);
+  if (turn === 1) {
+    // Diagnostic: what Vapi actually sends besides messages (names only, no content).
+    console.log(
+      'voice llm request shape',
+      JSON.stringify({
+        bodyKeys: Object.keys(loose).filter((k) => k !== 'messages'),
+        callKeys: body.call ? Object.keys(body.call) : null,
+        headerNames: Array.from(req.headers.keys()).filter((h) => h.startsWith('x-')),
+        callId,
+        hasCaller: !!callerE164,
+      }),
+    );
+  }
   if (turn === 1 && callId !== 'unknown') {
     // Make the call visible in admin even if the end-of-call webhook never lands.
     void upsertCallStarted({
@@ -214,6 +237,13 @@ export async function POST(req: NextRequest) {
         safeEnqueue(sseChunk(id, MODEL_NAME, delta, null));
       });
       stream.on('error', (err: unknown) => {
+        // Barge-in: Vapi drops the request when the caller interrupts, which
+        // surfaces here as an abort. Expected — close quietly.
+        const msg = err instanceof Error ? err.message : String(err);
+        if (/abort/i.test(msg) || (err as { name?: string })?.name === 'AbortError') {
+          finish();
+          return;
+        }
         console.error('voice llm: stream error', err);
         safeEnqueue(sseChunk(id, MODEL_NAME, ` ${VOICE_ERROR_MESSAGE}`, null));
         finish();
