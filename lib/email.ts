@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import type { Lead } from './db/schema';
-import { parseEmailList } from './followup';
+import { formatCallDuration, parseEmailList } from './followup';
 
 const FROM_DEFAULT = 'GoFlyTexas <info@goflytexas.com>';
 const ADMIN_DEFAULT = 'info@goflytexas.com';
@@ -108,7 +108,7 @@ function attributionLabel(attr: unknown): string | null {
   return null;
 }
 
-/** Extra context when the lead came from the AI phone agent. */
+/** Extra context when the lead came from a phone call (AI- or human-answered). */
 export type CallEmailContext = {
   id: string;
   durationSec: number | null;
@@ -117,38 +117,43 @@ export type CallEmailContext = {
   recordingUrl: string | null;
   /** Same caller within 24 h — appended to an existing lead. */
   repeat: boolean;
+  answeredBy: 'ai' | 'human';
+  answeredByName?: string | null;
+  followUps?: string[];
+  booking?: string | null;
 };
-
-function callDuration(sec: number | null): string {
-  if (sec == null) return '—';
-  const m = Math.floor(sec / 60);
-  const s = Math.round(sec % 60);
-  return m ? `${m}m ${s}s` : `${s}s`;
-}
 
 /**
  * Owner alert. Goes to ADMIN_EMAIL plus LEAD_NOTIFY_EMAILS. Built to be acted
  * on from a phone: tap-to-call, tap-to-email, and a one-click "I've reached
  * out" button that stamps the first-response time (no login needed).
- * With `opts.call` it becomes the "Missed call · AI answered" variant.
+ * With `opts.call` it becomes the "Missed call · AI answered" variant, or —
+ * for a live-answered call — the calmer "Answered by Jim" notes variant with
+ * no urgency banner and no ack button (the human already responded).
  */
 export async function sendAdminNotification(
   lead: Lead,
   opts?: { call?: CallEmailContext },
 ): Promise<void> {
   const call = opts?.call;
+  const human = call?.answeredBy === 'human';
+  const staff = call?.answeredByName ?? 'the team';
   const interest = interestLabel(lead.flightInterest);
   const ackUrl = `${SITE_URL}/ack?token=${lead.contactToken}`;
   const adminUrl = `${SITE_URL}/admin/leads/${lead.id}`;
   const source = attributionLabel(lead.attribution);
   const phoneDigits = lead.phone ? lead.phone.replace(/\D/g, '') : '';
-  const eyebrow = call
-    ? call.repeat
-      ? 'Missed call &mdash; called again &mdash; reply within 10 minutes'
-      : 'Missed call &mdash; AI answered &mdash; reply within 10 minutes'
-    : 'New lead &mdash; reply within 10 minutes';
+  const eyebrow = human
+    ? `Answered by ${escape(staff)} &mdash; notes filed automatically`
+    : call
+      ? call.repeat
+        ? 'Missed call &mdash; called again &mdash; reply within 10 minutes'
+        : 'Missed call &mdash; AI answered &mdash; reply within 10 minutes'
+      : 'New lead &mdash; reply within 10 minutes';
+  const eyebrowColor = human ? '#0c2340' : '#b91c1c';
+  const followUps = call?.followUps ?? [];
   const html = wrap(`
-      <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#b91c1c;font-weight:700;">${eyebrow}</p>
+      <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:${eyebrowColor};font-weight:700;">${eyebrow}</p>
       <h2 style="color:#0c2340;margin:0 0 12px;">${escape(lead.name)} &middot; ${escape(interest)}</h2>
       ${
         lead.phone
@@ -163,9 +168,15 @@ export async function sendAdminNotification(
       <table style="border-collapse:collapse;width:100%;font-size:14px;">
         ${
           call
-            ? `<tr><td style="padding:4px 0;color:#6b7280;width:140px;">Call length</td><td>${escape(callDuration(call.durationSec))}</td></tr>
+            ? `<tr><td style="padding:4px 0;color:#6b7280;width:140px;">Call length</td><td>${escape(formatCallDuration(call.durationSec))}</td></tr>
         <tr><td style="padding:4px 0;color:#6b7280;">Caller ID</td><td>${escape(call.fromNumber ?? 'withheld')}</td></tr>
-        ${call.summary ? `<tr><td style="padding:4px 0;color:#6b7280;vertical-align:top;">Summary</td><td style="white-space:pre-wrap;">${escape(call.summary)}</td></tr>` : ''}`
+        ${call.summary ? `<tr><td style="padding:4px 0;color:#6b7280;vertical-align:top;">Summary</td><td style="white-space:pre-wrap;">${escape(call.summary)}</td></tr>` : ''}
+        ${call.booking ? `<tr><td style="padding:4px 0;color:#6b7280;">Booked</td><td><strong>${escape(call.booking)}</strong></td></tr>` : ''}
+        ${
+          followUps.length
+            ? `<tr><td style="padding:4px 0;color:#6b7280;vertical-align:top;">Follow-ups</td><td><ul style="margin:0;padding-left:18px;">${followUps.map((f) => `<li>${escape(f)}</li>`).join('')}</ul></td></tr>`
+            : ''
+        }`
             : `<tr><td style="padding:4px 0;color:#6b7280;width:140px;">Prefers</td><td>${escape(lead.preferredContact ?? 'email')}</td></tr>`
         }
         <tr><td style="padding:4px 0;color:#6b7280;">Came from</td><td>${escape(source ?? 'Direct / organic')}</td></tr>
@@ -177,20 +188,28 @@ export async function sendAdminNotification(
           ? `<p style="margin:12px 0 0;font-size:14px;"><a href="${SITE_URL}/admin/calls?focus=${call.id}" style="color:#0c2340;font-weight:600;">Read the transcript</a>${call.recordingUrl ? ` &middot; <a href="${escape(call.recordingUrl)}" style="color:#0c2340;font-weight:600;">Listen to the recording</a>` : ''}</p>`
           : ''
       }
-      <p style="margin:20px 0 6px;"><a href="${ackUrl}" style="display:inline-block;background:#15803d;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;">&#10003; I've reached out</a></p>
-      <p style="margin:0;font-size:12px;color:#6b7280;">Tap after you call or email &mdash; it records the response time so we can see how fast leads get handled. Or <a href="${adminUrl}" style="color:#0c2340;">open the lead in admin</a>.</p>
+      ${
+        human
+          ? `<p style="margin:20px 0 6px;font-size:14px;"><a href="${adminUrl}" style="display:inline-block;border:1px solid #0c2340;color:#0c2340;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;">Open the lead</a></p>
+      <p style="margin:0;font-size:12px;color:#6b7280;">Already counted as answered. Add a note or change the status there.</p>`
+          : `<p style="margin:20px 0 6px;"><a href="${ackUrl}" style="display:inline-block;background:#15803d;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;">&#10003; I've reached out</a></p>
+      <p style="margin:0;font-size:12px;color:#6b7280;">Tap after you call or email &mdash; it records the response time so we can see how fast leads get handled. Or <a href="${adminUrl}" style="color:#0c2340;">open the lead in admin</a>.</p>`
+      }
       ${FOOTER_HTML}
   `);
   const recipients = Array.from(
     new Set([adminAddress(), ...parseEmailList(process.env.LEAD_NOTIFY_EMAILS)]),
   );
   const contact = lead.phone ?? lead.email ?? 'no contact';
+  const subject = human
+    ? `Call · ${lead.name} · ${contact} · ${interest} · answered by ${staff}`
+    : call
+      ? `Missed call · ${lead.name} · ${contact} · ${interest}`
+      : `New lead · ${lead.name} · ${contact} · ${interest}`;
   const { error } = await getResend().emails.send({
     from: fromAddress(),
     to: recipients,
-    subject: call
-      ? `Missed call · ${lead.name} · ${contact} · ${interest}`
-      : `New lead · ${lead.name} · ${contact} · ${interest}`,
+    subject,
     html,
     ...(lead.email ? { replyTo: lead.email } : {}),
   });

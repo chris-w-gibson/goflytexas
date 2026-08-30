@@ -162,6 +162,7 @@ export async function POST(req: NextRequest) {
         platformCallId: callId,
         fromNumber: callerE164,
         toNumber: toE164(body.call?.phoneNumber?.number ?? null),
+        answeredBy: 'ai',
       }).catch((err) => console.error('voice llm: upsertCallStarted failed', err));
     }
   }

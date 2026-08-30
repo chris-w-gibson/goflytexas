@@ -64,10 +64,13 @@ export function toAnthropicMessages(
   return out;
 }
 
-export function turnsToPlainText(turns: TranscriptTurn[]): string {
-  return turns
-    .map((t) => `${t.role === 'user' ? 'Caller' : 'Assistant'}: ${t.text}`)
-    .join('\n');
+/** "Caller: …" / "Assistant: …" lines; the staff member's name replaces "Assistant" on human-answered calls. */
+export function turnsToPlainText(
+  turns: TranscriptTurn[],
+  opts?: { assistantLabel?: string },
+): string {
+  const label = opts?.assistantLabel ?? 'Assistant';
+  return turns.map((t) => `${t.role === 'user' ? 'Caller' : label}: ${t.text}`).join('\n');
 }
 
 const MIN_WORDS = 3;
@@ -79,14 +82,33 @@ export function hasMeaningfulSpeech(turns: TranscriptTurn[]): boolean {
   );
 }
 
-export const NO_MESSAGE_MAX_SECONDS = 10;
+/** True when anybody said anything at all. */
+export function hasAnySpeech(turns: TranscriptTurn[]): boolean {
+  return turns.some((t) => t.text.trim().length > 0);
+}
 
-/** Hang-ups and robodials never become leads. */
+export const NO_MESSAGE_MAX_SECONDS = 10;
+export const HUMAN_NO_MESSAGE_MAX_SECONDS = 5;
+
+/** AI-answered calls: hang-ups and robodials never become leads. */
 export function classifyCall(input: {
   durationSec: number | null;
   turns: TranscriptTurn[];
 }): 'no_message' | 'message' {
   if (input.durationSec != null && input.durationSec < NO_MESSAGE_MAX_SECONDS) return 'no_message';
   if (!hasMeaningfulSpeech(input.turns)) return 'no_message';
+  return 'message';
+}
+
+/**
+ * Human-answered calls: a short awkward real conversation still counts.
+ * Only a near-instant drop or a recording nobody spoke on is "no message".
+ */
+export function classifyHumanCall(input: {
+  durationSec: number | null;
+  turns: TranscriptTurn[];
+}): 'no_message' | 'message' {
+  if (input.durationSec != null && input.durationSec < HUMAN_NO_MESSAGE_MAX_SECONDS) return 'no_message';
+  if (!hasAnySpeech(input.turns)) return 'no_message';
   return 'message';
 }

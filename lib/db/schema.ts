@@ -8,7 +8,12 @@ import {
   jsonb,
   integer,
 } from 'drizzle-orm/pg-core';
-import type { CallExtraction, TranscriptTurn } from '../voice/types';
+import type {
+  AnsweredBy,
+  CallExtraction,
+  TranscriptTurn,
+  TranscriptionStatus,
+} from '../voice/types';
 
 export const leadStatus = pgEnum('lead_status', [
   'new',
@@ -170,6 +175,14 @@ export const calls = pgTable('calls', {
   summary: text('summary'),
   extracted: jsonb('extracted').$type<CallExtraction | null>(),
   rawPayload: jsonb('raw_payload'),
+  // Phase 2 (0007): Twilio switchboard.
+  answeredBy: text('answered_by').$type<AnsweredBy | null>(),
+  answeredByName: text('answered_by_name'),
+  parentCallId: text('parent_call_id'),
+  recordingSid: text('recording_sid'),
+  dialCallSid: text('dial_call_sid'),
+  transcriptionStatus: text('transcription_status').$type<TranscriptionStatus | null>(),
+  forwardedToAiAt: timestamp('forwarded_to_ai_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
