@@ -20,6 +20,13 @@ function date(v: unknown): Date | null {
 }
 
 /** "AI: hi\nUser: hello" → turns. Used when the platform sends only a text transcript. */
+const TWILIO_CALL_SID = /^CA[0-9a-f]{32}$/i;
+
+/** Keep a value only when it is a Twilio CallSid (`CA` + 32 hex). */
+export function twilioCallSidOrNull(v: string | null | undefined): string | null {
+  return v && TWILIO_CALL_SID.test(v) ? v : null;
+}
+
 export function parseTranscriptText(text: string, opts?: { assistantLabels?: string[] }): TranscriptTurn[] {
   const extra = (opts?.assistantLabels ?? []).map((l) => l.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   const re = new RegExp(
@@ -116,8 +123,10 @@ export function normalizeVapiEndOfCall(body: unknown): NormalizedCallEnd | null 
     platformSummary: str(msg.summary) ?? str(rec(msg.analysis)?.summary),
     answeredBy: 'ai',
     answeredByName: null,
-    // Set by Vapi for Twilio-provider numbers; used to link to the Twilio parent row.
-    parentCallId: str(call.phoneCallProviderId),
+    // Only a real Twilio CallSid can name our parent row. Vapi-provider numbers
+    // report their own SIP call UUID here, which must not be stored as a parent
+    // (it would block the from-number/time-window link in linkChildCall).
+    parentCallId: twilioCallSidOrNull(str(call.phoneCallProviderId)),
   };
 }
 

@@ -55,8 +55,8 @@ describe('normalization for Phase 2', () => {
     const n = normalizeVapiEndOfCall(fixture)!;
     expect(n.answeredBy).toBe('ai');
     expect(n.parentCallId).toBeNull();
-    const withParent = normalizeVapiEndOfCall({ message: { type: 'end-of-call-report', call: { id: 'v1', phoneCallProviderId: 'CA777' } } })!;
-    expect(withParent.parentCallId).toBe('CA777');
+    const withParent = normalizeVapiEndOfCall({ message: { type: 'end-of-call-report', call: { id: 'v1', phoneCallProviderId: 'CA777777777777777777777777777777aa' } } })!;
+    expect(withParent.parentCallId).toBe('CA777777777777777777777777777777aa');
   });
   it('normalizeTwilioCall derives duration and normalizes numbers', () => {
     const n = normalizeTwilioCall({

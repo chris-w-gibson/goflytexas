@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import fixture from './fixtures/vapi-end-of-call.json';
-import { normalizeRetellCallEnded, normalizeVapiEndOfCall, parseTranscriptText } from '../voice/normalize';
+import {
+  normalizeRetellCallEnded,
+  normalizeVapiEndOfCall,
+  parseTranscriptText,
+  twilioCallSidOrNull,
+} from '../voice/normalize';
 
 describe('normalizeVapiEndOfCall', () => {
   it('maps the end-of-call-report fixture', () => {
@@ -53,6 +58,36 @@ describe('normalizeVapiEndOfCall', () => {
     expect(n.durationSec).toBe(45);
     expect(normalizeVapiEndOfCall({ message: { type: 'end-of-call-report' } })).toBeNull();
     expect(normalizeVapiEndOfCall('nope')).toBeNull();
+  });
+});
+
+describe('parent linkage from phoneCallProviderId', () => {
+  const withProviderId = (id: string) => {
+    const body = JSON.parse(JSON.stringify(fixture)) as { message: { call: Record<string, unknown> } };
+    body.message.call.phoneCallProviderId = id;
+    return body;
+  };
+
+  it('keeps a Twilio CallSid as the parent', () => {
+    const sid = 'CA9d962d057c1e4f0a8b2c3d4e5f60718a';
+    expect(normalizeVapiEndOfCall(withProviderId(sid))!.parentCallId).toBe(sid);
+  });
+
+  it('drops the SIP call UUID Vapi-provider numbers report (seen live 2026-08-29)', () => {
+    // Storing this would block linkChildCall's from-number/time-window fallback.
+    expect(
+      normalizeVapiEndOfCall(withProviderId('f9b0e14e-d7a8-431c-9dd2-a01e1a3591f5'))!.parentCallId,
+    ).toBeNull();
+    expect(normalizeVapiEndOfCall(fixture)!.parentCallId).toBeNull();
+  });
+
+  it('twilioCallSidOrNull is strict about shape', () => {
+    expect(twilioCallSidOrNull('CA' + 'a'.repeat(32))).toBe('CA' + 'a'.repeat(32));
+    expect(twilioCallSidOrNull('ca' + 'A'.repeat(32))).toBe('ca' + 'A'.repeat(32));
+    expect(twilioCallSidOrNull('CA' + 'a'.repeat(31))).toBeNull();
+    expect(twilioCallSidOrNull('PN' + 'a'.repeat(32))).toBeNull();
+    expect(twilioCallSidOrNull('')).toBeNull();
+    expect(twilioCallSidOrNull(null)).toBeNull();
   });
 });
 
