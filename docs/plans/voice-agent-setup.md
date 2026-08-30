@@ -57,7 +57,10 @@ Migration (hand-applied, idempotent — see the header of the file):
    set a **$10 low-balance alert**.
 2. Phone Numbers → Buy a Number → US, area code **940** (fallback 817 / 682), capability **Voice**.
    ~$1.15/mo. Voice only → no A2P/10DLC registration needed.
-3. Leave the number's voice configuration alone — Vapi takes it over on import.
+3. ~~Leave the number's voice configuration alone — Vapi takes it over on import.~~ **Phase 2 inverts
+   this:** the number's Voice URL points at OUR switchboard (`POST /api/voice/twilio/inbound`), the
+   Fallback URL at a static TwiML Bin, the status callback at `/api/voice/twilio/status`, and the
+   Vapi import of this number is deleted. The AI is reached by dialing `VOICE_AI_NUMBER` (+1 940-291-7613). See §7.
 
 ## 3. Vapi
 
@@ -107,3 +110,45 @@ Direct-dial behaviour is unchanged. Rollback is always on Jim's side, independen
 Week 0 — direct-dial tests from 3 phones/carriers. Week 1 — Jim enables forwarding; review every
 transcript daily and tune `VOICE_PERSONA`. Rollback: Jim's carrier code, or point the Vapi assistant
 at a fixed "please call back during business hours" first message.
+
+## 7. Phase 2 — the switchboard (every call rings the team first)
+
+Plan: `~/.claude/plans/i-d-like-to-plan-iridescent-bachman.md` (2026-08-29). Jim **forwards ALL calls**
+from (940) 905-3090 to +1 940-242-3072. Twilio rings the team's cells with a whisper + press-1, records
+answered calls dual-channel, Deepgram transcribes with roles, and the same post-call brain files notes
++ lead (stamped as a human touch) + the "Answered by Jim" email. Nobody presses 1 / after hours → the
+call is dialed to the AI line (`VOICE_AI_NUMBER`) and the Phase 1 assistant takes it.
+
+**Row states** (`calls.status`, `platform='twilio'`): `ringing → answered → processed|no_message|spam|failed`
+for human calls; `ringing → forwarded_to_ai` (never a lead/email — the linked Vapi row is) when the AI takes
+it; `passthrough` in kill-switch mode. `answered_by` = human | ai | none; `transcription_status` =
+pending | running | done | failed (hourly `voice-sweep` cron re-queues stuck rows).
+
+**Env** (Railway, read per request): `VOICE_ROUTING_MODE` (`ai_only` = Phase 1 behaviour; `humans_first`;
+`passthrough` = plain forward, no AI/recording — the server-side rollback), `VOICE_RING_TARGETS`
+(`+1…:Jim,+1…:Ann`; never the forwarded line), `VOICE_PUBLISHED_NUMBER`, `VOICE_TWILIO_NUMBER`,
+`VOICE_AI_NUMBER`, `VOICE_AI_SIP_URI` (optional), `VOICE_RING_TIMEOUT` (20), `VOICE_WHISPER_TIMEOUT` (4),
+`VOICE_BUSINESS_HOURS` (08:00-17:00), `VOICE_TZ`, `VOICE_WHISPER_VOICE`, `VOICE_PUBLIC_BASE_URL`
+(exact host Twilio is configured with — signature check), `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`,
+`DEEPGRAM_API_KEY`, `DEEPGRAM_MODEL`.
+
+**Twilio number config** (API, one-time): `VoiceUrl=https://www.goflytexas.com/api/voice/twilio/inbound`
+(POST), `VoiceFallbackUrl=<TwiML Bin: <Dial timeout=20> the first ring target, then <Dial> VOICE_AI_NUMBER>`,
+`StatusCallback=https://www.goflytexas.com/api/voice/twilio/status` (POST). Then delete the Vapi import of
++1 940-242-3072 (Vapi phone-number id `e3e2448e…`) so Vapi never rewrites the webhook. Fund Twilio to ~$50
+with auto-recharge — at $0 every call hits the fallback.
+
+**Migration:** `railway run -s Postgres -e production -- psql "$DATABASE_PUBLIC_URL" -f drizzle/0007_twilio_switchboard.sql` (idempotent).
+
+**Jim — forward ALL calls** (one code, instant, reversible): Verizon `*72` + Twilio number / off `*73`;
+AT&T / T-Mobile (GSM) `**21*1<twilio>#` / off `##21#`; landline `*72`/`*73`; VoIP app → "forward all calls".
+Direct-dial to the team's cells is unaffected. Caller ID on their handsets shows the real caller.
+
+**Gate 7 stages:** A `ai_only` + number repointed (call → AI as before; `forwarded_to_ai` parent + linked Vapi
+row; one email; break the route → fallback Bin still rings). B `humans_first` with Chris's cell as the only
+target (ringback → whisper → press 1 → talk → `processed`, Caller/Chris transcript, lead `contacted`, "answered
+by Chris" email, recording proxy; decline → AI after ~20 s; after-hours → AI). C add Jim's cell, Jim dials the
+forward-all code, one call each way; check `ForwardedFrom` in the inbound payload.
+
+**Recording disclosure:** none (owner decision; Texas one-party). Out-of-state two-party callers carry some
+exposure; the AI leg already discloses.

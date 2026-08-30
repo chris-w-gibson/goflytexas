@@ -1,5 +1,6 @@
+import type { Call } from '../db/schema';
 import { toE164 } from './phone';
-import type { NormalizedCallEnd, TranscriptTurn } from './types';
+import type { AnsweredBy, NormalizedCallEnd, TranscriptTurn, VoicePlatform } from './types';
 
 type AnyRecord = Record<string, unknown>;
 
@@ -19,10 +20,15 @@ function date(v: unknown): Date | null {
 }
 
 /** "AI: hi\nUser: hello" → turns. Used when the platform sends only a text transcript. */
-export function parseTranscriptText(text: string): TranscriptTurn[] {
+export function parseTranscriptText(text: string, opts?: { assistantLabels?: string[] }): TranscriptTurn[] {
+  const extra = (opts?.assistantLabels ?? []).map((l) => l.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const re = new RegExp(
+    `^\\s*(AI|Assistant|Agent|Bot|Staff${extra.length ? '|' + extra.join('|') : ''}|User|Caller|Customer)\\s*:\\s*(.*)$`,
+    'i',
+  );
   const turns: TranscriptTurn[] = [];
   for (const line of text.split(/\r?\n/)) {
-    const m = /^\s*(AI|Assistant|Agent|Bot|User|Caller|Customer)\s*:\s*(.*)$/i.exec(line);
+    const m = re.exec(line);
     if (!m) {
       const last = turns[turns.length - 1];
       if (last && line.trim()) last.text = `${last.text} ${line.trim()}`;
@@ -108,6 +114,10 @@ export function normalizeVapiEndOfCall(body: unknown): NormalizedCallEnd | null 
       str(call.recordingUrl),
     transcript,
     platformSummary: str(msg.summary) ?? str(rec(msg.analysis)?.summary),
+    answeredBy: 'ai',
+    answeredByName: null,
+    // Set by Vapi for Twilio-provider numbers; used to link to the Twilio parent row.
+    parentCallId: str(call.phoneCallProviderId),
   };
 }
 
@@ -145,5 +155,72 @@ export function normalizeRetellCallEnded(body: unknown): NormalizedCallEnd | nul
     recordingUrl: str(call.recording_url),
     transcript,
     platformSummary: str(rec(call.call_analysis)?.call_summary),
+    answeredBy: 'ai',
+    answeredByName: null,
+    parentCallId: null,
+  };
+}
+
+export type TwilioCallState = {
+  callSid: string;
+  from: string | null;
+  to: string | null;
+  forwardedFrom: string | null;
+  startedAt: Date | null;
+  endedAt: Date | null;
+  durationSec: number | null;
+  endedReason: string | null;
+  answeredBy: AnsweredBy;
+  answeredByName: string | null;
+  recordingUrl: string | null;
+  transcript: TranscriptTurn[];
+};
+
+/**
+ * Twilio calls arrive as several callbacks, so the normalized shape is built
+ * from OUR stored state rather than one payload.
+ */
+export function normalizeTwilioCall(s: TwilioCallState): NormalizedCallEnd {
+  let durationSec = s.durationSec;
+  if (durationSec == null && s.startedAt && s.endedAt) {
+    durationSec = (s.endedAt.getTime() - s.startedAt.getTime()) / 1000;
+  }
+  return {
+    platform: 'twilio',
+    platformCallId: s.callSid,
+    fromNumber: toE164(s.from),
+    toNumber: toE164(s.to),
+    forwardedFrom: toE164(s.forwardedFrom),
+    startedAt: s.startedAt,
+    endedAt: s.endedAt,
+    durationSec: durationSec == null ? null : Math.max(0, Math.round(durationSec)),
+    endedReason: s.endedReason,
+    recordingUrl: s.recordingUrl,
+    transcript: s.transcript,
+    platformSummary: null,
+    answeredBy: s.answeredBy,
+    answeredByName: s.answeredByName,
+    parentCallId: null,
+  };
+}
+
+/** Any stored call row → NormalizedCallEnd (pipeline re-runs, admin Reprocess). */
+export function normalizeFromCallRow(row: Call): NormalizedCallEnd {
+  return {
+    platform: row.platform as VoicePlatform,
+    platformCallId: row.platformCallId,
+    fromNumber: row.fromNumber,
+    toNumber: row.toNumber,
+    forwardedFrom: row.forwardedFrom,
+    startedAt: row.startedAt,
+    endedAt: row.endedAt,
+    durationSec: row.durationSec,
+    endedReason: row.endedReason,
+    recordingUrl: row.recordingUrl,
+    transcript: row.transcript ?? [],
+    platformSummary: null,
+    answeredBy: row.answeredBy ?? (row.platform === 'twilio' ? 'none' : 'ai'),
+    answeredByName: row.answeredByName,
+    parentCallId: row.parentCallId,
   };
 }

@@ -1,0 +1,17 @@
+{
+  "metadata": { "channels": 2, "duration": 31.4, "models": ["nova-3"] },
+  "results": {
+    "channels": [
+      { "alternatives": [{ "transcript": "Hi I'm calling about a discovery flight. Tuesday works.", "words": [] }] },
+      { "alternatives": [{ "transcript": "GoFlyTexas this is Jim. Sure, let me check the schedule.", "words": [] }] }
+    ],
+    "utterances": [
+      { "channel": 1, "start": 0.4, "end": 1.9, "transcript": "GoFlyTexas, this is Jim." },
+      { "channel": 0, "start": 2.3, "end": 4.8, "transcript": "Hi, I'm calling about a discovery flight." },
+      { "channel": 0, "start": 5.1, "end": 6.0, "transcript": "For my husband." },
+      { "channel": 1, "start": 6.9, "end": 9.5, "transcript": "Sure, let me check the schedule." },
+      { "channel": 1, "start": 12.0, "end": 13.1, "transcript": "Tuesday at three is open." },
+      { "channel": 0, "start": 13.6, "end": 14.4, "transcript": "Tuesday works." }
+    ]
+  }
+}

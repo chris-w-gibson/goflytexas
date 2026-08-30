@@ -92,7 +92,9 @@ export function responseState(
   now: Date = new Date(),
 ): ResponseState {
   if (lead.firstContactedAt) {
-    const ms = lead.firstContactedAt.getTime() - lead.createdAt.getTime();
+    // Clamped at 0: a lead filed from a live-answered call can carry a first
+    // contact that predates the row.
+    const ms = Math.max(0, lead.firstContactedAt.getTime() - lead.createdAt.getTime());
     return { kind: 'responded', ms, slow: ms > SLOW_RESPONSE_MS };
   }
   if (lead.status === 'new') {

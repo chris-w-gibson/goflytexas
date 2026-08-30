@@ -1,0 +1,28 @@
+name: voice-sweep
+
+on:
+  schedule:
+    # Hourly: re-run transcription + notes for human-answered calls whose
+    # background job never finished (Twilio doesn't retry its callbacks).
+    - cron: '17 * * * *'
+  workflow_dispatch: {}
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST /api/cron/voice-sweep
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          APP_URL: ${{ vars.APP_URL || 'https://www.goflytexas.com' }}
+        run: |
+          set -e
+          response=$(curl -fsS -X POST \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            -w '\n%{http_code}' \
+            "$APP_URL/api/cron/voice-sweep")
+          body=$(printf '%s' "$response" | sed '$d')
+          code=$(printf '%s' "$response" | tail -n1)
+          echo "HTTP $code"
+          echo "$body"
+          if [ "$code" != "200" ]; then exit 1; fi

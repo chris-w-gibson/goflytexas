@@ -1,6 +1,6 @@
 import { and, desc, eq, gt, isNotNull, ne, or, sql } from 'drizzle-orm';
 import { db } from './db';
-import { emailEvents, leads, type Lead, type NewLead } from './db/schema';
+import { emailEvents, leadNotes, leads, type Lead, type NewLead } from './db/schema';
 import {
   dueFollowupStep,
   FOLLOWUP_MAX_AGE_DAYS,
@@ -79,22 +79,41 @@ export async function updateLeadStatus(
 }
 
 /**
- * Record a HUMAN contact: sets first_contacted_at (once), last_contacted_at,
- * and moves a `new` lead to `contacted`. Converted/unsubscribed are left alone.
+ * Record a HUMAN contact at an explicit time (e.g. the moment a live-answered
+ * call ended): sets first_contacted_at (once), last_contacted_at (never
+ * earlier than what's there), and moves a `new` lead to `contacted`.
+ * Converted/unsubscribed are left alone.
  */
-export async function markContacted(id: string): Promise<Lead | undefined> {
-  const now = new Date();
+export async function markContactedAt(id: string, at: Date): Promise<Lead | undefined> {
   const [row] = await db
     .update(leads)
     .set({
       status: sql`case when ${leads.status} = 'new' then 'contacted'::lead_status else ${leads.status} end`,
-      firstContactedAt: sql`coalesce(${leads.firstContactedAt}, ${now})`,
-      lastContactedAt: now,
-      updatedAt: now,
+      firstContactedAt: sql`coalesce(${leads.firstContactedAt}, ${at})`,
+      lastContactedAt: sql`greatest(coalesce(${leads.lastContactedAt}, ${at}), ${at})`,
+      updatedAt: new Date(),
     })
     .where(eq(leads.id, id))
     .returning();
   return row;
+}
+
+/** Human contact right now (admin buttons, notes, ack link). */
+export async function markContacted(id: string): Promise<Lead | undefined> {
+  return markContactedAt(id, new Date());
+}
+
+/** Free-text activity note on a lead (human or automated author). */
+export async function addLeadNote(input: {
+  leadId: string;
+  authorName: string;
+  body: string;
+}): Promise<void> {
+  await db.insert(leadNotes).values({
+    leadId: input.leadId,
+    authorName: input.authorName,
+    body: input.body.slice(0, 4000),
+  });
 }
 
 /** Same as markContacted, addressed by the token from the notification email. */
