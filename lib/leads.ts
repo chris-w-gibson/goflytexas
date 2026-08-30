@@ -154,6 +154,22 @@ export type FollowupCandidate = { lead: Lead; step: number; sentCount: number };
  * Open leads (new/contacted, not unsubscribed, younger than the max age) with
  * the follow-up step that is due right now, per the staggered schedule.
  */
+/**
+ * Correlated count of follow-ups already sent to the outer `leads` row.
+ *
+ * The outer column MUST be table-qualified: inside a raw `sql` fragment Drizzle
+ * renders `${leads.id}` as a bare `"id"`, which Postgres resolves to the
+ * subquery's own `email_events.id` — the count was always 0, so the drip
+ * re-sent step 1 to every lead on every run (2026-08-29/30, 70 emails).
+ */
+export function followupSentCountSql() {
+  return sql<number>`(
+    select count(*)::int from ${emailEvents} e
+    where e.lead_id = ${leads}.${sql.identifier(leads.id.name)}
+      and e.kind = 'weekly_followup' and e.error is null
+  )`;
+}
+
 export async function findFollowupCandidates(opts?: {
   schedule?: number[];
   now?: Date;
@@ -164,10 +180,7 @@ export async function findFollowupCandidates(opts?: {
   const limit = opts?.limit ?? 200;
   const oldest = new Date(now.getTime() - FOLLOWUP_MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
 
-  const sentCount = sql<number>`(
-    select count(*)::int from ${emailEvents} e
-    where e.lead_id = ${leads.id} and e.kind = 'weekly_followup' and e.error is null
-  )`;
+  const sentCount = followupSentCountSql();
 
   const rows = await db
     .select({ lead: leads, sentCount })

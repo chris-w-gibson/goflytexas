@@ -162,9 +162,14 @@ export async function processStoredCall(call: Call, n: NormalizedCallEnd): Promi
     .filter(Boolean)
     .join('\n\n');
 
-  let lead: Lead | undefined = phone ? await findRecentLeadByPhone(phone) : undefined;
+  // "Recent" is judged against the call itself, not the wall clock, so a
+  // reprocessed or late-arriving call dedupes the same way it would have live.
+  const callTime = n.endedAt ?? n.startedAt ?? new Date();
+  let lead: Lead | undefined = phone
+    ? await findRecentLeadByPhone(phone, new Date(callTime.getTime() - 24 * 60 * 60 * 1000))
+    : undefined;
   let repeat = false;
-  if (lead && isRecentDuplicate(lead)) {
+  if (lead && isRecentDuplicate(lead, callTime)) {
     repeat = true;
     // Repeat caller within a day — note it on the existing lead, no twin.
     await addLeadNote({
