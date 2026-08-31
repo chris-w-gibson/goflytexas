@@ -143,13 +143,16 @@ export async function sendAdminNotification(
   const adminUrl = `${SITE_URL}/admin/leads/${lead.id}`;
   const source = attributionLabel(lead.attribution);
   const phoneDigits = lead.phone ? lead.phone.replace(/\D/g, '') : '';
+  // Source-forward, no response-time nagging (Jim 2026-08-31: "my partner is
+  // not going to like the idea he is being babysat") — the eyebrow says how
+  // the lead came in, nothing more.
   const eyebrow = human
     ? `Answered by ${escape(staff)} &mdash; notes filed automatically`
     : call
       ? call.repeat
-        ? 'Missed call &mdash; called again &mdash; reply within 10 minutes'
-        : 'Missed call &mdash; AI answered &mdash; reply within 10 minutes'
-      : 'New lead &mdash; reply within 10 minutes';
+        ? 'Phone lead &mdash; missed call, called again'
+        : 'Phone lead &mdash; missed call, AI answered'
+      : 'Website lead';
   const eyebrowColor = human ? '#0c2340' : '#b91c1c';
   const followUps = call?.followUps ?? [];
   const html = wrap(`
@@ -193,7 +196,7 @@ export async function sendAdminNotification(
           ? `<p style="margin:20px 0 6px;font-size:14px;"><a href="${adminUrl}" style="display:inline-block;border:1px solid #0c2340;color:#0c2340;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;">Open the lead</a></p>
       <p style="margin:0;font-size:12px;color:#6b7280;">Already counted as answered. Add a note or change the status there.</p>`
           : `<p style="margin:20px 0 6px;"><a href="${ackUrl}" style="display:inline-block;background:#15803d;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;">&#10003; I've reached out</a></p>
-      <p style="margin:0;font-size:12px;color:#6b7280;">Tap after you call or email &mdash; it records the response time so we can see how fast leads get handled. Or <a href="${adminUrl}" style="color:#0c2340;">open the lead in admin</a>.</p>`
+      <p style="margin:0;font-size:12px;color:#6b7280;">Clicking it adds the note to the lead sheet in <a href="${adminUrl}" style="color:#0c2340;">admin</a>.</p>`
       }
       ${FOOTER_HTML}
   `);
