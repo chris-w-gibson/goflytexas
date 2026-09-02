@@ -289,13 +289,18 @@ export function verifyTwilioSignature(i: {
   return false;
 }
 
-/** Where a recording can be played from the email/admin: Twilio media needs auth → our proxy. */
+/**
+ * Where a recording can be played from the email/admin. Twilio media needs
+ * Basic auth and Vapi only hands out short-lived presigned URLs, so both go
+ * through the admin proxy, which resolves a playable URL at click time.
+ */
 export function recordingLink(
-  call: { platform: string; recordingUrl: string | null; recordingSid?: string | null },
+  call: { id: string; platform: string; recordingUrl: string | null; recordingSid?: string | null },
   baseUrl: string,
 ): string | null {
+  const base = baseUrl.replace(/\/+$/, '');
   if (call.platform === 'twilio') {
-    return call.recordingSid ? `${baseUrl.replace(/\/+$/, '')}/admin/calls/recording/${call.recordingSid}` : null;
+    return call.recordingSid ? `${base}/admin/calls/recording/${call.recordingSid}` : null;
   }
-  return call.recordingUrl;
+  return call.recordingUrl ? `${base}/admin/calls/recording/${call.id}` : null;
 }

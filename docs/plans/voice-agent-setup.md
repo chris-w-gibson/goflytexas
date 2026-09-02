@@ -44,6 +44,7 @@ Deepgram voice ids must be the Aura-1 names (`asteria`, `luna`, …); the spec's
 | `VOICE_MAX_TURNS` | 16 |
 | `VOICE_DAILY_CALL_LIMIT` | 60 |
 | `VOICE_NOTIFY_NO_MESSAGE` | 0 |
+| `VAPI_API_KEY` | Vapi private key — the recording proxy fetches a fresh presigned URL per click (Vapi's stored `recordingUrl` is a bare R2 object URL that answers 400; presigned ones expire in 30 min) |
 
 `ANTHROPIC_API_KEY`, `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_EMAIL`, `LEAD_NOTIFY_EMAILS`,
 `NEXT_PUBLIC_SITE_URL` already exist. Nothing new is `NEXT_PUBLIC_`.
