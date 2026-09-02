@@ -142,11 +142,16 @@ describe('signature', () => {
 });
 
 describe('recordingLink', () => {
-  it('proxies Twilio media, passes Vapi URLs through', () => {
-    expect(recordingLink({ platform: 'twilio', recordingUrl: 'https://api.twilio.com/x', recordingSid: 'RE1' }, BASE + '/')).toBe(
-      'https://www.goflytexas.com/admin/calls/recording/RE1',
-    );
-    expect(recordingLink({ platform: 'twilio', recordingUrl: null, recordingSid: null }, BASE)).toBeNull();
-    expect(recordingLink({ platform: 'vapi', recordingUrl: 'https://s3/x.wav' }, BASE)).toBe('https://s3/x.wav');
+  it('proxies Twilio media by recording sid', () => {
+    expect(
+      recordingLink({ id: 'c1', platform: 'twilio', recordingUrl: 'https://api.twilio.com/x', recordingSid: 'RE1' }, BASE + '/'),
+    ).toBe('https://www.goflytexas.com/admin/calls/recording/RE1');
+    expect(recordingLink({ id: 'c1', platform: 'twilio', recordingUrl: null, recordingSid: null }, BASE)).toBeNull();
+  });
+  it('proxies Vapi recordings by our call id (their URLs are not playable as stored)', () => {
+    expect(
+      recordingLink({ id: '17feb10d-7a45-4364-ad3b-388144757db0', platform: 'vapi', recordingUrl: 'https://r2/x.wav' }, BASE),
+    ).toBe('https://www.goflytexas.com/admin/calls/recording/17feb10d-7a45-4364-ad3b-388144757db0');
+    expect(recordingLink({ id: 'c2', platform: 'vapi', recordingUrl: null }, BASE)).toBeNull();
   });
 });
