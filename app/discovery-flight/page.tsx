@@ -96,7 +96,7 @@ const jsonLd = {
         'An introductory flight with a certified flight instructor at Aero Valley Airport in Roanoke, Texas. No experience required — you take the controls.',
       url: 'https://www.goflytexas.com/discovery-flight',
       provider: {
-        '@type': 'FlightSchool',
+        '@type': ['LocalBusiness', 'EducationalOrganization'],
         name: 'GoFlyTexas',
         telephone: '+1-940-905-3090',
         address: {

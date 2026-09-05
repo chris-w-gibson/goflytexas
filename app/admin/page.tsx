@@ -3,6 +3,7 @@ import { countLeads, getResponseStats, listLeads } from '@/lib/leads';
 import { formatDuration } from '@/lib/followup';
 
 export const dynamic = 'force-dynamic';
+export const metadata = { robots: { index: false, follow: false } };
 
 export default async function AdminDashboard() {
   const [counts, recent, response] = await Promise.all([

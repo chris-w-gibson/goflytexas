@@ -206,6 +206,21 @@ export async function findFollowupCandidates(opts?: {
 }
 
 /** Most recent open lead with this display phone (XXX-XXX-XXXX) — for call dedupe. */
+export async function findRecentLeadByEmail(
+  email: string,
+  since: Date = new Date(Date.now() - 24 * 60 * 60 * 1000),
+): Promise<Lead | undefined> {
+  const [row] = await db
+    .select()
+    .from(leads)
+    .where(
+      and(eq(leads.email, email), gt(leads.createdAt, since), ne(leads.status, 'unsubscribed')),
+    )
+    .orderBy(desc(leads.createdAt))
+    .limit(1);
+  return row;
+}
+
 export async function findRecentLeadByPhone(
   phone: string,
   since: Date = new Date(Date.now() - 24 * 60 * 60 * 1000),

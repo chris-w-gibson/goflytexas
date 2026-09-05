@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 
 type FormData = {
+  website?: string; // honeypot
   name: string;
   email: string;
   phone: string;
@@ -130,6 +131,17 @@ export default function ContactPage() {
               </h2>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                {/* Honeypot — invisible to people, filled by bots. */}
+                <div className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden" aria-hidden="true">
+                  <label htmlFor="website">Website</label>
+                  <input
+                    id="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    {...register('website')}
+                  />
+                </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-navy-900 mb-2">

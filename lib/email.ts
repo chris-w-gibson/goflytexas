@@ -35,6 +35,14 @@ function interestLabel(key: string | null | undefined): string {
   return INTEREST_LABEL[key] ?? key;
 }
 
+/** RFC 8058 headers so mail clients offer a native unsubscribe. */
+function unsubHeaders(token: string): Record<string, string> {
+  return {
+    'List-Unsubscribe': `<${SITE_URL}/api/unsubscribe?token=${token}>, <${SITE_URL}/unsubscribe?token=${token}>`,
+    'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+  };
+}
+
 function unsubLink(token: string): string {
   return `${SITE_URL}/unsubscribe?token=${token}`;
 }
@@ -91,6 +99,7 @@ export async function sendAutoReply(lead: Lead): Promise<void> {
   const { error } = await getResend().emails.send({
     from: fromAddress(),
     to: lead.email,
+    headers: unsubHeaders(lead.unsubscribeToken),
     subject: wantsCall
       ? `Got it, ${firstName(lead.name)} — GoFlyTexas will call you shortly`
       : `Got your message, ${firstName(lead.name)} — here's what happens next`,
@@ -259,6 +268,7 @@ export async function sendFollowup(lead: Lead, step: number): Promise<void> {
   const { error } = await getResend().emails.send({
     from: fromAddress(),
     to: lead.email,
+    headers: unsubHeaders(lead.unsubscribeToken),
     subject,
     html: wrap(`${body}${FOOTER_HTML}${unsub}`),
     replyTo: adminAddress(),

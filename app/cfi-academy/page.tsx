@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/cfi-academy' },
   title: 'CFI/CFII Academy - Become a Flight Instructor',
   description: 'Join our CFI/CFII Academy at GoFlyTexas. Personalized one-on-one training to become a certified flight instructor. Launch your aviation teaching career.',
   openGraph: {

@@ -51,9 +51,6 @@ export const metadata: Metadata = {
     description: 'One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Aircraft rentals and pilot training for all levels.',
     images: ['/og-image.jpg'],
   },
-  alternates: {
-    canonical: 'https://www.goflytexas.com',
-  },
   verification: {
     google: 'M6YjYE63qGY1cy9W5b1m9e4vXFcU2gIMRjVJdgMg0V8',
   },
@@ -73,7 +70,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "FlightSchool",
+              "@type": ["LocalBusiness", "EducationalOrganization"],
               "name": "GoFlyTexas",
               "description": "One-on-one flight training at Aero Valley Airport in Roanoke, Texas. Aircraft rentals, aerial tours, and pilot training.",
               "url": "https://www.goflytexas.com",

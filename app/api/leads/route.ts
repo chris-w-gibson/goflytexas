@@ -1,12 +1,53 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { createLead, recordEmailEvent } from '@/lib/leads';
+import { createLead, findRecentLeadByEmail, recordEmailEvent } from '@/lib/leads';
 import { leadInputSchema } from '@/lib/validation';
 import { sendAdminNotification, sendAutoReply } from '@/lib/email';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// Abuse controls (audit 2026-09-04, H4). Every accepted lead fires two
+// Resend emails and lands on Jim's phone, so the endpoint needs a floor:
+// a per-IP window, a honeypot, and a 24-hour dedupe by email.
+const RATE_LIMIT = Number(process.env.LEADS_RATE_LIMIT ?? 5);
+const RATE_WINDOW_MS = Number(process.env.LEADS_RATE_WINDOW_MS ?? 10 * 60 * 1000);
+const hits = new Map<string, number[]>();
+
+function clientIp(req: NextRequest): string {
+  return (
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    req.headers.get('x-real-ip') ||
+    'unknown'
+  );
+}
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const windowStart = now - RATE_WINDOW_MS;
+  const prev = (hits.get(ip) ?? []).filter((t) => t > windowStart);
+  if (prev.length >= RATE_LIMIT) {
+    hits.set(ip, prev);
+    return true;
+  }
+  prev.push(now);
+  hits.set(ip, prev);
+  if (hits.size > 10_000) {
+    hits.forEach((times, key) => {
+      if (times.every((t) => t <= windowStart)) hits.delete(key);
+    });
+  }
+  return false;
+}
+
 export async function POST(req: NextRequest) {
+  const ip = clientIp(req);
+  if (rateLimited(ip)) {
+    return NextResponse.json(
+      { error: 'Too many submissions. Please call us at (940) 905-3090.' },
+      { status: 429 },
+    );
+  }
+
   let body: unknown;
   try {
     body = await req.json();
@@ -38,9 +79,22 @@ export async function POST(req: NextRequest) {
   }
 
   const data = parsed.data;
+
+  // Honeypot filled → a bot. Answer as if accepted so it learns nothing.
+  if (data.website) {
+    return NextResponse.json({ ok: true, id: 'accepted' }, { status: 201 });
+  }
+
+  // Same address within 24 h → a double submit or a retry. Reuse the lead and
+  // don't email anyone twice.
+  const recent = await findRecentLeadByEmail(data.email.toLowerCase());
+  if (recent) {
+    return NextResponse.json({ ok: true, id: recent.id, duplicate: true }, { status: 200 });
+  }
+
   const lead = await createLead({
     name: data.name,
-    email: data.email,
+    email: data.email.toLowerCase(),
     phone: data.phone || null,
     flightInterest: data.flightInterest || null,
     preferredContact: data.preferredContact ?? 'email',

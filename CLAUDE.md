@@ -82,3 +82,32 @@ lib/
 - Weather integration
 - Blog for SEO content
 - Google Reviews integration
+## Recent changes
+
+### 2026-09-05 — SEO, images, and lead-endpoint hardening (portfolio audit C1/C2/H1/H3/H4/H7)
+
+- **Canonicals**: the root layout no longer sets one canonical for the whole site
+  (it made Google treat every page as the homepage). `metadataBase` + a per-page
+  `alternates.canonical` on every public route; client-component routes
+  (`aircraft`, `our-team`, `flight-training`, `contact`, `login`) carry their
+  metadata in a `layout.tsx` because a `'use client'` page cannot export it.
+  `login`, `admin`, `ack`, `unsubscribe` are `noindex`.
+- **Images**: `sharp` is a dependency so `/_next/image` actually optimizes;
+  the 18 photos over ~1 MB in `public/` were downscaled in place to ≤2000 px
+  (52 MB → 7 MB, same file names, so localStorage image-slot assignments still
+  resolve). `ImageCarousel` uses `next/image`. The hero video renders only on
+  ≥768 px screens without reduced-motion; phones get the optimized poster.
+- **Leads endpoint**: per-IP window (5 / 10 min, `LEADS_RATE_LIMIT`,
+  `LEADS_RATE_WINDOW_MS`), a `website` honeypot field on the contact form,
+  and a 24-hour dedupe by email (`findRecentLeadByEmail`) so a double submit
+  doesn't email Jim twice.
+- **Unsubscribe**: GET shows a confirm button, a server action does the
+  unsubscribe (mail scanners were unsubscribing leads by prefetching the
+  link). `POST /api/unsubscribe?token=` is the RFC 8058 one-click target and
+  lead-facing emails carry `List-Unsubscribe` headers.
+- **Headers**: HSTS, nosniff, SAMEORIGIN, referrer policy, permissions policy
+  from `next.config.mjs`. CI (`.github/workflows/ci.yml`) runs lint,
+  typecheck and tests on push/PR.
+- Still manual: request indexing of `/discovery-flight` in Search Console (the
+  API cannot), the click-to-call conversion action in Google Ads (a write),
+  and the Drizzle journal regeneration for migrations 0004–0007.

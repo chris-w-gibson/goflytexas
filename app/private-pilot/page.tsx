@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/private-pilot' },
   title: 'Private Pilot Training - Start Your Aviation Journey',
   description: 'Complete private pilot training at GoFlyTexas. One-on-one ground instruction and flight lessons in modern Cessna 172N aircraft. Begin your pilot journey today.',
   openGraph: {

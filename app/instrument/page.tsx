@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/instrument' },
   title: 'Instrument Rating (IFR) Training - Fly in All Weather',
   description: 'Master instrument flight rules (IFR) with personalized training at GoFlyTexas. Learn to fly safely in clouds and low visibility conditions.',
   openGraph: {

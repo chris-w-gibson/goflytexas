@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Camera, X } from 'lucide-react';
 import { useImageEdit } from './ImageEditContext';
 import ImagePicker from './ImagePicker';
@@ -79,10 +80,12 @@ export default function ImageCarousel({
           onClick={() => !editMode && currentImage && setLightboxOpen(true)}
         >
           {currentImage ? (
-            <img
+            <Image
               src={currentImage}
               alt={currentSlot?.label || 'Aircraft image'}
-              className="w-full h-full object-cover"
+              fill
+              sizes="(max-width: 1024px) 100vw, 60vw"
+              className="object-cover"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gray-200">
@@ -155,10 +158,12 @@ export default function ImageCarousel({
                 }`}
               >
                 {thumbImage ? (
-                  <img
+                  <Image
                     src={thumbImage}
                     alt={slot.label}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="64px"
+                    className="object-cover"
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">

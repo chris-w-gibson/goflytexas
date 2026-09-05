@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/commercial' },
   title: 'Commercial Pilot License Training - Fly for a Career',
   description: 'Turn your passion into a profession with Commercial Pilot License training at GoFlyTexas. Advanced flight skills and career opportunities in aviation.',
   openGraph: {

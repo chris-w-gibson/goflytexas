@@ -10,6 +10,8 @@ export const leadInputSchema = z.object({
   flightInterest: z.string().trim().max(60).optional().or(z.literal('')),
   preferredContact: z.enum(['email', 'phone']).optional(),
   message: z.string().trim().max(4000).optional().or(z.literal('')),
+  // Honeypot: hidden on the form, never filled by people. Bots fill it.
+  website: z.string().max(200).optional().or(z.literal('')),
 });
 
 export type LeadInput = z.infer<typeof leadInputSchema>;

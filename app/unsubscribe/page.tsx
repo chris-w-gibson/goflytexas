@@ -1,12 +1,17 @@
 import Link from 'next/link';
-import { unsubscribeLead } from '@/lib/leads';
+import { redirect } from 'next/navigation';
+import { getLeadByUnsubscribeToken, unsubscribeLead } from '@/lib/leads';
 
 export const dynamic = 'force-dynamic';
+export const metadata = { robots: { index: false, follow: false } };
 
+// GET only shows a confirm button; the POST (server action) unsubscribes.
+// Corporate link scanners and Gmail prefetch used to unsubscribe leads by
+// merely opening the link (audit 2026-09-04, H3).
 export default async function UnsubscribePage({
   searchParams,
 }: {
-  searchParams?: { token?: string };
+  searchParams?: { token?: string; done?: string };
 }) {
   const token = searchParams?.token;
 
@@ -23,7 +28,7 @@ export default async function UnsubscribePage({
     );
   }
 
-  const lead = await unsubscribeLead(token).catch(() => undefined);
+  const lead = await getLeadByUnsubscribeToken(token).catch(() => undefined);
 
   if (!lead) {
     return (
@@ -37,18 +42,44 @@ export default async function UnsubscribePage({
     );
   }
 
+  if (searchParams?.done === '1' || lead.unsubscribed) {
+    return (
+      <Layout>
+        <h1 className="text-2xl font-bold mb-2 text-green-800">You&rsquo;re unsubscribed</h1>
+        <p className="text-slate-700 mb-4">
+          We&rsquo;ve removed <strong>{lead.email ?? 'your address'}</strong> from our follow-up emails. You won&rsquo;t
+          hear from us again unless you reach out first.
+        </p>
+        <p className="text-slate-500 text-sm">
+          Changed your mind? Just{' '}
+          <Link href="/contact" className="text-sky-700 hover:underline">send us a new message</Link>{' '}
+          anytime.
+        </p>
+      </Layout>
+    );
+  }
+
+  async function confirm() {
+    'use server';
+    await unsubscribeLead(token!).catch(() => undefined);
+    redirect(`/unsubscribe?token=${encodeURIComponent(token!)}&done=1`);
+  }
+
   return (
     <Layout>
-      <h1 className="text-2xl font-bold mb-2 text-green-800">You&rsquo;re unsubscribed</h1>
-      <p className="text-slate-700 mb-4">
-        We&rsquo;ve removed <strong>{lead.email ?? 'your address'}</strong> from our follow-up emails. You won&rsquo;t
-        hear from us again unless you reach out first.
+      <h1 className="text-2xl font-bold mb-2">Unsubscribe from GoFlyTexas emails?</h1>
+      <p className="text-slate-700 mb-6">
+        This stops follow-up emails to <strong>{lead.email ?? 'your address'}</strong>. You can always reach
+        us again through the contact page.
       </p>
-      <p className="text-slate-500 text-sm">
-        Changed your mind? Just{' '}
-        <Link href="/contact" className="text-sky-700 hover:underline">send us a new message</Link>{' '}
-        anytime.
-      </p>
+      <form action={confirm}>
+        <button
+          type="submit"
+          className="inline-block bg-navy-900 hover:bg-navy-800 text-white px-5 py-2.5 rounded-lg font-semibold"
+        >
+          Yes, unsubscribe me
+        </button>
+      </form>
     </Layout>
   );
 }
@@ -58,10 +89,6 @@ function Layout({ children }: { children: React.ReactNode }) {
     <main className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
       <div className="bg-white rounded-lg shadow border border-slate-200 max-w-lg w-full p-8">
         {children}
-        <hr className="my-6 border-slate-200" />
-        <p className="text-xs text-slate-500">
-          GoFlyTexas · Aero Valley Airport (52F) · 104 Boeing Way · Roanoke, TX 76262
-        </p>
       </div>
     </main>
   );

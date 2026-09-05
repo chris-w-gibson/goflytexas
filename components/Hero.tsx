@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRef, useEffect, useState } from 'react';
 import { ArrowRight, Star, MapPin, Volume2 } from 'lucide-react';
 
@@ -12,6 +13,15 @@ export default function Hero() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const introCompleteRef = useRef(false);
   const [showSoundPrompt, setShowSoundPrompt] = useState(false);
+  // The 2.6 MB loop only plays on wide screens that haven't asked for
+  // reduced motion; phones (85% of paid traffic) get the optimized poster
+  // instead of the download (audit 2026-09-04, C2/M13).
+  const [wantsVideo, setWantsVideo] = useState(false);
+  useEffect(() => {
+    const wide = window.matchMedia('(min-width: 768px)').matches;
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setWantsVideo(wide && !still);
+  }, []);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -47,7 +57,7 @@ export default function Hero() {
 
     v.addEventListener('timeupdate', onTimeUpdate);
     return () => v.removeEventListener('timeupdate', onTimeUpdate);
-  }, []);
+  }, [wantsVideo]);
 
   const handleEnableSound = () => {
     const v = videoRef.current;
@@ -61,18 +71,30 @@ export default function Hero() {
 
   return (
     <div className="relative bg-navy-950 pt-16 overflow-hidden min-h-[80vh] flex items-center">
-      <video
-        ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover"
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        poster="/IMG_4239.JPG"
-        aria-hidden="true"
-      >
-        <source src="/hero-loop.mp4" type="video/mp4" />
-      </video>
+      {wantsVideo ? (
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          playsInline
+          preload="metadata"
+          poster="/IMG_4239.JPG"
+          aria-hidden="true"
+        >
+          <source src="/hero-loop.mp4" type="video/mp4" />
+        </video>
+      ) : (
+        <Image
+          src="/IMG_4239.JPG"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+          aria-hidden="true"
+        />
+      )}
 
       <div className="absolute inset-0 bg-navy-950/60" aria-hidden="true" />
 

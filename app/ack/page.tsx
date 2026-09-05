@@ -10,6 +10,7 @@ import { OUTCOME_OPTIONS, composeOutcomeNote } from '@/lib/outcomes';
 // lands on the lead sheet in admin as a note, and the first touch stamps the
 // response time. GET only shows the form; the POST records (mail scanners).
 export const dynamic = 'force-dynamic';
+export const metadata = { robots: { index: false, follow: false } };
 
 async function ackAction(formData: FormData) {
   'use server';

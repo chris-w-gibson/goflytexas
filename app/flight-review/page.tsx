@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/flight-review' },
   title: 'BFR & IPC - Flight Review & Instrument Proficiency Check',
   description: 'Stay current with Biennial Flight Reviews and Instrument Proficiency Checks at GoFlyTexas. Personalized sessions to refresh skills and ensure safety.',
   openGraph: {
