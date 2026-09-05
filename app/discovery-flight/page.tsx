@@ -46,7 +46,7 @@ const faqs: { q: string; a: string }[] = [
   {
     q: 'How much does a discovery flight cost?',
     a: price
-      ? `A discovery flight is ${price}, which covers the aircraft and your instructor for the whole session.`
+      ? `A discovery flight is up to ${price} — it won't exceed that — and covers the aircraft and your instructor for the whole session.`
       : `Give us a call at ${CONTACT.phoneDisplay} and we'll go over current pricing — it covers the aircraft and your instructor for the whole session.`,
   },
   {

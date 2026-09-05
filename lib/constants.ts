@@ -26,8 +26,10 @@ export const DISCOVERY_FLIGHT: {
   durationMinutes: number | null;
   aircraft: string;
 } = {
-  price: null,
-  durationMinutes: null,
+  // Jim's rate card: the discovery flight "will not exceed $250" (bots have
+  // quoted this since 8/29). Published 2026-09-05 with Chris's go-ahead.
+  price: 250,
+  durationMinutes: 60,
   aircraft: 'Cessna 172',
 };
 
