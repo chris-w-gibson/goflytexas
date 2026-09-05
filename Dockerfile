@@ -1,4 +1,6 @@
-FROM node:18-alpine AS base
+# Node 20: sharp >= 0.34 requires node >= 20.9 (npm warned EBADENGINE on 18 and
+# the optimizer then failed to load it); Node 18 is also end-of-life.
+FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -44,6 +46,14 @@ RUN chown nextjs:nodejs .next
 # Automatically leverage output traces to reduce image size
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Belt and braces for the image optimizer: copy sharp and its @img binaries
+# from the deps stage (same alpine base, so the linuxmusl variants) and point
+# Next at them, so a change in Next's standalone tracing can't silently turn
+# /_next/image back into a pass-through (it did on 2026-09-05).
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules/sharp ./node_modules/sharp
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules/@img ./node_modules/@img
+ENV NEXT_SHARP_PATH=/app/node_modules/sharp
 
 USER nextjs
 
