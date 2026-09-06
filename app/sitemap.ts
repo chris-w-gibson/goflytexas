@@ -2,6 +2,10 @@ import type { MetadataRoute } from 'next';
 
 const BASE = 'https://www.goflytexas.com';
 
+// Evaluated at build time: every deploy bumps lastmod, which is what nudges
+// Google to recrawl pages it last saw before the per-page canonicals landed.
+const LAST_MODIFIED = new Date();
+
 // Public pages only — admin, api, and unsubscribe stay out.
 const ROUTES: { path: string; priority: number }[] = [
   { path: '/', priority: 1.0 },
@@ -20,6 +24,7 @@ const ROUTES: { path: string; priority: number }[] = [
 export default function sitemap(): MetadataRoute.Sitemap {
   return ROUTES.map((r) => ({
     url: `${BASE}${r.path}`,
+    lastModified: LAST_MODIFIED,
     changeFrequency: 'weekly',
     priority: r.priority,
   }));
