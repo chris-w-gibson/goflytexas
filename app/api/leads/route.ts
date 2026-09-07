@@ -1,3 +1,4 @@
+import { ATTR_COOKIE, parseAttributionCookie } from '@/lib/attribution';
 import { NextResponse, type NextRequest } from 'next/server';
 import { createLead, findRecentLeadByEmail, recordEmailEvent } from '@/lib/leads';
 import { leadInputSchema } from '@/lib/validation';
@@ -64,19 +65,9 @@ export async function POST(req: NextRequest) {
   }
 
   // First-touch attribution captured client-side into a cookie (see
-  // components/AttributionCapture.tsx); absent for direct/organic visitors.
-  let attribution: Record<string, string> | null = null;
-  const attrCookie = req.cookies.get('gft_attr')?.value;
-  if (attrCookie) {
-    try {
-      const parsedAttr: unknown = JSON.parse(decodeURIComponent(attrCookie));
-      if (parsedAttr && typeof parsedAttr === 'object' && !Array.isArray(parsedAttr)) {
-        attribution = parsedAttr as Record<string, string>;
-      }
-    } catch {
-      // malformed cookie — ignore
-    }
-  }
+  // components/AttributionCapture.tsx): gclid/utm_* for paid, or
+  // source/medium (organic | direct | referral) classified from the referrer.
+  const attribution = parseAttributionCookie(req.cookies.get(ATTR_COOKIE)?.value);
 
   const data = parsed.data;
 
