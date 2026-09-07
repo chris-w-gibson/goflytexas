@@ -19,6 +19,10 @@ const ROUTES: { path: string; priority: number }[] = [
   { path: '/aircraft', priority: 0.8 },
   { path: '/our-team', priority: 0.6 },
   { path: '/contact', priority: 0.8 },
+  { path: '/facts', priority: 0.6 },
+  { path: '/guides', priority: 0.6 },
+  { path: '/guides/private-pilot-license-cost-texas', priority: 0.7 },
+  { path: '/guides/block-time-wet-vs-dry-rates', priority: 0.7 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
