@@ -24,12 +24,15 @@ export const CONTACT = {
 export const DISCOVERY_FLIGHT: {
   price: number | null;
   durationMinutes: number | null;
+  /** Ride-along fee for one additional passenger (Jim's pricing doc, 8/27). */
+  passengerPrice: number | null;
   aircraft: string;
 } = {
   // Jim's rate card: the discovery flight "will not exceed $250" (bots have
   // quoted this since 8/29). Published 2026-09-05 with Chris's go-ahead.
   price: 250,
   durationMinutes: 60,
+  passengerPrice: 75,
   aircraft: 'Cessna 172',
 };
 

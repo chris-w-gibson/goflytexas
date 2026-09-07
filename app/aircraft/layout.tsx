@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 // This route's page is a client component and cannot export metadata, so the
 // title, description and canonical live here (audit 2026-09-04, C1/M1).
 export const metadata: Metadata = {
-  title: 'Our Aircraft at Aero Valley Airport',
+  title: 'Cessna 172 Rentals and Training Fleet — Aero Valley (52F)',
   description:
-    'The GoFlyTexas training fleet at Aero Valley Airport (52F) in Roanoke, TX: well-maintained aircraft for lessons, rentals and discovery flights.',
+    'Rent or train in the GoFlyTexas Cessna 172 fleet at Aero Valley Airport, Roanoke TX: glass-panel and round-gauge 172s, wet rates with fuel included, block time from $1,900. Checkouts for licensed pilots.',
   alternates: { canonical: '/aircraft' },
 };
 
