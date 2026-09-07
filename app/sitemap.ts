@@ -23,6 +23,8 @@ const ROUTES: { path: string; priority: number }[] = [
   { path: '/guides', priority: 0.6 },
   { path: '/guides/private-pilot-license-cost-texas', priority: 0.7 },
   { path: '/guides/block-time-wet-vs-dry-rates', priority: 0.7 },
+  { path: '/guides/how-long-private-pilot-license', priority: 0.7 },
+  { path: '/guides/flight-review-bfr-what-to-expect', priority: 0.7 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
