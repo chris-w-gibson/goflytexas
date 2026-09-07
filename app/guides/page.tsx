@@ -21,6 +21,16 @@ const GUIDES = [
     blurb: 'Why a low dry rate is not cheaper, how Hobbs time works, and how a block of hours lowers what you pay.',
   },
   {
+    href: '/guides/how-long-private-pilot-license',
+    title: 'How long does it take to get a private pilot license?',
+    blurb: 'The FAA minimum, what people really need, and how lessons per week turns hours into months.',
+  },
+  {
+    href: '/guides/flight-review-bfr-what-to-expect',
+    title: 'Flight review (BFR): what to expect and what to bring',
+    blurb: 'The every-24-months rule, what the ground and flight hours cover, the cost, and a checklist for the day.',
+  },
+  {
     href: '/discovery-flight',
     title: 'Discovery flight: what happens on the day',
     blurb: 'Minute by minute, what to bring, how to get here, and what it costs.',
