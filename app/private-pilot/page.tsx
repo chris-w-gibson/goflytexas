@@ -15,8 +15,8 @@ import {
 
 export const metadata: Metadata = {
   alternates: { canonical: '/private-pilot' },
-  title: 'Private Pilot Training - Start Your Aviation Journey',
-  description: 'Complete private pilot training at GoFlyTexas. One-on-one ground instruction and flight lessons in modern Cessna 172N aircraft. Begin your pilot journey today.',
+  title: 'Private Pilot License Training near Fort Worth, TX',
+  description: 'Earn your private pilot certificate at Aero Valley Airport, Roanoke TX: one-on-one ground school and flight lessons in Cessna 172s, wet rates with fuel included, block-time discounts. Start with a $250 discovery flight.',
   openGraph: {
     title: 'Private Pilot Training | GoFlyTexas',
     description: 'Complete private pilot training with personalized instruction. Ground school and flight lessons to earn your private pilot license.',

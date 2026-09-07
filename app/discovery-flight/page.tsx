@@ -18,10 +18,18 @@ import {
   CheckCircle,
 } from 'lucide-react';
 
+const price = formattedDiscoveryPrice();
+const duration = formattedDiscoveryDuration();
+const passengerPrice =
+  DISCOVERY_FLIGHT.passengerPrice === null ? null : `$${DISCOVERY_FLIGHT.passengerPrice}`;
+
 export const metadata: Metadata = {
-  title: 'Discovery Flight in Dallas–Fort Worth',
-  description:
-    'Take the controls of a real airplane on a discovery flight at Aero Valley Airport in Roanoke, TX. Fly with a certified instructor — no experience needed. Serving Dallas, Fort Worth and Denton.',
+  title: price
+    ? `Discovery Flight in Dallas–Fort Worth — ${price} All-In`
+    : 'Discovery Flight in Dallas–Fort Worth',
+  description: price
+    ? `Take the controls of a Cessna 172 with a certified instructor at Aero Valley Airport, Roanoke TX — ${price} all-in, ${duration ?? 'about an hour'} of flying, no experience needed. 25 minutes from Fort Worth and Denton.`
+    : 'Take the controls of a real airplane on a discovery flight at Aero Valley Airport in Roanoke, TX. Fly with a certified instructor — no experience needed. Serving Dallas, Fort Worth and Denton.',
   keywords: [
     'discovery flight Dallas',
     'discovery flight Fort Worth',
@@ -38,9 +46,6 @@ export const metadata: Metadata = {
     canonical: 'https://www.goflytexas.com/discovery-flight',
   },
 };
-
-const price = formattedDiscoveryPrice();
-const duration = formattedDiscoveryDuration();
 
 const faqs: { q: string; a: string }[] = [
   {
@@ -74,6 +79,24 @@ const faqs: { q: string; a: string }[] = [
   {
     q: 'What should I bring?',
     a: 'Just a photo ID, sunglasses and comfortable clothes. We supply the airplane, the headset and the instructor.',
+  },
+  {
+    q: 'Can I bring someone with me?',
+    a: passengerPrice
+      ? `Family and friends are welcome at the airport, and one additional passenger can usually ride along in the back seat for ${passengerPrice}, weight and weather permitting — mention it when you book.`
+      : 'Family and friends are welcome at the airport, and one additional passenger can usually ride along in the back seat, weight and weather permitting — mention it when you book.',
+  },
+  {
+    q: 'What if the weather is bad on the day?',
+    a: 'Your instructor makes the call. If the weather is not right for a first flight, we reschedule you for the next good day — a discovery flight is meant to be enjoyable, not white-knuckled.',
+  },
+  {
+    q: 'Is it safe?',
+    a: 'The airplane has a full set of controls on both sides, and your certified flight instructor is flying with you the entire time. Our aircraft are maintained on the same schedule we use for student training every day.',
+  },
+  {
+    q: 'Can I give a discovery flight as a gift?',
+    a: `Yes — many first flights are gifts. Call ${CONTACT.phoneDisplay} and we will set it up so the recipient can pick a day that works for them.`,
   },
 ];
 
@@ -161,6 +184,9 @@ export default function DiscoveryFlightPage() {
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 Fly a real airplane on your first day
+                <span className="block text-2xl md:text-3xl text-navy-200 font-semibold mt-3">
+                  Discovery flights in Dallas–Fort Worth, from Aero Valley Airport in Roanoke
+                </span>
               </h1>
               <p className="text-xl text-navy-100 mb-6">
                 A discovery flight is the easiest way to find out whether flying is for
@@ -298,6 +324,119 @@ export default function DiscoveryFlightPage() {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Getting here */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-navy-900 mb-4">
+                Getting to Aero Valley
+              </h2>
+              <p className="text-lg text-navy-600 mb-6">
+                {CONTACT.airport} sits just off Highway 114 in {CONTACT.city}, on the north
+                side of the DFW metroplex. Most of our discovery-flight guests drive in from
+                the towns below; the airport has free parking right by the hangar and there
+                is no security line — you walk straight out to the airplane.
+              </p>
+              <ul className="grid sm:grid-cols-2 gap-3">
+                {[
+                  ['Southlake, Keller, Trophy Club', 'about 15 minutes'],
+                  ['Flower Mound, Grapevine', 'about 20 minutes'],
+                  ['Denton, Lewisville', 'about 25 minutes'],
+                  ['Fort Worth', 'about 30 minutes'],
+                  ['Frisco, Plano', 'about 40 minutes'],
+                  ['Dallas', 'about 45 minutes'],
+                ].map(([place, time]) => (
+                  <li
+                    key={place}
+                    className="flex items-start bg-navy-50 border border-navy-100 rounded-lg px-4 py-3"
+                  >
+                    <MapPin className="h-5 w-5 text-sky-600 mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="text-navy-800">
+                      <span className="font-semibold">{place}</span>
+                      <span className="text-navy-500"> — {time}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-navy-50 border border-navy-100 rounded-lg p-8">
+              <h3 className="text-xl font-semibold text-navy-900 mb-3">
+                What you will fly
+              </h3>
+              <p className="text-navy-600 mb-4">
+                Your discovery flight is in a {DISCOVERY_FLIGHT.aircraft}, the most widely
+                used training airplane in the world: four seats, a high wing you can see
+                out from under, and a full set of controls on both sides so your instructor
+                can fly alongside you. We train in both glass-panel and traditional
+                round-gauge 172s, and you can ask for either.
+              </p>
+              <p className="text-navy-600 mb-6">
+                Nothing is rushed. You will spend a few minutes on the ground learning what
+                the instructor checks before every flight, then {duration ?? 'about an hour'} in
+                the air over the countryside north of Fort Worth, with the controls in your
+                hands for most of it.
+              </p>
+              <Link
+                href="/aircraft"
+                className="inline-flex items-center text-sky-700 font-medium hover:text-sky-800"
+              >
+                Meet the fleet →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* After your flight */}
+      <section className="py-16 bg-navy-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-navy-900 mb-4">
+            After your flight
+          </h2>
+          <p className="text-lg text-navy-600 mb-6">
+            Plenty of people take a discovery flight for the experience and leave it there.
+            If it lights something up, the same instructor can walk you through what comes
+            next: the{' '}
+            <Link href="/private-pilot" className="text-sky-700 font-medium hover:text-sky-800">
+              private pilot certificate
+            </Link>
+            , how often you would want to fly, and what it typically costs. Because the
+            flight is logged as dual instruction, the hour you just flew already counts.
+          </p>
+          <ul className="space-y-3 text-navy-700">
+            <li className="flex items-start">
+              <CheckCircle className="h-5 w-5 text-sky-600 mr-3 flex-shrink-0 mt-0.5" />
+              <span>
+                Hourly rates are wet — fuel is included — so the price you hear is the price
+                you pay. Prepaid block time lowers the effective rate.
+              </span>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="h-5 w-5 text-sky-600 mr-3 flex-shrink-0 mt-0.5" />
+              <span>
+                One-on-one instruction, scheduled around your calendar. Flying two or three
+                times a week finishes sooner and costs less than once a week.
+              </span>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="h-5 w-5 text-sky-600 mr-3 flex-shrink-0 mt-0.5" />
+              <span>
+                Already a pilot? Ask about a{' '}
+                <Link href="/flight-review" className="text-sky-700 font-medium hover:text-sky-800">
+                  flight review
+                </Link>{' '}
+                or a rental checkout instead — see all our{' '}
+                <Link href="/flight-training" className="text-sky-700 font-medium hover:text-sky-800">
+                  training programs
+                </Link>
+                .
+              </span>
+            </li>
+          </ul>
         </div>
       </section>
 

@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { attributionLabel as sharedAttributionLabel } from '@/lib/attribution';
 import type { Lead } from './db/schema';
 import { formatCallDuration, parseEmailList } from './followup';
 
@@ -110,11 +111,10 @@ export async function sendAutoReply(lead: Lead): Promise<void> {
 }
 
 function attributionLabel(attr: unknown): string | null {
-  if (!attr || typeof attr !== 'object') return null;
-  const a = attr as Record<string, string>;
-  if (a.gclid) return 'Google Ads';
-  if (a.utm_source) return `${a.utm_source}${a.utm_campaign ? ` / ${a.utm_campaign}` : ''}`;
-  return null;
+  const label = sharedAttributionLabel(
+    attr && typeof attr === 'object' && !Array.isArray(attr) ? (attr as Record<string, string>) : null,
+  );
+  return label === 'Unknown' ? null : label;
 }
 
 /** Extra context when the lead came from a phone call (AI- or human-answered). */

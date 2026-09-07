@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { attributionLabel } from '@/lib/attribution';
 import { listLeads, type LeadStatus } from '@/lib/leads';
 import { formatDuration, responseState } from '@/lib/followup';
 
@@ -98,7 +99,15 @@ export default async function LeadsPage({
                     <div className="text-xs text-slate-500">{l.phone ?? '—'}</div>
                   </td>
                   <td className="px-4 py-2 text-slate-600">{l.flightInterest ?? '—'}</td>
-                  <td className="px-4 py-2 text-slate-600">{l.source}</td>
+                  <td className="px-4 py-2 text-slate-600">
+                    {l.source}
+                    {(() => {
+                      const ch = attributionLabel(l.attribution as Record<string, string> | null);
+                      return ch !== 'Unknown' ? (
+                        <span className="block text-xs text-slate-400">{ch}</span>
+                      ) : null;
+                    })()}
+                  </td>
                   <td className="px-4 py-2">
                     <span className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${badge(l.status)}`}>
                       {l.status}

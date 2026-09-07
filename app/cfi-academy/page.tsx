@@ -16,8 +16,8 @@ import {
 
 export const metadata: Metadata = {
   alternates: { canonical: '/cfi-academy' },
-  title: 'CFI/CFII Academy - Become a Flight Instructor',
-  description: 'Join our CFI/CFII Academy at GoFlyTexas. Personalized one-on-one training to become a certified flight instructor. Launch your aviation teaching career.',
+  title: 'CFI Academy near Fort Worth — 10 and 15-Day Courses',
+  description: 'Become a certified flight instructor at GoFlyTexas, Roanoke TX: a 10-day classroom academy or 15-day academy with flight time, one-on-one mentorship, mock oral and checkride scheduling.',
   openGraph: {
     title: 'CFI/CFII Academy | GoFlyTexas',
     description: 'Become a certified flight instructor with our mentorship program. Build hours and launch your aviation teaching career.',

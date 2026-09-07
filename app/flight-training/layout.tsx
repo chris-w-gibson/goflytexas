@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 // This route's page is a client component and cannot export metadata, so the
 // title, description and canonical live here (audit 2026-09-04, C1/M1).
 export const metadata: Metadata = {
-  title: 'Flight Training Programs in Dallas–Fort Worth',
+  title: 'Flight School in Roanoke, TX (DFW) — Private Pilot to CFI',
   description:
-    'Private pilot, instrument, commercial and CFI training with one-on-one instruction at Aero Valley Airport, Roanoke, TX. Serving Dallas, Fort Worth and Denton.',
+    'One-on-one flight training 25 minutes from Fort Worth and Denton at Aero Valley Airport, Roanoke TX: private pilot, instrument, commercial and CFI. Start with a $250 discovery flight.',
   alternates: { canonical: '/flight-training' },
 };
 
