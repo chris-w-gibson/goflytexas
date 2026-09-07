@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, ReactNode } from 'react';
-import { Camera, ImageIcon } from 'lucide-react';
+import Image from 'next/image';
+import { Camera } from 'lucide-react';
 import { useImageEdit } from './ImageEditContext';
 import ImagePicker from './ImagePicker';
 
@@ -13,6 +14,12 @@ interface EditableBackgroundProps {
   fallbackClassName?: string;
 }
 
+/**
+ * Section background that Jim can swap in edit mode. The image is rendered as
+ * a next/image layer (not a CSS background) so phones get a resized, optimized
+ * variant and below-the-fold sections lazy-load — the raw 2500px originals used
+ * to be the heaviest downloads on the homepage (Core Web Vitals audit 2026-09-07).
+ */
 export default function EditableBackground({
   locationId,
   children,
@@ -23,19 +30,27 @@ export default function EditableBackground({
   const { editMode, getImage } = useImageEdit();
   const [showPicker, setShowPicker] = useState(false);
   const imagePath = getImage(locationId);
+  const baseClassName = imagePath ? 'bg-navy-950' : fallbackClassName;
 
-  const backgroundStyle = imagePath
-    ? { backgroundImage: `url(${imagePath})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-    : {};
-
-  const baseClassName = imagePath ? '' : fallbackClassName;
+  const layers = imagePath ? (
+    <>
+      <Image
+        src={imagePath}
+        alt=""
+        fill
+        sizes="100vw"
+        className="object-cover"
+        aria-hidden="true"
+      />
+      <div className={`absolute inset-0 ${overlayClassName}`} />
+    </>
+  ) : null;
 
   if (editMode) {
     return (
       <>
-        <div className={`relative ${baseClassName} ${className}`} style={backgroundStyle}>
-          {/* Overlay for readability */}
-          {imagePath && <div className={`absolute inset-0 ${overlayClassName}`} />}
+        <div className={`relative overflow-hidden ${baseClassName} ${className}`}>
+          {layers}
 
           {/* Content */}
           <div className="relative z-10">{children}</div>
@@ -68,8 +83,8 @@ export default function EditableBackground({
 
   // Normal display mode
   return (
-    <div className={`relative ${baseClassName} ${className}`} style={backgroundStyle}>
-      {imagePath && <div className={`absolute inset-0 ${overlayClassName}`} />}
+    <div className={`relative overflow-hidden ${baseClassName} ${className}`}>
+      {layers}
       <div className="relative z-10">{children}</div>
     </div>
   );
