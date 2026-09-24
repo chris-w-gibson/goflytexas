@@ -1,4 +1,4 @@
-import { and, desc, eq, gt, isNotNull, ne, or, sql } from 'drizzle-orm';
+import { and, desc, eq, gt, ilike, isNotNull, isNull, or, sql } from 'drizzle-orm';
 import { db } from './db';
 import { emailEvents, leadNotes, leads, type Lead, type NewLead } from './db/schema';
 import {
@@ -16,18 +16,32 @@ export async function createLead(input: NewLead): Promise<Lead> {
 
 export async function listLeads(opts?: {
   status?: LeadStatus;
+  /** Name / email / phone contains (Jim 2026-09-24: "a name search box"). */
+  q?: string;
+  /** Archived contacts are settled and hidden unless asked for. */
+  view?: 'active' | 'archived' | 'all';
+  /** Subscription is separate from the pipeline status. */
+  subscribed?: boolean;
   limit?: number;
 }): Promise<Lead[]> {
   const limit = opts?.limit ?? 200;
-  if (opts?.status) {
-    return db
-      .select()
-      .from(leads)
-      .where(eq(leads.status, opts.status))
-      .orderBy(desc(leads.createdAt))
-      .limit(limit);
+  const view = opts?.view ?? 'active';
+  const conds = [];
+  if (view === 'active') conds.push(isNull(leads.archivedAt));
+  if (view === 'archived') conds.push(isNotNull(leads.archivedAt));
+  if (opts?.status) conds.push(eq(leads.status, opts.status));
+  if (opts?.subscribed === true) conds.push(eq(leads.unsubscribed, false));
+  if (opts?.subscribed === false) conds.push(eq(leads.unsubscribed, true));
+  if (opts?.q) {
+    const like = `%${opts.q.replace(/[%_\\]/g, '\\$&')}%`;
+    conds.push(or(ilike(leads.name, like), ilike(leads.email, like), ilike(leads.phone, like)));
   }
-  return db.select().from(leads).orderBy(desc(leads.createdAt)).limit(limit);
+  return db
+    .select()
+    .from(leads)
+    .where(conds.length ? and(...conds) : undefined)
+    .orderBy(desc(leads.createdAt))
+    .limit(limit);
 }
 
 export async function getLeadById(id: string): Promise<Lead | undefined> {
@@ -136,16 +150,54 @@ export async function touchLastContacted(id: string): Promise<void> {
 }
 
 export async function unsubscribeLead(token: string): Promise<Lead | undefined> {
+  // Subscription is its own flag (Jim 2026-09-24) — the pipeline status
+  // keeps saying where the lead actually got to.
   const [row] = await db
     .update(leads)
-    .set({
-      unsubscribed: true,
-      status: 'unsubscribed',
-      updatedAt: new Date(),
-    })
+    .set({ unsubscribed: true, updatedAt: new Date() })
     .where(eq(leads.unsubscribeToken, token))
     .returning();
   return row;
+}
+
+/** Admin toggle: they asked us to stop, or told us it is fine again. */
+export async function setSubscription(id: string, subscribed: boolean): Promise<Lead | undefined> {
+  const [row] = await db
+    .update(leads)
+    .set({ unsubscribed: !subscribed, updatedAt: new Date() })
+    .where(eq(leads.id, id))
+    .returning();
+  return row;
+}
+
+/**
+ * Archive = settled (Jim 2026-09-24): off the working list and out of the
+ * drip; subscription untouched — "leave them in subscribed until they or we
+ * unsubscribe them even if they get archived".
+ */
+export async function archiveLead(id: string): Promise<Lead | undefined> {
+  const now = new Date();
+  const [row] = await db
+    .update(leads)
+    .set({ archivedAt: now, updatedAt: now })
+    .where(eq(leads.id, id))
+    .returning();
+  return row;
+}
+
+export async function unarchiveLead(id: string): Promise<Lead | undefined> {
+  const [row] = await db
+    .update(leads)
+    .set({ archivedAt: null, updatedAt: new Date() })
+    .where(eq(leads.id, id))
+    .returning();
+  return row;
+}
+
+/** Gone for good — the fake leads the AI call bot made while it was being tested (Jim 2026-09-24). */
+export async function deleteLead(id: string): Promise<boolean> {
+  const rows = await db.delete(leads).where(eq(leads.id, id)).returning({ id: leads.id });
+  return rows.length > 0;
 }
 
 export type FollowupCandidate = { lead: Lead; step: number; sentCount: number };
@@ -188,6 +240,8 @@ export async function findFollowupCandidates(opts?: {
     .where(
       and(
         eq(leads.unsubscribed, false),
+        // Archived = settled: no more follow-ups (Jim 2026-09-24).
+        isNull(leads.archivedAt),
         // Phone-only leads (no email) never enter the email drip.
         isNotNull(leads.email),
         or(eq(leads.status, 'new'), eq(leads.status, 'contacted')),
@@ -214,7 +268,12 @@ export async function findRecentLeadByEmail(
     .select()
     .from(leads)
     .where(
-      and(eq(leads.email, email), gt(leads.createdAt, since), ne(leads.status, 'unsubscribed')),
+      and(
+        eq(leads.email, email),
+        gt(leads.createdAt, since),
+        eq(leads.unsubscribed, false),
+        isNull(leads.archivedAt),
+      ),
     )
     .orderBy(desc(leads.createdAt))
     .limit(1);
@@ -229,7 +288,12 @@ export async function findRecentLeadByPhone(
     .select()
     .from(leads)
     .where(
-      and(eq(leads.phone, phone), gt(leads.createdAt, since), ne(leads.status, 'unsubscribed')),
+      and(
+        eq(leads.phone, phone),
+        gt(leads.createdAt, since),
+        eq(leads.unsubscribed, false),
+        isNull(leads.archivedAt),
+      ),
     )
     .orderBy(desc(leads.createdAt))
     .limit(1);
@@ -254,14 +318,18 @@ export async function countLeads(): Promise<{
   contacted: number;
   converted: number;
   unsubscribed: number;
+  archived: number;
 }> {
+  // Pipeline counts are the working list (archived excluded); unsubscribed
+  // is the flag across everyone (Jim 2026-09-24).
   const [row] = await db
     .select({
-      total: sql<number>`count(*)::int`,
-      new_: sql<number>`count(*) filter (where status = 'new')::int`,
-      contacted: sql<number>`count(*) filter (where status = 'contacted')::int`,
-      converted: sql<number>`count(*) filter (where status = 'converted')::int`,
-      unsubscribed: sql<number>`count(*) filter (where status = 'unsubscribed')::int`,
+      total: sql<number>`count(*) filter (where archived_at is null)::int`,
+      new_: sql<number>`count(*) filter (where status = 'new' and archived_at is null)::int`,
+      contacted: sql<number>`count(*) filter (where status = 'contacted' and archived_at is null)::int`,
+      converted: sql<number>`count(*) filter (where status = 'converted' and archived_at is null)::int`,
+      unsubscribed: sql<number>`count(*) filter (where unsubscribed)::int`,
+      archived: sql<number>`count(*) filter (where archived_at is not null)::int`,
     })
     .from(leads);
   return row;
@@ -277,8 +345,8 @@ export async function getResponseStats(): Promise<{
 }> {
   const [row] = await db
     .select({
-      waiting: sql<number>`count(*) filter (where status = 'new' and first_contacted_at is null)::int`,
-      waitingOverHour: sql<number>`count(*) filter (where status = 'new' and first_contacted_at is null and created_at < now() - interval '1 hour')::int`,
+      waiting: sql<number>`count(*) filter (where status = 'new' and first_contacted_at is null and archived_at is null)::int`,
+      waitingOverHour: sql<number>`count(*) filter (where status = 'new' and first_contacted_at is null and archived_at is null and created_at < now() - interval '1 hour')::int`,
       responded30d: sql<number>`count(*) filter (where first_contacted_at is not null and created_at > now() - interval '30 days')::int`,
       medianResponseMs: sql<number | null>`(
         percentile_cont(0.5) within group (order by extract(epoch from (first_contacted_at - created_at)))

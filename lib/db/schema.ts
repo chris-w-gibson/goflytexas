@@ -41,7 +41,13 @@ export const leads = pgTable('leads', {
   attribution: jsonb('attribution'),
 
   unsubscribeToken: uuid('unsubscribe_token').defaultRandom().notNull(),
+  // Subscription lives HERE, apart from the pipeline status (Jim 2026-09-24:
+  // "if you select contacted you can no longer tell if they are subscribed").
+  // The 'unsubscribed' enum value is legacy — nothing writes it since 0008.
   unsubscribed: boolean('unsubscribed').notNull().default(false),
+  // Settled contacts (Jim 2026-09-24): hidden from the working list, out of
+  // the drip, still subscribed until they or we unsubscribe them.
+  archivedAt: timestamp('archived_at', { withTimezone: true }),
   // One-click "I've reached out" link in the owner notification email (no login).
   contactToken: uuid('contact_token').defaultRandom().notNull(),
 

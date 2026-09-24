@@ -111,3 +111,24 @@ lib/
 - Still manual: request indexing of `/discovery-flight` in Search Console (the
   API cannot), the click-to-call conversion action in Google Ads (a write),
   and the Drizzle journal regeneration for migrations 0004–0007.
+
+## Leads: subscription and archive are not statuses (2026-09-24)
+
+Jim (GFT Hub, 9/24): archive contacts once settled; delete the fake leads the AI call bot
+made in testing; a name search on the landing page; subscribed/unsubscribed as its own column
+("if you select contacted you can no longer tell if they are subscribed").
+
+- `leads.status` is the pipeline only: `new | contacted | converted`. The enum still defines
+  `unsubscribed` (Postgres cannot drop a value) but nothing writes it; migration 0008 moved
+  those rows back to `contacted` (first_contacted_at set) or `new`. Subscription is the
+  `unsubscribed` boolean — `unsubscribeLead` / `setSubscription` touch only that.
+- `leads.archived_at` = settled. `listLeads` defaults to `view: 'active'` (archived hidden),
+  `?view=archived` shows them; counts and the response stats exclude archived; the drip and
+  the call-dedupe skip archived. Archiving never changes subscription.
+- `?q=` searches name / email / phone (ilike) from the dashboard box and the leads page;
+  `lib/leadFilters.ts` owns the query-string contract (old `?status=unsubscribed` links map to
+  `?subscribed=no`).
+- `deleteLeadAction` needs the confirm checkbox; notes cascade, calls keep their row with
+  `lead_id` nulled.
+- Migration `drizzle/0008_archive_and_subscription.sql` is hand-applied like 0006/0007
+  (`railway run -s Postgres -e production -- psql "$DATABASE_PUBLIC_URL" -f …`), idempotent.

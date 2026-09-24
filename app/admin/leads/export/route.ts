@@ -24,6 +24,8 @@ export async function GET() {
     'Interest',
     'Preferred contact',
     'Status',
+    'Subscribed',
+    'Archived',
     'Source',
     'Message',
     'Created',
@@ -38,6 +40,9 @@ export async function GET() {
         csvCell(l.flightInterest),
         csvCell(l.preferredContact),
         csvCell(l.status),
+        // Jim 2026-09-24: subscription and archive are their own columns
+        csvCell(l.unsubscribed ? 'no' : 'yes'),
+        csvCell(l.archivedAt ? l.archivedAt.toISOString() : ''),
         csvCell(l.source),
         csvCell(l.message),
         csvCell(l.createdAt.toISOString()),
