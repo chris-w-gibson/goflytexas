@@ -11,6 +11,7 @@ import {
   Fuel
 } from 'lucide-react';
 import ImageCarousel from '@/components/ImageCarousel';
+import { RATES, blockEffective, usd } from '@/lib/rates';
 
 const aircraft = [
   {
@@ -32,7 +33,6 @@ const aircraft = [
       ceiling: "13,500 ft",
       fuelCapacity: "40 gal"
     },
-    hourlyRate: "Competitive Rates",
     description: "Blue stripe. Advanced avionics suite ensuring a consistent, modern training experience."
   },
   {
@@ -54,7 +54,6 @@ const aircraft = [
       ceiling: "13,500 ft",
       fuelCapacity: "40 gal"
     },
-    hourlyRate: "Competitive Rates",
     description: "Reliable and proven trainer, perfect for all stages of flight training."
   },
   {
@@ -76,7 +75,6 @@ const aircraft = [
       ceiling: "13,500 ft",
       fuelCapacity: "40 gal"
     },
-    hourlyRate: "Competitive Rates",
     description: "Brown/copper stripe. Reliable trainer with modern GPS navigation, perfect for all stages of flight training."
   },
   {
@@ -98,7 +96,6 @@ const aircraft = [
       ceiling: "13,500 ft",
       fuelCapacity: "40 gal"
     },
-    hourlyRate: "Competitive Rates",
     description: "Red stripe. Well-equipped trainer maintained to the highest standards for safety and comfort."
   }
 ];
@@ -243,31 +240,70 @@ export default function AircraftPage() {
             </ul>
           </div>
 
+          <div className="bg-navy-50 rounded-lg p-8 mb-8 border border-navy-100">
+            <h3 className="text-xl font-semibold text-navy-900 mb-2">Rental Rates</h3>
+            <p className="text-navy-700 mb-6">
+              Every rate below is <span className="font-semibold">wet</span> &mdash; fuel, oil and
+              GPS database updates are already in the hourly price, so the number you see is the
+              number you pay for the airplane. Current as of {RATES.asOf}.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-4 mb-6">
+              <div className="bg-white rounded-lg border border-navy-100 p-5">
+                <p className="text-3xl font-bold text-navy-900">
+                  {usd(RATES.glassPanelHourly)}
+                  <span className="text-base font-normal text-navy-600"> / hour</span>
+                </p>
+                <p className="text-navy-700 mt-1">Glass-panel Cessna 172 &mdash; digital flight displays</p>
+              </div>
+              <div className="bg-white rounded-lg border border-navy-100 p-5">
+                <p className="text-3xl font-bold text-navy-900">
+                  {usd(RATES.roundGaugeHourly)}
+                  <span className="text-base font-normal text-navy-600"> / hour</span>
+                </p>
+                <p className="text-navy-700 mt-1">Round-gauge Cessna 172 &mdash; traditional analog instruments</p>
+              </div>
+            </div>
+
+            <p className="text-navy-700">
+              Instruction is billed on top of the aircraft: {usd(RATES.cfiHourly)} an hour with a
+              two-hour minimum per session, or {usd(RATES.cfiAdvancedHourly)} an hour for instrument
+              and commercial training.
+            </p>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-xl font-semibold text-navy-900 mb-4">Hourly Rates Include</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-navy-600 mr-2">•</span>
-                  <span className="text-navy-700">Fuel costs</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-navy-600 mr-2">•</span>
-                  <span className="text-navy-700">Oil and consumables</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-navy-600 mr-2">•</span>
-                  <span className="text-navy-700">GPS database updates</span>
-                </li>
-              </ul>
+              <h3 className="text-xl font-semibold text-navy-900 mb-4">Block Time</h3>
+              <p className="text-navy-700 leading-relaxed mb-3">
+                {usd(RATES.blockPrice)} buys {RATES.blockHours} hours &mdash; ten plus a bonus hour
+                &mdash; which works out to about {usd(Math.round(blockEffective()))} an hour on the
+                glass-panel aircraft. Fly a round-gauge airplane on block time and every hour
+                returns a {usd(RATES.roundGaugeBlockCredit)} credit, stretching the same block
+                further still.
+              </p>
+              <p className="text-navy-700 leading-relaxed">
+                Larger 25- and 50-hour blocks bring the effective rate down below $150 an hour on
+                the round-gauge aircraft. Ask us for the current block sheet.
+              </p>
+              <Link
+                href="/guides/block-time-wet-vs-dry-rates"
+                className="inline-block mt-4 text-navy-900 font-semibold underline underline-offset-4 hover:text-navy-700"
+              >
+                How block time and wet vs dry rates work
+              </Link>
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold text-navy-900 mb-4">Block Time Discounts</h3>
+              <h3 className="text-xl font-semibold text-navy-900 mb-4">Checking Out in Our Aircraft</h3>
               <p className="text-navy-700 leading-relaxed">
-                Discounted hourly rates are available with the purchase of block time, sold in
-                <span className="font-semibold"> 10, 25, and 50 hour</span> blocks.
-                The more you buy, the more you save. Contact us for current pricing.
+                Renting starts with a checkout flight alongside one of our instructors, so you are
+                comfortable in the airplane and we know your flying. Already current in a 172? The
+                checkout is usually short. Call{' '}
+                <a href="tel:+19409053090" className="font-semibold underline underline-offset-4">
+                  (940) 905-3090
+                </a>{' '}
+                and we will set it up.
               </p>
             </div>
           </div>
