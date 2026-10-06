@@ -14,7 +14,7 @@ export default function Footer() {
             {/* Social Media Links */}
             <div className="flex space-x-4">
               <a
-                href="https://www.facebook.com/goflytexas"
+                href="https://www.facebook.com/p/GoFly-Texas-61579294361015/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-navy-400 hover:text-white transition-colors"

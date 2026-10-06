@@ -99,7 +99,7 @@ export default function RootLayout({
               ],
               "priceRange": "$$",
               "sameAs": [
-                "https://www.facebook.com/goflytexas",
+                "https://www.facebook.com/p/GoFly-Texas-61579294361015/",
                 "https://www.instagram.com/goflytx"
               ],
               "hasOfferCatalog": {
