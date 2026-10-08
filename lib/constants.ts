@@ -74,6 +74,8 @@ export const FLIGHT_INTERESTS: ReadonlyArray<{ value: string; label: string }> =
   { value: 'ferry', label: 'Ferry Flight' },
   { value: 'insurance', label: 'Insurance Checkout' },
   { value: 'biennial', label: 'Biannual Review (BFR)' },
+  // Not a sales enquiry — see NON_SALES_INTERESTS below.
+  { value: 'careers', label: 'Careers / Employment' },
   { value: 'other', label: 'Other' },
 ];
 
@@ -89,4 +91,21 @@ const FLIGHT_INTEREST_LABEL: Record<string, string> = Object.fromEntries(
 export function flightInterestLabel(key: string | null | undefined): string {
   if (!key) return 'Not specified';
   return FLIGHT_INTEREST_LABEL[key] ?? key;
+}
+
+/**
+ * Interests that are not someone wanting to fly with us.
+ *
+ * Job applicants kept arriving through the contact form (4 of the first 14
+ * "Other" leads were CFIs and a dispatcher asking about openings). They were
+ * landing in the sales queue: counted against the callback target and mailed
+ * the day 7/14/21 drip inviting them to book a discovery flight. They still
+ * become leads and still alert the owner — they just stay out of the drip.
+ */
+export const NON_SALES_INTERESTS: readonly string[] = ['careers'];
+
+const NON_SALES_SET = new Set<string>(NON_SALES_INTERESTS);
+
+export function isSalesInterest(key: string | null | undefined): boolean {
+  return !key || !NON_SALES_SET.has(key);
 }

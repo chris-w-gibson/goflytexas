@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { FLIGHT_INTERESTS, flightInterestLabel } from '../constants';
+import {
+  FLIGHT_INTERESTS,
+  NON_SALES_INTERESTS,
+  flightInterestLabel,
+  isSalesInterest,
+} from '../constants';
 
 /**
  * Regression for Jim's 2026-10-07 report: the contact form had no Discovery
@@ -45,5 +50,27 @@ describe('flightInterestLabel', () => {
   it('passes through legacy label-valued rows unchanged', () => {
     // 15 prod leads stored the label itself before the form was fixed.
     expect(flightInterestLabel('Discovery Flight')).toBe('Discovery Flight');
+  });
+});
+
+describe('non-sales interests', () => {
+  it('treats careers as not a sales enquiry', () => {
+    expect(isSalesInterest('careers')).toBe(false);
+  });
+
+  it('treats everything else, including nothing chosen, as a prospect', () => {
+    for (const { value } of FLIGHT_INTERESTS) {
+      if (value === 'careers') continue;
+      expect(isSalesInterest(value)).toBe(true);
+    }
+    expect(isSalesInterest(null)).toBe(true);
+    expect(isSalesInterest('Discovery Flight')).toBe(true);
+  });
+
+  it('every non-sales key is a real option', () => {
+    const values = FLIGHT_INTERESTS.map((i) => i.value);
+    for (const key of NON_SALES_INTERESTS) {
+      expect(values).toContain(key);
+    }
   });
 });

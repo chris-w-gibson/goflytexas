@@ -1,6 +1,7 @@
-import { and, desc, eq, gt, ilike, isNotNull, isNull, or, sql } from 'drizzle-orm';
+import { and, desc, eq, gt, ilike, isNotNull, isNull, notInArray, or, sql } from 'drizzle-orm';
 import { db } from './db';
 import { emailEvents, leadNotes, leads, type Lead, type NewLead } from './db/schema';
+import { NON_SALES_INTERESTS } from '@/lib/constants';
 import {
   dueFollowupStep,
   FOLLOWUP_MAX_AGE_DAYS,
@@ -244,6 +245,11 @@ export async function findFollowupCandidates(opts?: {
         isNull(leads.archivedAt),
         // Phone-only leads (no email) never enter the email drip.
         isNotNull(leads.email),
+        // Job applicants are not prospects — never drip them (2026-10-08).
+        or(
+          isNull(leads.flightInterest),
+          notInArray(leads.flightInterest, NON_SALES_INTERESTS as string[]),
+        ),
         or(eq(leads.status, 'new'), eq(leads.status, 'contacted')),
         gt(leads.createdAt, oldest),
       ),
