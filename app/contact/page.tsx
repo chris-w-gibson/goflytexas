@@ -14,6 +14,7 @@ import {
   Send,
   CheckCircle
 } from 'lucide-react';
+import { FLIGHT_INTERESTS } from '@/lib/constants';
 
 type FormData = {
   website?: string; // honeypot
@@ -232,15 +233,11 @@ export default function ContactPage() {
                       className="w-full px-4 py-2 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 text-navy-900"
                     >
                       <option value="">Select an option</option>
-                      <option value="private">Private Pilot License</option>
-                      <option value="instrument">Instrument Rating</option>
-                      <option value="commercial">Commercial License</option>
-                      <option value="rental">Aircraft Rental</option>
-                      <option value="tour">Aerial Tour</option>
-                      <option value="ferry">Ferry Flight</option>
-                      <option value="insurance">Insurance Checkout</option>
-                      <option value="biennial">Biannual Review (BFR)</option>
-                      <option value="other">Other</option>
+                      {FLIGHT_INTERESTS.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

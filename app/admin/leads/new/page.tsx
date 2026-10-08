@@ -1,4 +1,5 @@
 import { createManualLeadAction } from '@/app/admin/actions';
+import { FLIGHT_INTERESTS } from '@/lib/constants';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,15 +21,11 @@ export default function NewLeadPage() {
           <label htmlFor="flightInterest" className="block text-sm font-medium mb-1">Interested in</label>
           <select id="flightInterest" name="flightInterest" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
             <option value="">Select…</option>
-            <option value="private">Private Pilot License</option>
-            <option value="instrument">Instrument Rating</option>
-            <option value="commercial">Commercial License</option>
-            <option value="rental">Aircraft Rental</option>
-            <option value="tour">Aerial Tour</option>
-            <option value="ferry">Ferry Flight</option>
-            <option value="insurance">Insurance Checkout</option>
-            <option value="biennial">Biannual Review (BFR)</option>
-            <option value="other">Other</option>
+            {FLIGHT_INTERESTS.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
           </select>
         </div>
 

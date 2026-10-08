@@ -43,7 +43,7 @@ export default function DiscoveryFlightForm() {
           name: data.name,
           email: data.email,
           phone: data.phone,
-          flightInterest: 'Discovery Flight',
+          flightInterest: 'discovery',
           preferredContact: 'phone',
           message: data.preferredTime
             ? `Discovery flight request. Preferred day/time: ${data.preferredTime}`

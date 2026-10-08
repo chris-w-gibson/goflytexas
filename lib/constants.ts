@@ -50,3 +50,43 @@ export function formattedDiscoveryDuration(): string | null {
   if (durationMinutes === 60) return 'about an hour';
   return `about ${durationMinutes} minutes`;
 }
+
+/**
+ * The one list of "I'm interested in" options.
+ *
+ * Every form, the admin lead views and the owner-alert emails read this, so a
+ * new option appears everywhere at once. It used to be copied into the contact
+ * form, the admin new-lead form and a private map in lib/email.ts; they drifted,
+ * and the contact form ended up with no Discovery Flight option at all even
+ * though the email map had a label for it (Jim, 2026-10-07).
+ *
+ * `value` is what gets stored in leads.flight_interest — always the key, never
+ * the label.
+ */
+export const FLIGHT_INTERESTS: ReadonlyArray<{ value: string; label: string }> = [
+  // The discovery flight is the way most people start, so it leads the list.
+  { value: 'discovery', label: 'Discovery Flight' },
+  { value: 'private', label: 'Private Pilot License' },
+  { value: 'instrument', label: 'Instrument Rating' },
+  { value: 'commercial', label: 'Commercial License' },
+  { value: 'rental', label: 'Aircraft Rental' },
+  { value: 'tour', label: 'Aerial Tour' },
+  { value: 'ferry', label: 'Ferry Flight' },
+  { value: 'insurance', label: 'Insurance Checkout' },
+  { value: 'biennial', label: 'Biannual Review (BFR)' },
+  { value: 'other', label: 'Other' },
+];
+
+const FLIGHT_INTEREST_LABEL: Record<string, string> = Object.fromEntries(
+  FLIGHT_INTERESTS.map((i) => [i.value, i.label]),
+);
+
+/**
+ * Human label for a stored interest. Unknown values pass through unchanged —
+ * leads filed before this list existed stored the label itself
+ * (e.g. "Discovery Flight"), and those should still read correctly.
+ */
+export function flightInterestLabel(key: string | null | undefined): string {
+  if (!key) return 'Not specified';
+  return FLIGHT_INTEREST_LABEL[key] ?? key;
+}

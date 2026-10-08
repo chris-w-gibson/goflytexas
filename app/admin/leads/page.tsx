@@ -9,6 +9,7 @@ import {
   type LeadListParams,
 } from '@/lib/leadFilters';
 import { formatDuration, responseState } from '@/lib/followup';
+import { flightInterestLabel } from '@/lib/constants';
 
 export const dynamic = 'force-dynamic';
 
@@ -155,7 +156,7 @@ export default async function LeadsPage({
                     <div>{l.email ?? <span className="text-slate-400">no email</span>}</div>
                     <div className="text-xs text-slate-500">{l.phone ?? '—'}</div>
                   </td>
-                  <td className="px-4 py-2 text-slate-600">{l.flightInterest ?? '—'}</td>
+                  <td className="px-4 py-2 text-slate-600">{l.flightInterest ? flightInterestLabel(l.flightInterest) : '—'}</td>
                   <td className="px-4 py-2 text-slate-600">
                     {l.source}
                     {(() => {

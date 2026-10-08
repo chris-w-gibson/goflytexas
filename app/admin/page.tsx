@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { countLeads, getResponseStats, listLeads } from '@/lib/leads';
 import { formatDuration } from '@/lib/followup';
+import { flightInterestLabel } from '@/lib/constants';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { robots: { index: false, follow: false } };
@@ -119,7 +120,7 @@ export default async function AdminDashboard() {
                       </Link>
                     </td>
                     <td className="px-4 py-2 text-slate-600">{l.email ?? l.phone ?? '—'}</td>
-                    <td className="px-4 py-2 text-slate-600">{l.flightInterest ?? '—'}</td>
+                    <td className="px-4 py-2 text-slate-600">{l.flightInterest ? flightInterestLabel(l.flightInterest) : '—'}</td>
                     <td className="px-4 py-2"><StatusBadge status={l.status} /></td>
                     <td className="px-4 py-2 text-slate-500">{new Date(l.createdAt).toLocaleString()}</td>
                   </tr>

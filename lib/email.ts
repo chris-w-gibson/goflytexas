@@ -2,6 +2,7 @@ import { Resend } from 'resend';
 import { attributionLabel as sharedAttributionLabel } from '@/lib/attribution';
 import type { Lead } from './db/schema';
 import { formatCallDuration, parseEmailList } from './followup';
+import { flightInterestLabel } from '@/lib/constants';
 
 const FROM_DEFAULT = 'GoFlyTexas <info@goflytexas.com>';
 const ADMIN_DEFAULT = 'info@goflytexas.com';
@@ -18,22 +19,8 @@ function getResend(): Resend {
   return _resend;
 }
 
-const INTEREST_LABEL: Record<string, string> = {
-  discovery: 'Discovery Flight',
-  private: 'Private Pilot License',
-  instrument: 'Instrument Rating',
-  commercial: 'Commercial License',
-  rental: 'Aircraft Rental',
-  tour: 'Aerial Tour',
-  ferry: 'Ferry Flight',
-  insurance: 'Insurance Checkout',
-  biennial: 'Biannual Review (BFR)',
-  other: 'Other',
-};
-
 function interestLabel(key: string | null | undefined): string {
-  if (!key) return 'Not specified';
-  return INTEREST_LABEL[key] ?? key;
+  return flightInterestLabel(key);
 }
 
 /** RFC 8058 headers so mail clients offer a native unsubscribe. */
