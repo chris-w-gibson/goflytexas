@@ -98,6 +98,10 @@ const faqs: { q: string; a: string }[] = [
     q: 'Can I give a discovery flight as a gift?',
     a: `Yes — many first flights are gifts. Call ${CONTACT.phoneDisplay} and we will set it up so the recipient can pick a day that works for them.`,
   },
+  {
+    q: 'Is there a minimum age for a discovery flight?',
+    a: `The FAA sets no minimum age for flying with an instructor and logging the time. A student pilot can fly solo at 16 and earn a private pilot certificate at 17, and hours flown with an instructor before then still count. Call ${CONTACT.phoneDisplay} with your child's age and we will talk through whether they are ready.`,
+  },
 ];
 
 const offerSchema: Record<string, unknown> = {
@@ -322,6 +326,82 @@ export default function DiscoveryFlightPage() {
               >
                 See the airplanes you could fly →
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Young pilots — landing target for the young-pilot ad group */}
+      <section id="young-pilots" className="py-16 bg-navy-50 scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-navy-900 mb-4">
+                A first flight for a young pilot
+              </h2>
+              <p className="text-lg text-navy-600 mb-6">
+                Many discovery flights are booked by a parent or grandparent for a young
+                person who cannot stop talking about airplanes. They get the same flight
+                as anyone else: a few minutes on the ground with the instructor, then{' '}
+                {duration ?? 'about an hour'} in a {DISCOVERY_FLIGHT.aircraft} with the
+                controls in their hands for most of it, and a certified instructor with a
+                full set of controls beside them the whole time.
+              </p>
+              <ul className="space-y-4 mb-8">
+                {[
+                  price ? `${price} for the flight — the same as any discovery flight.` : null,
+                  passengerPrice
+                    ? `One adult can usually ride along in the back seat for ${passengerPrice}.`
+                    : null,
+                  'Gift certificates are available if it is a surprise.',
+                  'Tell us their age when you call and we will talk through whether they are ready for the left seat.',
+                ]
+                  .filter((item): item is string => item !== null)
+                  .map((item) => (
+                    <li key={item} className="flex items-start">
+                      <CheckCircle className="h-6 w-6 text-sky-600 mr-3 flex-shrink-0 mt-0.5" />
+                      <span className="text-navy-800">{item}</span>
+                    </li>
+                  ))}
+              </ul>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="#book"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-navy-900 text-white font-semibold rounded-full hover:bg-navy-800 transition-colors"
+                >
+                  Book their first flight
+                </a>
+                <a
+                  href={CONTACT.phoneHref}
+                  className="inline-flex items-center justify-center px-6 py-3 border border-navy-300 text-navy-900 font-semibold rounded-full hover:bg-white transition-colors"
+                >
+                  <Phone className="h-5 w-5 mr-2" />
+                  Call {CONTACT.phoneDisplay}
+                </a>
+              </div>
+            </div>
+
+            <div className="bg-white border border-navy-100 rounded-lg p-8">
+              <div className="flex items-center mb-4">
+                <Plane className="h-6 w-6 text-sky-600 mr-3" />
+                <h3 className="text-xl font-semibold text-navy-900">How far it can go</h3>
+              </div>
+              <ul className="space-y-4">
+                {[
+                  ['Any age', 'No FAA minimum age to fly with an instructor and log the time.'],
+                  ['16', 'A student pilot can fly solo.'],
+                  ['17', 'They can earn a private pilot certificate.'],
+                ].map(([age, text]) => (
+                  <li key={age} className="flex items-start">
+                    <span className="min-w-[4.5rem] font-bold text-navy-900">{age}</span>
+                    <span className="text-navy-600">{text}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-sm text-navy-500 mt-6">
+                Every hour flown with an instructor is logged as dual instruction, so it
+                counts toward a pilot certificate later. These are FAA minimums.
+              </p>
             </div>
           </div>
         </div>
