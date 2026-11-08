@@ -248,7 +248,7 @@ export async function sendFollowup(lead: Lead, step: number): Promise<void> {
     body = `
       <h2 style="color:#0c2340;">We'll stop here, ${name}.</h2>
       <p>This is the last check-in we'll send &mdash; nobody likes an inbox full of follow-ups. The door stays open as long as you like.</p>
-      <p>When the timing's right, the fastest way in is a call to ${PHONE_HTML}, or a reply to this email. If "not now, but maybe next month" is closer to the truth, reply with <em>next month</em> and we'll check in once, then.</p>
+      <p>When the timing's right, the fastest way in is a call to ${PHONE_HTML}, or a reply to this email. If later suits you better, reply with when you'd like us to reach back out to you, and we'll check in once, then.</p>
       <p>Thanks for looking us up. Blue skies,<br/>The GoFlyTexas team</p>`;
   }
 
