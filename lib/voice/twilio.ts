@@ -62,6 +62,12 @@ export function ringTimeoutSec(env: Env = process.env): number {
   return Number.isFinite(n) ? Math.min(45, Math.max(5, Math.floor(n))) : 20;
 }
 
+/** Ring time per person when the on-call order is rung one after another. */
+export function sequenceRingTimeoutSec(env: Env = process.env): number {
+  const n = Number(env.VOICE_SEQUENCE_RING_TIMEOUT ?? 15);
+  return Number.isFinite(n) ? Math.min(30, Math.max(8, Math.floor(n))) : 15;
+}
+
 export function whisperTimeoutSec(env: Env = process.env): number {
   const n = Number(env.VOICE_WHISPER_TIMEOUT ?? 4);
   return Number.isFinite(n) ? Math.min(10, Math.max(2, Math.floor(n))) : 4;
@@ -142,6 +148,18 @@ export function routeUrl(baseUrl: string, path: string, query?: Record<string, s
   return `${base}${path}${qs ? `?${qs}` : ''}`;
 }
 
+function recordedDial(i: { baseUrl: string; timeoutSec: number; action: string; numbers: string }): string {
+  const recording = routeUrl(i.baseUrl, '/api/voice/twilio/recording');
+  return twiml(
+    `<Dial timeout="${i.timeoutSec}" answerOnBridge="true" ringTone="us" record="record-from-answer-dual" recordingStatusCallback="${escapeXml(recording)}" recordingStatusCallbackEvent="completed absent" recordingStatusCallbackMethod="POST" action="${escapeXml(i.action)}" method="POST" timeLimit="3600">${i.numbers}</Dial>`,
+  );
+}
+
+function whisperedNumber(baseUrl: string, parentSid: string, t: RingTarget, idx: number): string {
+  const url = routeUrl(baseUrl, '/api/voice/twilio/whisper', { parent: parentSid, t: idx });
+  return `<Number url="${escapeXml(url)}" method="POST">${escapeXml(t.number)}</Number>`;
+}
+
 /** Simultaneous ring of every target with a whisper on each leg. */
 export function inboundDialTwiml(i: {
   baseUrl: string;
@@ -149,17 +167,43 @@ export function inboundDialTwiml(i: {
   targets: RingTarget[];
   timeoutSec: number;
 }): string {
-  const action = routeUrl(i.baseUrl, '/api/voice/twilio/dial-result', { parent: i.parentSid });
-  const recording = routeUrl(i.baseUrl, '/api/voice/twilio/recording');
-  const numbers = i.targets
-    .map((t, idx) => {
-      const url = routeUrl(i.baseUrl, '/api/voice/twilio/whisper', { parent: i.parentSid, t: idx });
-      return `<Number url="${escapeXml(url)}" method="POST">${escapeXml(t.number)}</Number>`;
-    })
-    .join('');
-  return twiml(
-    `<Dial timeout="${i.timeoutSec}" answerOnBridge="true" ringTone="us" record="record-from-answer-dual" recordingStatusCallback="${escapeXml(recording)}" recordingStatusCallbackEvent="completed absent" recordingStatusCallbackMethod="POST" action="${escapeXml(action)}" method="POST" timeLimit="3600">${numbers}</Dial>`,
-  );
+  return recordedDial({
+    baseUrl: i.baseUrl,
+    timeoutSec: i.timeoutSec,
+    action: routeUrl(i.baseUrl, '/api/voice/twilio/dial-result', { parent: i.parentSid }),
+    numbers: i.targets.map((t, idx) => whisperedNumber(i.baseUrl, i.parentSid, t, idx)).join(''),
+  });
+}
+
+/**
+ * On-call order: ring ONE person (`step` in the call's ring plan). The dial
+ * result carries the step, so a no-answer moves to the next person and the
+ * last one falls through to the AI.
+ */
+export function sequenceDialTwiml(i: {
+  baseUrl: string;
+  parentSid: string;
+  target: RingTarget;
+  step: number;
+  timeoutSec: number;
+}): string {
+  return recordedDial({
+    baseUrl: i.baseUrl,
+    timeoutSec: i.timeoutSec,
+    action: routeUrl(i.baseUrl, '/api/voice/twilio/dial-result', { parent: i.parentSid, step: i.step }),
+    numbers: whisperedNumber(i.baseUrl, i.parentSid, i.target, i.step),
+  });
+}
+
+/** The person to ring after `step` went unanswered, if the plan has one. */
+export function nextInPlan(
+  plan: RingTarget[] | null | undefined,
+  step: string | null,
+): { target: RingTarget; step: number } | null {
+  if (!plan || step === null || !/^\d+$/.test(step)) return null;
+  const next = Number(step) + 1;
+  const target = plan[next];
+  return target ? { target, step: next } : null;
 }
 
 /** Whisper played to the callee before bridging; no key within the timeout → hang up that leg. */

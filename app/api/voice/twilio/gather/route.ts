@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { transitionTwilioCall } from '@/lib/calls';
+import { getCallByPlatformId, transitionTwilioCall } from '@/lib/calls';
 import { acceptTwiml, hangupTwiml, ringTargets } from '@/lib/voice/twilio';
 import { readTwilioRequest, twimlError, xml } from '@/lib/voice/twilioRequest';
 
@@ -19,7 +19,9 @@ export async function POST(req: NextRequest) {
   const digits = (r.params.Digits ?? '').trim();
   if (!parentSid || digits !== '1') return xml(hangupTwiml());
 
-  const name = ringTargets()[targetIndex]?.name ?? 'Team';
+  // An on-call call names the person from the order chosen when it came in.
+  const plan = (await getCallByPlatformId(parentSid).catch(() => undefined))?.ringPlan;
+  const name = (plan ? plan[targetIndex]?.name : ringTargets()[targetIndex]?.name) ?? 'Team';
   const row = await transitionTwilioCall(parentSid, ['ringing'], 'answered', {
     answeredBy: 'human',
     answeredByName: name,
