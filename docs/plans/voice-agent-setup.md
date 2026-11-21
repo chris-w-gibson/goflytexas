@@ -153,3 +153,17 @@ forward-all code, one call each way; check `ForwardedFrom` in the inbound payloa
 
 **Recording disclosure:** none (owner decision; Texas one-party). Out-of-state two-party callers carry some
 exposure; the AI leg already discloses.
+
+## On-call order (2026-11-21)
+
+`/admin/on-call` holds who a call rings each day (the usual week plus one-day changes). It only
+matters in `VOICE_ROUTING_MODE=humans_first`, in business hours:
+
+- a day with people scheduled: ring the first for `VOICE_SEQUENCE_RING_TIMEOUT` seconds (default 15),
+  then the next, then the AI line. Each person hears the whisper and presses 1 to take the call.
+- a day with nobody scheduled: `VOICE_RING_TARGETS` all ring together, as before; with none, the AI.
+
+The order is stored on the call (`calls.ring_plan`) when it comes in. Migration:
+`railway run -s Postgres -e production -- psql "$DATABASE_PUBLIC_URL" -f drizzle/0009_on_call.sql`.
+Still owed before switching the mode: the four live test calls from a phone that is not on the
+list (press 1 and talk, no answer on the first person, decline, hang up while it rings).

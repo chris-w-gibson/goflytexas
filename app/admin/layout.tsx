@@ -45,6 +45,8 @@ export default async function AdminLayout({ children }: { children: ReactNode })
             <Link href="/admin/bot-knowledge" className="hover:text-white whitespace-nowrap">Bot Knowledge</Link>
             <Link href="/admin/chats" className="hover:text-white whitespace-nowrap">Chats</Link>
             <Link href="/admin/calls" className="hover:text-white whitespace-nowrap">Calls</Link>
+            <Link href="/admin/on-call" className="hover:text-white whitespace-nowrap">On call</Link>
+            <Link href="/admin/media" className="hover:text-white whitespace-nowrap">Media</Link>
             <Link href="/admin/users" className="hover:text-white whitespace-nowrap">Users</Link>
           </nav>
         </div>

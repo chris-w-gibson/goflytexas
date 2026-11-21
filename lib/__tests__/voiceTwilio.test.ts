@@ -4,6 +4,7 @@ import {
   aiFallbackTwiml,
   escapeXml,
   inboundDialTwiml,
+  nextInPlan,
   isBusinessHours,
   parseForm,
   recordingLink,
@@ -11,6 +12,8 @@ import {
   ringTimeoutSec,
   routeUrl,
   routingMode,
+  sequenceDialTwiml,
+  sequenceRingTimeoutSec,
   twilioSignature,
   verifyTwilioSignature,
   whisperLine,
@@ -153,5 +156,45 @@ describe('recordingLink', () => {
       recordingLink({ id: '17feb10d-7a45-4364-ad3b-388144757db0', platform: 'vapi', recordingUrl: 'https://r2/x.wav' }, BASE),
     ).toBe('https://www.goflytexas.com/admin/calls/recording/17feb10d-7a45-4364-ad3b-388144757db0');
     expect(recordingLink({ id: 'c2', platform: 'vapi', recordingUrl: null }, BASE)).toBeNull();
+  });
+});
+
+describe('on-call order', () => {
+  const PLAN = [
+    { name: 'Mark', number: '+19405550101' },
+    { name: 'Jim', number: '+12145550102' },
+  ];
+
+  it('rings one person and carries the step on the dial result and the whisper', () => {
+    const x = sequenceDialTwiml({ baseUrl: BASE, parentSid: 'CA123', target: PLAN[1], step: 1, timeoutSec: 15 });
+    expect(x.match(/<Number /g)).toHaveLength(1);
+    expect(x).toContain('>+12145550102</Number>');
+    expect(x).toContain('timeout="15"');
+    expect(x).toContain(`action="${BASE}/api/voice/twilio/dial-result?parent=CA123&amp;step=1"`);
+    expect(x).toContain(`url="${BASE}/api/voice/twilio/whisper?parent=CA123&amp;t=1"`);
+    expect(x).toContain('record="record-from-answer-dual"');
+  });
+
+  it('nextInPlan moves to the following person, then runs out', () => {
+    expect(nextInPlan(PLAN, '0')).toEqual({ target: PLAN[1], step: 1 });
+    expect(nextInPlan(PLAN, '1')).toBeNull();
+  });
+
+  it('nextInPlan is null for a call rung all together or a step it cannot read', () => {
+    expect([nextInPlan(null, '0'), nextInPlan(PLAN, null), nextInPlan(PLAN, 'x'), nextInPlan(PLAN, '-1')]).toEqual([
+      null,
+      null,
+      null,
+      null,
+    ]);
+  });
+
+  it('sequenceRingTimeoutSec defaults to 15 and stays between 8 and 30', () => {
+    expect([
+      sequenceRingTimeoutSec({}),
+      sequenceRingTimeoutSec({ VOICE_SEQUENCE_RING_TIMEOUT: '3' }),
+      sequenceRingTimeoutSec({ VOICE_SEQUENCE_RING_TIMEOUT: '90' }),
+      sequenceRingTimeoutSec({ VOICE_SEQUENCE_RING_TIMEOUT: 'soon' }),
+    ]).toEqual([15, 8, 30, 15]);
   });
 });

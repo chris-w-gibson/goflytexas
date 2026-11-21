@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { upsertTwilioCall } from '@/lib/calls';
+import { loadRingPlan } from '@/lib/onCallStore';
 import { toE164 } from '@/lib/voice/phone';
 import {
   aiFallbackTwiml,
@@ -11,13 +12,17 @@ import {
   ringTargets,
   ringTimeoutSec,
   routingMode,
+  sequenceDialTwiml,
+  sequenceRingTimeoutSec,
 } from '@/lib/voice/twilio';
 import { readTwilioRequest, twimlError, xml } from '@/lib/voice/twilioRequest';
 
 /**
  * Twilio Voice URL for +1 940-242-3072. Every inbound call starts here:
  * ring the team with a whisper (humans_first, in hours) or hand straight to
- * the AI assistant. A DB hiccup never drops a call — the AI TwiML still goes out.
+ * the AI assistant. With an on-call schedule for the day the people are rung
+ * one after another; without one, VOICE_RING_TARGETS all ring together.
+ * A DB hiccup never drops a call — the AI TwiML still goes out.
  */
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -66,16 +71,35 @@ export async function POST(req: NextRequest) {
     return xml(passthroughTwiml({ targets, timeoutSec: 30, voice: aiOptions().voice }));
   }
 
-  if (mode === 'humans_first' && inHours && targets.length > 0) {
-    try {
-      await upsertTwilioCall({ ...base, status: 'ringing', event: { name: 'inbound', payload: p } });
-    } catch (err) {
-      log(err);
-      return xml(aiFallbackTwiml(aiOptions()));
+  if (mode === 'humans_first' && inHours) {
+    const plan = await loadRingPlan(now).catch((err) => {
+      console.error('twilio inbound: on-call lookup failed', err);
+      return [];
+    });
+    if (plan.length > 0 || targets.length > 0) {
+      try {
+        await upsertTwilioCall({
+          ...base,
+          status: 'ringing',
+          ringPlan: plan.length > 0 ? plan : null,
+          event: { name: 'inbound', payload: p },
+        });
+      } catch (err) {
+        log(err);
+        return xml(aiFallbackTwiml(aiOptions()));
+      }
+      return xml(
+        plan.length > 0
+          ? sequenceDialTwiml({
+              baseUrl: r.baseUrl,
+              parentSid: callSid,
+              target: plan[0],
+              step: 0,
+              timeoutSec: sequenceRingTimeoutSec(),
+            })
+          : inboundDialTwiml({ baseUrl: r.baseUrl, parentSid: callSid, targets, timeoutSec: ringTimeoutSec() }),
+      );
     }
-    return xml(
-      inboundDialTwiml({ baseUrl: r.baseUrl, parentSid: callSid, targets, timeoutSec: ringTimeoutSec() }),
-    );
   }
 
   void upsertTwilioCall({

@@ -7,6 +7,9 @@ import {
   boolean,
   jsonb,
   integer,
+  date,
+  primaryKey,
+  bigint,
 } from 'drizzle-orm/pg-core';
 import type {
   AnsweredBy,
@@ -189,9 +192,73 @@ export const calls = pgTable('calls', {
   dialCallSid: text('dial_call_sid'),
   transcriptionStatus: text('transcription_status').$type<TranscriptionStatus | null>(),
   forwardedToAiAt: timestamp('forwarded_to_ai_at', { withTimezone: true }),
+  // 0009: the on-call order chosen when the call came in (name + number, in
+  // ring order). Null = the simultaneous ring of VOICE_RING_TARGETS.
+  ringPlan: jsonb('ring_plan').$type<{ name: string; number: string }[] | null>(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
 export type Call = typeof calls.$inferSelect;
 export type NewCall = typeof calls.$inferInsert;
+
+// On-call schedule (0009, Jim 2026-11-20). Weekday 0 = Sunday, in VOICE_TZ.
+// Position 1 is rung first, position 2 next, then the AI assistant.
+export const phoneStaff = pgTable('phone_staff', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  name: text('name').notNull(),
+  phone: text('phone').notNull().unique(),
+  active: boolean('active').notNull().default(true),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const onCallRota = pgTable(
+  'on_call_rota',
+  {
+    weekday: integer('weekday').notNull(),
+    position: integer('position').notNull(),
+    staffId: uuid('staff_id')
+      .notNull()
+      .references(() => phoneStaff.id, { onDelete: 'cascade' }),
+  },
+  (t) => ({ pk: primaryKey({ columns: [t.weekday, t.position] }) }),
+);
+
+export const onCallOverrides = pgTable(
+  'on_call_overrides',
+  {
+    day: date('day').notNull(),
+    position: integer('position').notNull(),
+    staffId: uuid('staff_id')
+      .notNull()
+      .references(() => phoneStaff.id, { onDelete: 'cascade' }),
+  },
+  (t) => ({ pk: primaryKey({ columns: [t.day, t.position] }) }),
+);
+
+export type PhoneStaff = typeof phoneStaff.$inferSelect;
+
+// Media library (0010, Jim 2026-11-20). The file itself is in the storage
+// bucket under storage_key; thumb_key is a small JPEG made in the browser.
+export const mediaItems = pgTable('media_items', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  kind: text('kind').$type<'photo' | 'video'>().notNull(),
+  storageKey: text('storage_key').notNull().unique(),
+  thumbKey: text('thumb_key'),
+  filename: text('filename').notNull(),
+  mimeType: text('mime_type').notNull(),
+  sizeBytes: bigint('size_bytes', { mode: 'number' }).notNull(),
+  width: integer('width'),
+  height: integer('height'),
+  durationSec: integer('duration_sec'),
+  note: text('note'),
+  // Everyone shown agreed to be posted publicly. Off until someone says so.
+  clearedToPost: boolean('cleared_to_post').notNull().default(false),
+  uploadedBy: uuid('uploaded_by').references(() => users.id, { onDelete: 'set null' }),
+  uploadedByName: text('uploaded_by_name').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export type MediaItem = typeof mediaItems.$inferSelect;

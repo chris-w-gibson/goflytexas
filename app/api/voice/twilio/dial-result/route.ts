@@ -1,13 +1,20 @@
 import type { NextRequest } from 'next/server';
 import { getCallByPlatformId, transitionTwilioCall, upsertTwilioCall } from '@/lib/calls';
 import { toE164 } from '@/lib/voice/phone';
-import { aiFallbackTwiml, hangupTwiml } from '@/lib/voice/twilio';
+import {
+  aiFallbackTwiml,
+  hangupTwiml,
+  nextInPlan,
+  sequenceDialTwiml,
+  sequenceRingTimeoutSec,
+} from '@/lib/voice/twilio';
 import { readTwilioRequest, twimlError, xml } from '@/lib/voice/twilioRequest';
 
 /**
  * <Dial action>: the ring is over. Either a human talked (hang up; the
- * recording callback finishes the job), the caller gave up while it rang, or
- * nobody accepted → hand the caller to the AI assistant.
+ * recording callback finishes the job), the caller gave up while it rang, the
+ * next person in the on-call order gets their turn, or nobody accepted → hand
+ * the caller to the AI assistant.
  */
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -58,6 +65,23 @@ export async function POST(req: NextRequest) {
       endedReason: 'caller-hung-up-while-ringing',
     }).catch(() => undefined);
     return xml(hangupTwiml());
+  }
+
+  const next = row?.status === 'ringing' ? nextInPlan(row.ringPlan, r.query.get('step')) : null;
+  if (next) {
+    await upsertTwilioCall({
+      callSid: parentSid,
+      event: { name: `dial-result-${next.step - 1}`, payload: p },
+    }).catch((err) => console.error('twilio dial-result: upsert failed', err));
+    return xml(
+      sequenceDialTwiml({
+        baseUrl: r.baseUrl,
+        parentSid,
+        target: next.target,
+        step: next.step,
+        timeoutSec: sequenceRingTimeoutSec(),
+      }),
+    );
   }
 
   await transitionTwilioCall(parentSid, ['ringing'], 'forwarded_to_ai', {

@@ -103,6 +103,8 @@ export type TwilioCallPatch = {
   transcript?: TranscriptTurn[] | null;
   transcriptionStatus?: TranscriptionStatus | null;
   forwardedToAiAt?: Date | null;
+  /** On-call order chosen at the first callback; later callbacks never replace it. */
+  ringPlan?: { name: string; number: string }[] | null;
   /** Merged into raw_payload under this key (one key per callback kind). */
   event?: { name: string; payload: unknown };
 };
@@ -131,6 +133,7 @@ export async function upsertTwilioCall(patch: TwilioCallPatch): Promise<Call> {
   coalesce('recordingSid', 'recording_sid', patch.recordingSid !== undefined);
   coalesce('recordingUrl', 'recording_url', patch.recordingUrl !== undefined);
   coalesce('forwardedToAiAt', 'forwarded_to_ai_at', patch.forwardedToAiAt !== undefined);
+  if (patch.ringPlan !== undefined) set.ringPlan = sql.raw('coalesce(calls.ring_plan, excluded.ring_plan)');
   if (patch.transcript !== undefined) {
     set.transcript = sql`case when excluded.transcript is null or jsonb_array_length(excluded.transcript) = 0 then ${calls.transcript} else excluded.transcript end`;
   }
@@ -163,6 +166,7 @@ export async function upsertTwilioCall(patch: TwilioCallPatch): Promise<Call> {
       transcript: patch.transcript ?? null,
       transcriptionStatus: patch.transcriptionStatus ?? null,
       forwardedToAiAt: patch.forwardedToAiAt ?? null,
+      ringPlan: patch.ringPlan ?? null,
       rawPayload: rawPayload ?? null,
       updatedAt: now,
     })

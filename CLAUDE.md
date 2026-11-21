@@ -132,3 +132,55 @@ made in testing; a name search on the landing page; subscribed/unsubscribed as i
   `lead_id` nulled.
 - Migration `drizzle/0008_archive_and_subscription.sql` is hand-applied like 0006/0007
   (`railway run -s Postgres -e production -- psql "$DATABASE_PUBLIC_URL" -f …`), idempotent.
+
+## On call and Media (2026-11-21)
+
+Jim (11/20): "an on call per day calendar or a batting list" for the phone, and "a repository
+for media content… users drop their content in a general media tab".
+
+### On call (`/admin/on-call`)
+
+- `phone_staff` (name + cell), `on_call_rota` (weekday 0 = Sunday → position 1, 2) and
+  `on_call_overrides` (one date with its own order). A date with an override uses only the
+  override; every other day follows the usual week. Rules are pure in `lib/voice/onCall.ts`
+  (`orderFor`, `ringPlan`), storage in `lib/onCallStore.ts`. The day is the Central day
+  (`VOICE_TZ`), never the UTC date.
+- **It changes nothing while `VOICE_ROUTING_MODE=ai_only`** (the live setting): the page says
+  so. In `humans_first`, in business hours, a day WITH people is rung one after another
+  (`sequenceDialTwiml`, `VOICE_SEQUENCE_RING_TIMEOUT`, default 15 s each, two people at most),
+  then the AI. A day with nobody scheduled keeps the old behaviour: `VOICE_RING_TARGETS` all
+  ring together, and with none of those the AI answers.
+- The order is chosen once, when the call comes in, and stored on `calls.ring_plan`; the
+  dial-result and gather routes read it from the row (`step` in the query), so a schedule edit
+  or midnight in the middle of a call cannot ring or name the wrong person.
+- Anyone signed in changes the schedule; only an admin adds, switches off or removes a phone
+  (whose cell a business call rings). The break-glass key is read-only here. A number that is
+  one of our own lines (`reservedNumbers`) is refused, or it would loop.
+- The ordered ring has unit tests only. It has never taken a live call: the `humans_first`
+  test calls (Stage B) were parked on 8/29 and are still owed before the mode is switched.
+
+### Media (`/admin/media`)
+
+- Files live in the Railway storage bucket `media` (S3 API, private, region `iad`); the table
+  `media_items` is the index. The browser sends each file straight to the bucket with a signed
+  link (`/admin/media/sign` → PUT → `/admin/media/items`), so a phone video never passes through
+  this server. Viewing goes through `/admin/media/file/<id>`, which redirects to a one-hour
+  signed link (`?thumb=1`, `?download=1`).
+- Variables on the web service: `MEDIA_BUCKET`, `MEDIA_ENDPOINT`, `MEDIA_REGION` (`auto`),
+  `MEDIA_ACCESS_KEY_ID`, `MEDIA_SECRET_ACCESS_KEY` (the bucket's own credentials; a copy for
+  scripts sits in `~/.config/goflytexas/media.env`, mode 600). Without them the page says
+  storage is not set up and takes no uploads.
+- The bucket needs CORS for the site's origin or the browser PUT is refused before it starts:
+  `npx tsx scripts/media-bucket-cors.ts https://www.goflytexas.com` (re-run if the address changes).
+- A signed upload link signs the content type (`signableHeaders`); by default only the host is
+  signed and the link takes anything. The size cannot be signed, so `/admin/media/items` reads
+  the size back from the bucket and removes a file over the limit. It accepts a storage key only
+  in the shape the sign route issues for that item (`isKeyFor`).
+- Thumbnails are made in the browser (a 640 px JPEG; a frame for a video) and stored beside the
+  file as `<id>.thumb.jpg`. A HEIC picked on a desktop gets no thumbnail and shows its file name.
+- `cleared_to_post` ("OK to post") is off until someone ticks it. Anything that later drafts or
+  publishes posts reads only rows with it on.
+- Development: `MEDIA_LOCAL_DIR` stands in for the bucket through `/admin/media/local`, only
+  when `NODE_ENV` is not production.
+- Migrations `drizzle/0009_on_call.sql` and `drizzle/0010_media_library.sql` are hand-applied
+  like 0006-0008 and must land before the deploy that reads the new tables.
