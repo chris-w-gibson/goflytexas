@@ -14,6 +14,9 @@ import {
 } from '@/lib/leads';
 import { PIPELINE_STATUSES } from '@/lib/leadFilters';
 import { leadInputSchema } from '@/lib/validation';
+import { getSessionFromCookies, getUserById } from '@/lib/auth';
+import { addLeadNote } from '@/lib/leads';
+import { setLeadOwner } from '@/lib/rotationStore';
 
 // Subscription is no longer a status (Jim 2026-09-24) — it has its own toggle.
 const VALID_STATUSES: readonly LeadStatus[] = PIPELINE_STATUSES;
@@ -37,7 +40,11 @@ export async function createManualLeadAction(formData: FormData) {
     throw new Error(parsed.error.issues.map((i) => i.message).join(', '));
   }
   const data = parsed.data;
+  // A lead someone typed in is theirs: they are the one talking to the person.
+  // The rotation does not move.
+  const session = await getSessionFromCookies();
   await createLead({
+    ...(session ? { ownerId: session.uid, assignedAt: new Date() } : {}),
     name: data.name,
     email: data.email,
     phone: data.phone || null,
@@ -64,6 +71,28 @@ export async function markContactedAction(formData: FormData) {
   const id = String(formData.get('id') ?? '');
   if (!id) throw new Error('Missing id');
   await markContacted(id);
+  revalidateLead(id);
+}
+
+/**
+ * Hand a lead to a named person, or to nobody (Jim 2026-11-22: "if somebody
+ * just leaves one day, we can pick up right where they left off"). The hand-over
+ * is written on the lead; the rotation does not move.
+ */
+export async function setOwnerAction(formData: FormData) {
+  const session = await getSessionFromCookies();
+  if (!session) throw new Error('Sign in to hand a lead over');
+  const id = String(formData.get('id') ?? '');
+  const ownerId = String(formData.get('ownerId') ?? '');
+  if (!id) throw new Error('Missing id');
+  const owner = ownerId ? await getUserById(ownerId) : undefined;
+  if (ownerId && (!owner || owner.disabled)) throw new Error('That person cannot take leads');
+  await setLeadOwner(id, owner?.id ?? null);
+  await addLeadNote({
+    leadId: id,
+    authorName: session.name || session.email,
+    body: owner ? `Handed to ${owner.name}.` : 'Taken back: nobody holds this lead now.',
+  });
   revalidateLead(id);
 }
 

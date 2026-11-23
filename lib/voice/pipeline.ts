@@ -18,6 +18,7 @@ import {
   markContactedAt,
   recordEmailEvent,
 } from '@/lib/leads';
+import { handOutLeadSafely, ownerOf } from '@/lib/rotationStore';
 import { extractCall, fallbackExtraction, isRecentDuplicate, type ExtractionMode } from './extract';
 import {
   normalizeFromCallRow,
@@ -210,9 +211,17 @@ export async function processStoredCall(call: Call, n: NormalizedCallEnd): Promi
     ...(human ? { transcriptionStatus: 'done' as const } : {}),
   });
 
+  // A call nobody answered is a lead like any other (Jim 2026-11-22: "the
+  // phone calls we want to treat just like we're treating the internet leads…
+  // the voicemail will go to them"): it goes to the next person in the
+  // rotation. A repeat caller stays with whoever already has them. A call a
+  // person answered is theirs already and is not handed out.
+  const owner = human ? null : lead.ownerId ? await ownerOf(lead) : await handOutLeadSafely(lead.id);
+
   const fresh = (await getCallById(call.id)) ?? call;
   try {
     await sendAdminNotification(lead, {
+      owner,
       call: {
         id: call.id,
         durationSec: n.durationSec,

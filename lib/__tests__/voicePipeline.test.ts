@@ -19,6 +19,10 @@ vi.mock('@/lib/leads', () => ({
   recordEmailEvent: vi.fn(async () => undefined),
 }));
 vi.mock('@/lib/email', () => ({ sendAdminNotification: vi.fn(async () => undefined) }));
+vi.mock('@/lib/rotationStore', () => ({
+  handOutLeadSafely: vi.fn(async () => null),
+  ownerOf: vi.fn(async () => null),
+}));
 vi.mock('../voice/extract', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../voice/extract')>();
   return { ...actual, extractCall: vi.fn() };
@@ -31,6 +35,7 @@ vi.mock('../voice/transcribe', () => ({
 import * as calls from '@/lib/calls';
 import * as leads from '@/lib/leads';
 import { sendAdminNotification } from '@/lib/email';
+import { handOutLeadSafely, ownerOf } from '@/lib/rotationStore';
 import { extractCall } from '../voice/extract';
 import { transcribeRecording } from '../voice/transcribe';
 import { processCallEnd, processRawPayload, processTwilioCall } from '../voice/pipeline';
@@ -218,6 +223,59 @@ describe('processCallEnd — AI-answered (Vapi)', () => {
     expect(created.createdAt).toBeUndefined();
     expect(leads.markContactedAt).not.toHaveBeenCalled();
     expect(vi.mocked(sendAdminNotification).mock.calls[0][1]!.call!.answeredBy).toBe('ai');
+  });
+});
+
+// Jim 2026-11-22: "the phone calls we want to treat just like we're treating
+// the internet leads… the voicemail will go to them."
+describe('who a phone lead goes to', () => {
+  const mark = { id: 'user-mark', name: 'Mark King', email: 'mark@example.com' };
+  const missed = {
+    platform: 'vapi' as const,
+    platformCallId: 'vapi-2',
+    fromNumber: '+18175550142',
+    toNumber: '+19402917613',
+    forwardedFrom: null,
+    startedAt,
+    endedAt,
+    durationSec: 90,
+    endedReason: 'customer-ended-call',
+    recordingUrl: null,
+    transcript: [{ role: 'user' as const, text: 'I want a discovery flight please' }],
+    platformSummary: null,
+    answeredBy: 'ai' as const,
+    answeredByName: null,
+    parentCallId: null,
+  };
+  const aiRow = () =>
+    row({ platform: 'vapi', platformCallId: 'vapi-2', answeredBy: 'ai', answeredByName: null, status: 'received' });
+
+  it('hands a call the AI took to the next person and addresses the alert to them', async () => {
+    vi.mocked(calls.upsertCallEnded).mockResolvedValue(aiRow());
+    vi.mocked(handOutLeadSafely).mockResolvedValue(mark);
+    await processCallEnd(missed, {});
+    expect(handOutLeadSafely).toHaveBeenCalledWith('lead-1');
+    expect(vi.mocked(sendAdminNotification).mock.calls[0][1]!.owner).toEqual(mark);
+  });
+
+  it('leaves a repeat caller with the person who already has them', async () => {
+    vi.mocked(calls.upsertCallEnded).mockResolvedValue(aiRow());
+    const held = { ...lead, ownerId: mark.id, createdAt: new Date(endedAt.getTime() - 3600_000) } as Lead;
+    vi.mocked(leads.findRecentLeadByPhone).mockResolvedValue(held);
+    vi.mocked(ownerOf).mockResolvedValue(mark);
+    await processCallEnd(missed, {});
+    expect(handOutLeadSafely).not.toHaveBeenCalled();
+    expect(vi.mocked(sendAdminNotification).mock.calls[0][1]!.owner).toEqual(mark);
+  });
+
+  it('does not hand out a call a person answered', async () => {
+    const r = row();
+    vi.mocked(calls.getCallByPlatformId).mockResolvedValue(r);
+    vi.mocked(calls.claimTranscription).mockResolvedValue(r);
+    vi.mocked(calls.upsertTwilioCall).mockResolvedValue(r);
+    await processTwilioCall('CA123');
+    expect(handOutLeadSafely).not.toHaveBeenCalled();
+    expect(vi.mocked(sendAdminNotification).mock.calls[0][1]!.owner).toBeNull();
   });
 });
 

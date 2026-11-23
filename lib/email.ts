@@ -3,6 +3,7 @@ import { attributionLabel as sharedAttributionLabel } from '@/lib/attribution';
 import type { Lead } from './db/schema';
 import { formatCallDuration, parseEmailList } from './followup';
 import { flightInterestLabel } from '@/lib/constants';
+import { leadRecipients, type LeadOwner } from './rotation';
 
 const FROM_DEFAULT = 'GoFlyTexas <info@goflytexas.com>';
 const ADMIN_DEFAULT = 'info@goflytexas.com';
@@ -120,7 +121,9 @@ export type CallEmailContext = {
 };
 
 /**
- * Owner alert. Goes to ADMIN_EMAIL plus LEAD_NOTIFY_EMAILS. Built to be acted
+ * Owner alert. With `opts.owner` (the person the rotation gave the lead to) it
+ * goes to them, and ADMIN_EMAIL plus LEAD_NOTIFY_EMAILS are copied; without
+ * one it goes to ADMIN_EMAIL plus LEAD_NOTIFY_EMAILS. Built to be acted
  * on from a phone: tap-to-call, tap-to-email, and a one-click "I've reached
  * out" button that stamps the first-response time (no login needed).
  * With `opts.call` it becomes the "Missed call · AI answered" variant, or —
@@ -129,9 +132,10 @@ export type CallEmailContext = {
  */
 export async function sendAdminNotification(
   lead: Lead,
-  opts?: { call?: CallEmailContext },
+  opts?: { call?: CallEmailContext; owner?: LeadOwner | null },
 ): Promise<void> {
   const call = opts?.call;
+  const owner = opts?.owner ?? null;
   const human = call?.answeredBy === 'human';
   const staff = call?.answeredByName ?? 'the team';
   const interest = interestLabel(lead.flightInterest);
@@ -178,6 +182,7 @@ export async function sendAdminNotification(
         }`
             : `<tr><td style="padding:4px 0;color:#6b7280;width:140px;">Prefers</td><td>${escape(lead.preferredContact ?? 'email')}</td></tr>`
         }
+        ${owner ? `<tr><td style="padding:4px 0;color:#6b7280;">Went to</td><td><strong>${escape(owner.name)}</strong></td></tr>` : ''}
         <tr><td style="padding:4px 0;color:#6b7280;">Came from</td><td>${escape(source ?? 'Direct / organic')}</td></tr>
         <tr><td style="padding:4px 0;color:#6b7280;">${call ? 'Call ended' : 'Submitted'}</td><td>${escape(new Date(lead.createdAt).toLocaleString('en-US', { timeZone: 'America/Chicago' }))} CT</td></tr>
         ${!call && lead.message ? `<tr><td style="padding:4px 0;color:#6b7280;vertical-align:top;">Message</td><td style="white-space:pre-wrap;">${escape(lead.message)}</td></tr>` : ''}
@@ -196,18 +201,20 @@ export async function sendAdminNotification(
       }
       ${FOOTER_HTML}
   `);
-  const recipients = Array.from(
-    new Set([adminAddress(), ...parseEmailList(process.env.LEAD_NOTIFY_EMAILS)]),
-  );
+  const recipients = leadRecipients(owner, [
+    adminAddress(),
+    ...parseEmailList(process.env.LEAD_NOTIFY_EMAILS),
+  ]);
   const contact = lead.phone ?? lead.email ?? 'no contact';
+  const forOwner = owner ? ` · to ${firstName(owner.name)}` : '';
   const subject = human
     ? `Call · ${lead.name} · ${contact} · ${interest} · answered by ${staff}`
     : call
-      ? `Missed call · ${lead.name} · ${contact} · ${interest}`
-      : `New lead · ${lead.name} · ${contact} · ${interest}`;
+      ? `Missed call · ${lead.name} · ${contact} · ${interest}${forOwner}`
+      : `New lead · ${lead.name} · ${contact} · ${interest}${forOwner}`;
   const { error } = await getResend().emails.send({
     from: fromAddress(),
-    to: recipients,
+    ...recipients,
     subject,
     html,
     ...(lead.email ? { replyTo: lead.email } : {}),

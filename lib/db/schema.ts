@@ -10,6 +10,7 @@ import {
   date,
   primaryKey,
   bigint,
+  type AnyPgColumn,
 } from 'drizzle-orm/pg-core';
 import type {
   AnsweredBy,
@@ -58,6 +59,10 @@ export const leads = pgTable('leads', {
   // automated drip — that's what makes response time honest.
   firstContactedAt: timestamp('first_contacted_at', { withTimezone: true }),
   lastContactedAt: timestamp('last_contacted_at', { withTimezone: true }),
+  // 0011: who the lead went to (the rotation, a hand-over, or whoever typed
+  // it in). Null = nobody; the shared inbox has it.
+  ownerId: uuid('owner_id').references((): AnyPgColumn => users.id, { onDelete: 'set null' }),
+  assignedAt: timestamp('assigned_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
@@ -92,6 +97,10 @@ export const users = pgTable('users', {
   role: userRole('role').notNull().default('admin'),
   mustChangePassword: boolean('must_change_password').notNull().default(true),
   disabled: boolean('disabled').notNull().default(false),
+  // 0011: the lead rotation. Orders are never renumbered, only swapped, so a
+  // person who leaves keeps the place the list carries on from.
+  inRotation: boolean('in_rotation').notNull().default(false),
+  rotationOrder: integer('rotation_order'),
   lastLoginAt: timestamp('last_login_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
@@ -238,6 +247,27 @@ export const onCallOverrides = pgTable(
 );
 
 export type PhoneStaff = typeof phoneStaff.$inferSelect;
+
+// Lead rotation (0011, Jim 2026-11-22). Days are Central calendar days,
+// inclusive at both ends.
+export const rotationDaysOff = pgTable('rotation_days_off', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  startDay: date('start_day').notNull(),
+  endDay: date('end_day').notNull(),
+  note: text('note'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+// One row (id 1): who got the last lead and where they stood in the list.
+export const rotationState = pgTable('rotation_state', {
+  id: integer('id').primaryKey().default(1),
+  lastUserId: uuid('last_user_id').references(() => users.id, { onDelete: 'set null' }),
+  lastPosition: integer('last_position'),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
 
 // Media library (0010, Jim 2026-11-20). The file itself is in the storage
 // bucket under storage_key; thumb_key is a small JPEG made in the browser.

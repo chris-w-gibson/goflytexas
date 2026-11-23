@@ -3,6 +3,7 @@ import { desc } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
 import { getSessionFromCookies } from '@/lib/auth';
+import { ownerNames } from '@/lib/rotationStore';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +18,7 @@ export async function GET() {
     return NextResponse.json({ error: 'Sign in required' }, { status: 401 });
   }
   const rows = await db.select().from(leads).orderBy(desc(leads.createdAt));
+  const names = await ownerNames();
   const header = [
     'Name',
     'Email',
@@ -24,6 +26,7 @@ export async function GET() {
     'Interest',
     'Preferred contact',
     'Status',
+    'Went to',
     'Subscribed',
     'Archived',
     'Source',
@@ -40,6 +43,7 @@ export async function GET() {
         csvCell(l.flightInterest),
         csvCell(l.preferredContact),
         csvCell(l.status),
+        csvCell(l.ownerId ? names.get(l.ownerId) : ''),
         // Jim 2026-09-24: subscription and archive are their own columns
         csvCell(l.unsubscribed ? 'no' : 'yes'),
         csvCell(l.archivedAt ? l.archivedAt.toISOString() : ''),
