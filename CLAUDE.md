@@ -184,3 +184,14 @@ for media content… users drop their content in a general media tab".
   when `NODE_ENV` is not production.
 - Migrations `drizzle/0009_on_call.sql` and `drizzle/0010_media_library.sql` are hand-applied
   like 0006-0008 and must land before the deploy that reads the new tables.
+
+## Jim's 11/22 call (requirements: `docs/meetings/requirements/call-jim_2026-11-22.md`)
+
+- **The phone assistant never asks for or agrees to a callback time (GFT-1122-10).** Jim: a set
+  time is a window the team will miss. `VOICE_PERSONA` says so in its own paragraph and the
+  wrap-up turn confirms only the number (`lib/__tests__/voicePersona.test.ts`). A time the caller
+  offers on their own is still kept: `preferredTime` in the extraction, printed on the lead as
+  "Caller mentioned: …" (it used to read "Best time: …", which looked like an appointment).
+- **`LEAD_NOTIFY_EMAILS` is unset on production since 11/23 (GFT-1122-11):** lead emails go to
+  `ADMIN_EMAIL` (`info@goflytexas.com`) only. `railway variable delete` did not restart the
+  service; a `railway redeploy --service goflytexas` was needed for the change to take effect.

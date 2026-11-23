@@ -1,0 +1,139 @@
+# Transcription: Call Jim At Christopher_261122_190849.m4a
+# Date: 2026-11-23
+# Model: faster-whisper-small.en (20-min pieces)
+# Duration: 13.3 min
+
+[00:00:00] my sleeve helping us. Yeah, I can see most of what you've already done here. The only thing I would
+[00:00:06] say like is on the on call thing. I think it's going to be kind of a hybrid thing to avoid being
+[00:00:13] controlled like you kind of have it like who's on today. Yes, and it'll just go to those people. But
+[00:00:18] I think what I want to do is the hybrid part to where we have like a batter's list and by default,
+[00:00:24] whoever we select is in that group. And if we want to take them out for particular days, like if they
+[00:00:30] say, hey, I'm not going to be able to take any leads or anything this weekend, I'm going to be on
+[00:00:34] vacation, blah, blah, blah or this week, we can take them out of those in particular, those particular
+[00:00:39] days. You know what I mean? Yeah, that makes sense. So it'll just, you know, have the list and
+[00:00:46] wherever it never leaves off. In other words, it doesn't reset each day. It just goes down to
+[00:00:50] list in order and then goes back to the top. And then and so the phone calls we want to treat just
+[00:00:56] like we're treating the internet leads. You know what I mean? Right. Okay. And so the voicemail will
+[00:01:01] go to them. But what I would like and I think we kind of have this set up already is well, sort of
+[00:01:09] we don't have this part, but I'd like to add on that little menu list there where it says like,
+[00:01:14] let me go out leads. It'll say who that lead went to and then what they did with it. And
+[00:01:20] then I'm going to make them put in notes, of course, like, right? I talked to them. They're coming out
+[00:01:25] on the first. This one's closed or what there's another another name for closed
+[00:01:32] converted, right? So they're, they're coming out. We set up a discovery plot or whatever it may be.
+[00:01:38] But I want to see, add to that little, what is this called the leads list, I guess,
+[00:01:45] who that lead went to. And then I think you already have it set up to where if they email them
+[00:01:52] or click here to contact them, it'll say they reached out by phone, right? Like if they click on the
+[00:01:58] email, their phone number. Yeah, you can see kind of where they came in from exactly. Or if they reply,
+[00:02:04] well, no, you see where they came in from. Right. Hold up. Just make sure we're on the same page.
+[00:02:08] So on that lead email, right? Right. Say how it came in. They're able to click on a phone
+[00:02:14] number to call them back, right? Yes. Okay. Well, capture that they try attempted to call them back.
+[00:02:24] If I would, I'm trying to think of how it would capture that.
+[00:02:28] If they click on that number, hidden button that says they did click on this in the email.
+[00:02:36] I see. Yeah, I could track a cookie on how they came in. If it was coming in from that email
+[00:02:40] specifically. Yeah. So what I would like to do is just tell them, Hey, here's when you need
+[00:02:46] to make notes. One, if you get an email to lead and you're going to call them, click on the email
+[00:02:52] phone number to call them. Right. That way it makes a note you call them. We don't have to go,
+[00:02:56] Hey, what did you do with all these leads? Like, well, you're not, you didn't put notes in, you
+[00:03:00] didn't like that's a note. You don't have to do it automatically register that you called them.
+[00:03:06] If you hit reply, then it'll say that, you know, you send them an email.
+[00:03:16] And then probably when, I don't know if you, can you capture that email to put it in like the
+[00:03:23] lead information? Like here's the response. I don't know how easy that is, but that's possible.
+[00:03:30] I should be able to get into the database for tracking that.
+[00:03:34] What about the thing you told me before the conversation?
+[00:03:38] Oh, sitting on and writing shotgun. Yeah. So if they hit the callback number,
+[00:03:42] can we make it automatically right in the conversation?
+[00:03:46] Yeah. No, because the agent that would be tracking that could see where that came in
+[00:03:50] from and make that like a note, like inside the database tracking it. Yeah.
+[00:03:56] So like if they do call back from that number and says, okay, they return their call. Here's
+[00:04:00] the conversation. Yeah. And I don't think that would be a problem. Okay. That's pretty handy.
+[00:04:07] Especially like some of these people are probably born sales machines by any means. So
+[00:04:13] we can kind of look at it. And if somebody just leaves one day too, we can pick up right where they
+[00:04:17] left off. We can just review that and be like, hey, we didn't call this person. They were going to
+[00:04:22] get back and whatever. The other one is what about if they click on that message and hold
+[00:04:30] it to send them a text, is there a way that that could record they send them a message?
+[00:04:35] I mean, yeah, because we would track that we did that.
+[00:04:39] Okay. So that all happens just from the email that gets sent to them. Yeah,
+[00:04:43] because we're tracking kind of what the user's methodology is upon that email going out.
+[00:04:50] All right. So we can just kind of make that what you got now is beautiful. And just kind of make
+[00:04:55] it a hybrid type thing. Like, hey, if you're on the list, you're in the rotation and let's
+[00:04:59] we go take you off those days. Yes. If we take you off the rotation, you're not in a rotation. We can add
+[00:05:06] you, put you in whatever. So that's that's beautiful. And then if we can track those other things,
+[00:05:11] I can tell them you don't need to put a note in for sending them a text. Right. Although we won't
+[00:05:16] know what the text says. So maybe they do want to include some information from that right.
+[00:05:23] We're not going to know what the text says. You know, we will because we'll be able to get all
+[00:05:28] it depends where that text goes. If it goes to the AI line, then we'd get that. AI line. Well,
+[00:05:35] like if we have like a an AI managing, like if we have like text messages or IMs coming in from
+[00:05:41] the chat bot. Well, I'm saying that the lead gets sent to them via email. Oh, yeah. And then
+[00:05:49] they hold the number and say I want to send this number of message. That message won't be captured.
+[00:05:55] But if they click call them, that'll all be captured and the transcript will be generated.
+[00:06:03] That. Yeah. Okay. I think that'll all work out pretty good. And I just need to put users in and
+[00:06:11] say what an option to add them to the list or something like that. Or you got it right now.
+[00:06:20] Yeah.
+[00:06:22] Users. So. Okay. There's reset password and disable. So on call.
+[00:06:31] How would I add somebody to this change this day? Nobody usually this week. Okay.
+[00:06:41] So. Nobody. I don't see. I don't see a way to add them. Team phones. Yeah,
+[00:06:58] I'm not really seeing a way to. Well, it says add person. So I can't pull from the users.
+[00:07:05] Is it kind of functioning as a separate tool from what's already in the users? Yes.
+[00:07:11] Okay. So I would just just add everybody to this. Yeah. Could you make it interact with the users?
+[00:07:20] With like everyone that's got their own lines tied to the. Not online. It's not online at all.
+[00:07:26] But I will say this. Speaking of all lines. If someone calls that number and they're like,
+[00:07:33] hey, I can you just connect me to Jim Lewis police. It would be nice to set this up to where
+[00:07:39] it'll just dial on straight over to him. You know what I mean? Yeah. Because then it's that or like
+[00:07:44] instead of having AI do it, it's like click for this person or that number. Kind of like what they
+[00:07:48] do on just basic stuff depends on how you want to do it. Yeah. Well, I'm thinking like AI is going
+[00:07:55] to be the first one to answer. And I know you set it up a little bit different. I think that's a
+[00:07:59] good way to get tire kickers off off the line. Yeah. Like you want to know how much our rate is.
+[00:08:05] You want to know this. You want to know that whatever that this breaks the deal. Then so be
+[00:08:09] we don't want to waste our time with you anyways. Yeah. So filters for more solid leads, right?
+[00:08:15] And then I think it would be cool with like, well, I think it'd be cool if it's like, hey,
+[00:08:25] yeah, just have someone give me a call back blah, blah, blah. One thing I don't want to do. And I
+[00:08:29] noticed it was doing this. I don't know if it's still doing this, but what is a convenient time
+[00:08:34] for you? And then it sets the time for us to call them back. I don't really like that.
+[00:08:39] We're going to miss that window. You know what I mean? Like, yeah, we're supposed to call me at
+[00:08:43] seven 30 in the morning and never called me announced nine. Now hold on to dang how this works.
+[00:08:48] Yeah. Well, that's what your system's kind of indicating. Yeah. So I would rather just kind
+[00:08:54] of be like, Hey, you know, when we're available, we'll give you a call back or I didn't even have
+[00:08:59] to say that, but instead of pinpointing it and setting us up for failure is what I'm trying to
+[00:09:05] avoid a little bit there. Like whoever gets the lead, as soon as they get it, they need to respond.
+[00:09:10] I know that I know it's worked that way, but like, Hey, you got the lead. Yeah. It came in 30
+[00:09:14] minutes ago. You saw it. So you see it. You need to respond unless you're just totally swamped.
+[00:09:19] Right. Yeah. So if we could kind of take that out of the AI system, but then also integrate
+[00:09:26] somehow to where if this is possible, you know, these are all just fairytale wishes to the,
+[00:09:31] to some degree, if someone calls and is like, Hey, can I please speak with Jim Malone or
+[00:09:36] Hey, can I please speak with Mark King or can I please speak with Kristen or, you know,
+[00:09:41] they say a specific person, if they're in their user group, it'll ring to them. Yeah.
+[00:09:48] I don't think it's a good problem. Other than that, if we have that capabilities,
+[00:09:55] I don't really see a reason to keep paying Grasshopper other than we just think somebody
+[00:10:01] to host the line. Yeah. Well, all we need them for at that point. Yeah. I mean, is that,
+[00:10:07] I mean, they're probably something cheaper than what they do, or I can downgrade to just hosting
+[00:10:11] the line or some. I think probably that would be the best bet would be just downgrading it.
+[00:10:17] Downgrading it. Yeah. In case we needed to revert, we could revert back to what we had. Yeah.
+[00:10:23] Okay. Let's see. So the, did you understand my intentions behind the media?
+[00:10:33] I did. And I think that makes sense. Actually, I think you grabbed grass fit really well with
+[00:10:39] your response there that like, I want these people to start putting shit in here. Yeah.
+[00:10:43] That way we can start making some posts. I'm also going to have them go ahead and include
+[00:10:47] these other things they make for like classes and stuff like that. And I would like AI to
+[00:10:54] also have the ability, you know, we have our AI. What's it called actually? Bot knowledge?
+[00:11:02] Yes. The bot knowledge. I would like for it to be able to tap into the media too, to be able to learn
+[00:11:07] from that anything we're putting in there. So like, let's just say for instance, we're having a class on
+[00:11:12] December 15th for CFI. Right. I would like for it to be able to read that ad that's in the media.
+[00:11:19] And that way, if anybody calls with specific questions for that, it at least knows what the
+[00:11:24] ad says. Does that make sense? Yeah. Working to summarize kind of what it is within the ad.
+[00:11:31] Yeah. I mean, if they're like, Hey, what day is that? Or how much is it? Or what's the schedule for it? Or
+[00:11:40] what are they required to do? Any just general information that they've written on this ad for
+[00:11:48] that class, which it's pretty informative to some degree. Like if you need your CFI certification
+[00:11:54] to be able to instruct you, you kind of already know what you need, but like this, that ad
+[00:11:59] pretty much summarizes everything. Yeah. So if you can cross it over to where the bot is able to read
+[00:12:07] the media, that would be good too. And then I'm going to get them to understand a little bit better
+[00:12:13] of what that bot is. Yeah. The knowledge database bank. Because as we're doing this,
+[00:12:20] it's going to speak to kind of how the consultants and some of the sales shit with
+[00:12:23] Enviro, links going to look. Yeah. Same over there. So as we practice. As a matter of fact,
+[00:12:31] as a matter of fact, it might not be. Well, this tool that you're building for all this,
+[00:12:36] we might be able to use it on everything. Yeah, it's going to be very plug and play.
+[00:12:42] Yeah. So I don't know Enviro server. It might be like if Michelle doesn't answer the phone,
+[00:12:47] then it goes to the AI. You know, that might be a little different because
+[00:12:52] a lot of people that are calling that are calling about billing or I can't get a hold of my guy
+[00:12:56] or whatever. So maybe it goes to Michelle, does her 15 seconds and then goes to the AI
+[00:13:03] before her voicemail picks up. Do you mind giving me like five minutes to go in and close my check
+[00:13:08] out real quick? No, no, I'm gonna go close it and then I'm gonna drive out from this bitch.
+[00:13:13] All right. All right. Tuesday.

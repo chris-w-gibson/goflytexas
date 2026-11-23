@@ -157,7 +157,7 @@ export async function processStoredCall(call: Call, n: NormalizedCallEnd): Promi
     extracted.summary,
     extracted.booking ? `Booked: ${extracted.booking}` : null,
     followUps.length ? `Follow-ups:\n${followUps.map((f) => `- ${f}`).join('\n')}` : null,
-    extracted.preferredTime ? `Best time: ${extracted.preferredTime}` : null,
+    extracted.preferredTime ? `Caller mentioned: ${extracted.preferredTime}` : null,
   ]
     .filter(Boolean)
     .join('\n\n');
