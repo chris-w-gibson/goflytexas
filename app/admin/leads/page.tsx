@@ -10,6 +10,8 @@ import {
 } from '@/lib/leadFilters';
 import { formatDuration, responseState } from '@/lib/followup';
 import { flightInterestLabel } from '@/lib/constants';
+import { whatTheyDid } from '@/lib/rotation';
+import { lastHumanNotes, ownerNames } from '@/lib/rotationStore';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,6 +23,7 @@ const STAGE_LABELS: Record<(typeof PIPELINE_STATUSES)[number], string> = {
 
 // Jim 2026-09-24 (GFT Hub): a name search box, archive for settled contacts,
 // and subscribed/unsubscribed shown apart from the pipeline status.
+// Jim 2026-11-22: "who that lead went to and then what they did with it.
 export default async function LeadsPage({
   searchParams,
 }: {
@@ -32,7 +35,10 @@ export default async function LeadsPage({
     q: params.q,
     view: params.view,
     subscribed: params.subscribed,
+    owner: params.owner,
   });
+  const [names, notes] = await Promise.all([ownerNames(), lastHumanNotes(leads.map((l) => l.id))]);
+  const people = Array.from(names, ([id, name]) => ({ id, name })).sort((a, b) => a.name.localeCompare(b.name));
   const deleted = searchParams?.deleted === '1';
 
   const stageLinks: Array<{ label: string; params: LeadListParams; active: boolean }> = [
@@ -87,6 +93,21 @@ export default async function LeadsPage({
         {params.status ? <input type="hidden" name="status" value={params.status} /> : null}
         {params.view === 'archived' ? <input type="hidden" name="view" value="archived" /> : null}
         {params.subscribed === false ? <input type="hidden" name="subscribed" value="no" /> : null}
+        <select
+          name="owner"
+          defaultValue={params.owner ?? ''}
+          aria-label="Went to"
+          data-testid="went-to-filter"
+          className="border border-slate-300 rounded-lg px-2 py-2 text-sm bg-white"
+        >
+          <option value="">Went to: anyone</option>
+          {people.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.name}
+            </option>
+          ))}
+          <option value="none">Nobody</option>
+        </select>
         <input
           type="search"
           name="q"
@@ -127,23 +148,25 @@ export default async function LeadsPage({
         </div>
       ) : (
         <div className="bg-white rounded-lg border border-slate-200 overflow-x-auto">
-          <table className="w-full text-sm min-w-[800px]">
+          <table className="w-full text-sm min-w-[1040px]">
             <thead className="bg-slate-100 text-left text-xs uppercase tracking-wide text-slate-600">
               <tr>
-                <th className="px-4 py-2">Name</th>
-                <th className="px-4 py-2">Email / Phone</th>
-                <th className="px-4 py-2">Interest</th>
-                <th className="px-4 py-2">Source</th>
-                <th className="px-4 py-2">Status</th>
-                <th className="px-4 py-2">Subscribed</th>
-                <th className="px-4 py-2">Response</th>
-                <th className="px-4 py-2">Last contact</th>
+                <th className="px-3 py-2">Name</th>
+                <th className="px-3 py-2">Email / Phone</th>
+                <th className="px-3 py-2">Interest</th>
+                <th className="px-3 py-2">Source</th>
+                <th className="px-3 py-2">Went to</th>
+                <th className="px-3 py-2">What they did</th>
+                <th className="px-3 py-2">Status</th>
+                <th className="px-3 py-2">Subscribed</th>
+                <th className="px-3 py-2">Response</th>
+                <th className="px-3 py-2">Last contact</th>
               </tr>
             </thead>
             <tbody>
               {leads.map((l) => (
                 <tr key={l.id} className="border-t border-slate-100 hover:bg-slate-50">
-                  <td className="px-4 py-2">
+                  <td className="px-3 py-2">
                     <Link href={`/admin/leads/${l.id}`} className="text-sky-700 hover:underline font-medium">
                       {l.name}
                     </Link>
@@ -152,12 +175,12 @@ export default async function LeadsPage({
                       {l.archivedAt ? ' · archived' : ''}
                     </div>
                   </td>
-                  <td className="px-4 py-2 text-slate-600">
+                  <td className="px-3 py-2 text-slate-600">
                     <div>{l.email ?? <span className="text-slate-400">no email</span>}</div>
                     <div className="text-xs text-slate-500">{l.phone ?? '—'}</div>
                   </td>
-                  <td className="px-4 py-2 text-slate-600">{l.flightInterest ? flightInterestLabel(l.flightInterest) : '—'}</td>
-                  <td className="px-4 py-2 text-slate-600">
+                  <td className="px-3 py-2 text-slate-600">{l.flightInterest ? flightInterestLabel(l.flightInterest) : '—'}</td>
+                  <td className="px-3 py-2 text-slate-600">
                     {l.source}
                     {(() => {
                       const ch = attributionLabel(l.attribution as Record<string, string> | null);
@@ -166,12 +189,22 @@ export default async function LeadsPage({
                       ) : null;
                     })()}
                   </td>
-                  <td className="px-4 py-2">
+                  <td className="px-3 py-2 whitespace-nowrap" data-testid="went-to">
+                    {l.ownerId && names.get(l.ownerId) ? (
+                      <span className="font-medium text-navy-900">{names.get(l.ownerId)}</span>
+                    ) : (
+                      <span className="text-slate-400">Nobody</span>
+                    )}
+                  </td>
+                  <td className="px-3 py-2 min-w-[12rem] max-w-[18rem]" data-testid="what-they-did">
+                    <FollowThroughCell lead={l} note={notes.get(l.id) ?? null} />
+                  </td>
+                  <td className="px-3 py-2">
                     <span className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${badge(l.status)}`}>
                       {l.status}
                     </span>
                   </td>
-                  <td className="px-4 py-2">
+                  <td className="px-3 py-2">
                     <span
                       className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${
                         l.unsubscribed ? 'bg-slate-200 text-slate-600' : 'bg-green-50 text-green-800'
@@ -180,10 +213,10 @@ export default async function LeadsPage({
                       {subscriptionLabel(l)}
                     </span>
                   </td>
-                  <td className="px-4 py-2">
+                  <td className="px-3 py-2">
                     <ResponseCell lead={l} />
                   </td>
-                  <td className="px-4 py-2 text-slate-500">
+                  <td className="px-3 py-2 text-slate-500">
                     {l.lastContactedAt ? new Date(l.lastContactedAt).toLocaleDateString() : '—'}
                   </td>
                 </tr>
@@ -208,6 +241,23 @@ function FilterPill({ label, href, active }: { label: string; href: string; acti
     >
       {label}
     </Link>
+  );
+}
+
+function FollowThroughCell({
+  lead,
+  note,
+}: {
+  lead: { status: string; firstContactedAt: Date | null };
+  note: { authorName: string; body: string } | null;
+}) {
+  const did = whatTheyDid({ status: lead.status, firstContactedAt: lead.firstContactedAt, lastNote: note });
+  if (!did.done) return <span className="text-xs text-slate-400">{did.text}</span>;
+  return (
+    <span className="text-xs text-slate-700">
+      {did.text}
+      {did.who ? <span className="block text-slate-400">{did.who}</span> : null}
+    </span>
   );
 }
 

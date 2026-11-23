@@ -23,6 +23,8 @@ export async function listLeads(opts?: {
   view?: 'active' | 'archived' | 'all';
   /** Subscription is separate from the pipeline status. */
   subscribed?: boolean;
+  /** Who the lead went to: a user id, or 'none' for leads nobody holds. */
+  owner?: string;
   limit?: number;
 }): Promise<Lead[]> {
   const limit = opts?.limit ?? 200;
@@ -33,6 +35,8 @@ export async function listLeads(opts?: {
   if (opts?.status) conds.push(eq(leads.status, opts.status));
   if (opts?.subscribed === true) conds.push(eq(leads.unsubscribed, false));
   if (opts?.subscribed === false) conds.push(eq(leads.unsubscribed, true));
+  if (opts?.owner === 'none') conds.push(isNull(leads.ownerId));
+  else if (opts?.owner) conds.push(eq(leads.ownerId, opts.owner));
   if (opts?.q) {
     const like = `%${opts.q.replace(/[%_\\]/g, '\\$&')}%`;
     conds.push(or(ilike(leads.name, like), ilike(leads.email, like), ilike(leads.phone, like)));

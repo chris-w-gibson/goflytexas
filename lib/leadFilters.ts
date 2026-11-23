@@ -3,6 +3,7 @@
 //   ?q=jack                          name / email / phone search
 //   ?view=archived                    settled contacts (hidden by default)
 //   ?subscribed=no                    unsubscribed, whatever their stage
+//   ?owner=<user id>|none             who the lead went to (Jim 2026-11-22)
 // Old links with ?status=unsubscribed keep working: they mean ?subscribed=no.
 
 export const PIPELINE_STATUSES = ['new', 'contacted', 'converted'] as const;
@@ -13,7 +14,11 @@ export type LeadListParams = {
   q?: string;
   view: 'active' | 'archived';
   subscribed?: boolean;
+  /** A user id, or 'none' for leads nobody holds. */
+  owner?: string;
 };
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 type RawParams = Record<string, string | string[] | undefined> | undefined;
 
@@ -35,6 +40,8 @@ export function parseLeadListParams(raw: RawParams): LeadListParams {
   if (q) out.q = q;
   if (sub === 'no') out.subscribed = false;
   if (sub === 'yes') out.subscribed = true;
+  const owner = first(raw?.owner);
+  if (owner && (owner === 'none' || UUID.test(owner))) out.owner = owner;
   return out;
 }
 
@@ -46,6 +53,7 @@ export function leadListHref(params: LeadListParams): string {
   if (params.view === 'archived') qs.set('view', 'archived');
   if (params.subscribed === false) qs.set('subscribed', 'no');
   if (params.subscribed === true) qs.set('subscribed', 'yes');
+  if (params.owner) qs.set('owner', params.owner);
   const s = qs.toString();
   return s ? `/admin/leads?${s}` : '/admin/leads';
 }

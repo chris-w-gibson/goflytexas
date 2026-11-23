@@ -35,7 +35,7 @@ Rules:
 - callerName: the caller's name as they gave it, properly capitalized; null if they never gave one.
 - callbackPhone: ONLY if the caller stated a callback number that is different from the caller ID shown to you. Digits only. Otherwise null.
 ${INTEREST_RULE}
-- preferredTime: the callback day/time in the caller's words, e.g. "Tuesday after 3pm"; null if none.
+- preferredTime: a day or time the caller offered on their own for flying, visiting or being called, in their words, e.g. "Tuesday after 3pm"; null if none. The assistant never asks for one and never promises one.
 - spam: true for robocalls, recorded messages, sales pitches to the business, wrong numbers, pranks or abuse, or calls where the caller never expressed any interest in flying or the school. Give spamReason in a few words; otherwise null.
 - Do not invent anything that is not in the transcript.`;
 

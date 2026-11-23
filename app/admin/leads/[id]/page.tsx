@@ -4,6 +4,7 @@ import {
   archiveLeadAction,
   deleteLeadAction,
   markContactedAction,
+  setOwnerAction,
   setSubscriptionAction,
   unarchiveLeadAction,
   updateStatusAction,
@@ -14,6 +15,11 @@ import { formatDuration, responseState } from '@/lib/followup';
 import { NotesSection } from './NotesSection';
 import { CallsSection } from './CallsSection';
 import { flightInterestLabel } from '@/lib/constants';
+import { getSessionFromCookies } from '@/lib/auth';
+import { ownerNames } from '@/lib/rotationStore';
+import { asc, eq } from 'drizzle-orm';
+import { db } from '@/lib/db';
+import { users } from '@/lib/db/schema';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,6 +29,12 @@ const STATUSES = PIPELINE_STATUSES;
 export default async function LeadDetailPage({ params }: { params: { id: string } }) {
   const lead = await getLeadById(params.id);
   if (!lead) notFound();
+  const [session, names, takers] = await Promise.all([
+    getSessionFromCookies(),
+    ownerNames(),
+    db.select({ id: users.id, name: users.name }).from(users).where(eq(users.disabled, false)).orderBy(asc(users.name)),
+  ]);
+  const ownerName = lead.ownerId ? names.get(lead.ownerId) : undefined;
 
   return (
     <div className="space-y-6 max-w-3xl">
@@ -51,6 +63,41 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
         <Row label="Phone">{lead.phone ? <a href={`tel:${lead.phone}`} className="text-sky-700 hover:underline">{lead.phone}</a> : '—'}</Row>
         <Row label="Interest">{lead.flightInterest ? flightInterestLabel(lead.flightInterest) : '—'}</Row>
         <Row label="Preferred contact">{lead.preferredContact ?? 'email'}</Row>
+        <Row label="Went to">
+          <span className="inline-flex flex-wrap items-center gap-3" data-testid="lead-owner">
+            {ownerName ? (
+              <span>
+                <strong className="text-navy-900">{ownerName}</strong>
+                {lead.assignedAt ? (
+                  <span className="text-slate-500"> · {new Date(lead.assignedAt).toLocaleString()}</span>
+                ) : null}
+              </span>
+            ) : (
+              <span className="text-slate-400">Nobody. The shared inbox has it.</span>
+            )}
+            {session ? (
+              <form action={setOwnerAction} className="inline-flex items-center gap-2">
+                <input type="hidden" name="id" value={lead.id} />
+                <select
+                  name="ownerId"
+                  defaultValue={lead.ownerId ?? ''}
+                  aria-label="Hand this lead to"
+                  className="border border-slate-300 rounded px-2 py-1 text-xs bg-white"
+                >
+                  <option value="">Nobody</option>
+                  {takers.map((u) => (
+                    <option key={u.id} value={u.id}>
+                      {u.name}
+                    </option>
+                  ))}
+                </select>
+                <button type="submit" className="text-xs text-sky-700 hover:underline">
+                  Hand over
+                </button>
+              </form>
+            ) : null}
+          </span>
+        </Row>
         <Row label="Status">
           <span className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${badge(lead.status)}`}>{lead.status}</span>
         </Row>

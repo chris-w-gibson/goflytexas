@@ -66,3 +66,20 @@ describe('labels', () => {
     expect(isArchived({ archivedAt: new Date() })).toBe(true);
   });
 });
+
+// Jim 2026-11-22: "who that lead went to".
+describe('the went-to filter', () => {
+  const mark = '3f2b1c9e-8a4d-4f6b-9c1d-2e5a7b9d0c11';
+
+  it('reads a person or nobody, and drops anything else', () => {
+    expect(parseLeadListParams({ owner: mark })).toEqual({ view: 'active', owner: mark });
+    expect(parseLeadListParams({ owner: 'none' })).toEqual({ view: 'active', owner: 'none' });
+    expect(parseLeadListParams({ owner: "x' or 1=1" })).toEqual({ view: 'active' });
+  });
+
+  it('keeps the person in the link beside the other filters', () => {
+    expect(leadListHref({ view: 'active', status: 'new', owner: mark })).toBe(
+      `/admin/leads?status=new&owner=${mark}`,
+    );
+  });
+});

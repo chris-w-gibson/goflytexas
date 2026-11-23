@@ -2,95 +2,74 @@
 
 import { revalidatePath } from 'next/cache';
 import { getSessionFromCookies } from '@/lib/auth';
+import { dayOffRange } from '@/lib/rotation';
 import {
-  addPerson,
-  clearDay,
-  removePerson,
-  saveDay,
-  saveWeekday,
-  setPersonActive,
-} from '@/lib/onCallStore';
-import { isDay } from '@/lib/voice/onCall';
-import { formatPhoneDisplay, toE164 } from '@/lib/voice/phone';
-import { reservedNumbers } from '@/lib/voice/twilio';
+  addDayOff,
+  addToRotation,
+  moveInRotation,
+  removeDayOff,
+  removeFromRotation,
+} from '@/lib/rotationStore';
 
 const PAGE = '/admin/on-call';
 
-/** The schedule is changed by anyone signed in; the break-glass key is read-only. */
+/** Days off are set by anyone signed in; the break-glass key is read-only. */
 async function requireSession() {
   const session = await getSessionFromCookies();
-  if (!session) throw new Error('Sign in to change the on-call schedule');
+  if (!session) throw new Error('Sign in to change the rotation');
   return session;
 }
 
-/** Whose phone a business call rings is an admin's call. */
+/** Who is in the rotation, and in what order, is an admin's call. */
 async function requireAdmin() {
   const session = await requireSession();
   if (session.role !== 'admin') throw new Error('Admin access required');
   return session;
 }
 
-const pick = (formData: FormData, key: string): string | null => {
+const pick = (formData: FormData, key: string): string => {
   const v = formData.get(key);
-  return typeof v === 'string' && v ? v : null;
+  return typeof v === 'string' ? v.trim() : '';
 };
 
-export async function saveWeekAction(formData: FormData): Promise<void> {
-  await requireSession();
-  for (let weekday = 0; weekday < 7; weekday++) {
-    await saveWeekday(weekday, [pick(formData, `first_${weekday}`), pick(formData, `second_${weekday}`)]);
-  }
-  revalidatePath(PAGE);
-}
-
-export async function saveDayAction(formData: FormData): Promise<void> {
-  await requireSession();
-  const day = pick(formData, 'day');
-  if (!day || !isDay(day)) return;
-  await saveDay(day, [pick(formData, 'first'), pick(formData, 'second')]);
-  revalidatePath(PAGE);
-}
-
-export async function clearDayAction(formData: FormData): Promise<void> {
-  await requireSession();
-  const day = pick(formData, 'day');
-  if (!day || !isDay(day)) return;
-  await clearDay(day);
-  revalidatePath(PAGE);
-}
-
-export type PersonState = { error?: string; success?: string };
-
-export async function addPersonAction(_prev: PersonState, formData: FormData): Promise<PersonState> {
+export async function addToRotationAction(formData: FormData): Promise<void> {
   await requireAdmin();
-  const name = (pick(formData, 'name') ?? '').trim().slice(0, 80);
-  const phone = toE164(pick(formData, 'phone'));
-  if (!name) return { error: 'Enter a name.' };
-  if (!phone) return { error: 'Enter a 10-digit cell number.' };
-  if (reservedNumbers().has(phone)) {
-    return { error: 'That is one of the business lines. Enter the person\'s own cell.' };
-  }
-  try {
-    await addPerson(name, phone);
-  } catch {
-    return { error: `${formatPhoneDisplay(phone)} is already on the list.` };
-  }
+  const userId = pick(formData, 'userId');
+  if (!userId) return;
+  await addToRotation(userId);
   revalidatePath(PAGE);
-  return { success: `${name} added. Put them on a day below.` };
 }
 
-export async function setPersonActiveAction(formData: FormData): Promise<void> {
+export async function removeFromRotationAction(formData: FormData): Promise<void> {
   await requireAdmin();
+  const userId = pick(formData, 'userId');
+  if (!userId) return;
+  await removeFromRotation(userId);
+  revalidatePath(PAGE);
+}
+
+export async function moveInRotationAction(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const userId = pick(formData, 'userId');
+  const direction = pick(formData, 'direction');
+  if (!userId || (direction !== 'up' && direction !== 'down')) return;
+  await moveInRotation(userId, direction);
+  revalidatePath(PAGE);
+}
+
+export async function addDayOffAction(formData: FormData): Promise<void> {
+  await requireSession();
+  const userId = pick(formData, 'userId');
+  const range = dayOffRange(pick(formData, 'start'), pick(formData, 'end'));
+  if (!userId || !range) return;
+  await addDayOff({ userId, ...range, note: pick(formData, 'note').slice(0, 120) || null });
+  revalidatePath(PAGE);
+}
+
+export async function removeDayOffAction(formData: FormData): Promise<void> {
+  await requireSession();
   const id = pick(formData, 'id');
   if (!id) return;
-  await setPersonActive(id, formData.get('active') === 'true');
-  revalidatePath(PAGE);
-}
-
-export async function removePersonAction(formData: FormData): Promise<void> {
-  await requireAdmin();
-  const id = pick(formData, 'id');
-  if (!id || formData.get('confirm') !== 'on') return;
-  await removePerson(id);
+  await removeDayOff(id);
   revalidatePath(PAGE);
 }

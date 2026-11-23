@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { addLeadNote, getLeadByContactToken, markContactedByToken } from '@/lib/leads';
 import { formatDuration, responseState } from '@/lib/followup';
 import { OUTCOME_OPTIONS, composeOutcomeNote } from '@/lib/outcomes';
+import { ownerOf } from '@/lib/rotationStore';
 
 // "I've reached out" from the owner notification email (Jim 2026-08-31):
 // multi-select what actually happened, add a note, say who did it — all of it
@@ -54,6 +55,8 @@ export default async function AckPage({
   }
 
   const state = responseState(lead);
+  // The lead went to one person (Jim 2026-11-22), so their name is filled in.
+  const owner = await ownerOf(lead).catch(() => null);
   const saved = searchParams?.saved === '1';
 
   return (
@@ -120,6 +123,7 @@ export default async function AckPage({
             name="author"
             required
             maxLength={80}
+            defaultValue={owner?.name ?? ''}
             placeholder="So the lead sheet shows who reached out"
             className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"
           />

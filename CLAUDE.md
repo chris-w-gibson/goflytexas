@@ -184,3 +184,52 @@ for media content… users drop their content in a general media tab".
   when `NODE_ENV` is not production.
 - Migrations `drizzle/0009_on_call.sql` and `drizzle/0010_media_library.sql` are hand-applied
   like 0006-0008 and must land before the deploy that reads the new tables.
+
+## Jim's 11/22 call (requirements: `docs/meetings/requirements/call-jim_2026-11-22.md`)
+
+- **The phone assistant never asks for or agrees to a callback time (GFT-1122-10).** Jim: a set
+  time is a window the team will miss. `VOICE_PERSONA` says so in its own paragraph and the
+  wrap-up turn confirms only the number (`lib/__tests__/voicePersona.test.ts`). A time the caller
+  offers on their own is still kept: `preferredTime` in the extraction, printed on the lead as
+  "Caller mentioned: …" (it used to read "Best time: …", which looked like an appointment).
+- **`LEAD_NOTIFY_EMAILS` is unset on production since 11/23 (GFT-1122-11):** lead emails go to
+  `ADMIN_EMAIL` (`info@goflytexas.com`) only. `railway variable delete` did not restart the
+  service; a `railway redeploy --service goflytexas` was needed for the change to take effect.
+
+## The lead rotation (2026-11-23, GFT-1122-01/02/03/08)
+
+Jim (11/22): "a batter's list… whoever we select is in that group. And if we want to take them
+out for particular days… we can. It doesn't reset each day. It just goes down the list in order
+and then goes back to the top", and on the leads list "who that lead went to and then what they
+did with it".
+
+- **On call (`/admin/on-call`) is the rotation.** The people come from Users (`users.in_rotation`,
+  `users.rotation_order`); an admin adds, takes out and reorders, anyone signed in sets days off
+  (`rotation_days_off`, inclusive Central days; one day = the same day twice). The break-glass key
+  is read-only. The weekday phone schedule moved, unchanged, to `/admin/on-call/ring-order`
+  (linked at the foot of the page); it still only matters in `humans_first`.
+- **Rules are pure in `lib/rotation.ts`, storage in `lib/rotationStore.ts`.** `rotation_state`
+  (one row) holds who got the last lead and the order number they held. `nextUp` walks on from
+  that person; if they have left the rotation it carries on from their number. **Order numbers
+  are swapped, never renumbered**, so a person who is taken out leaves a gap the list resumes
+  from; a newcomer gets the highest number plus one.
+- **`handOutLead` gives a lead to the next person and moves the list on, inside one transaction
+  that locks the state row**, so leads arriving together go to different people. Call sites use
+  `handOutLeadSafely`: a failed hand-out is logged and the lead email goes to the shared inbox as
+  before. Nobody in the rotation, or everyone off today, also leaves the lead with the shared inbox.
+- **What is handed out:** a website lead (`/api/leads`) and a call nobody answered (AI answered,
+  missed, voicemail; `lib/voice/pipeline.ts`). A repeat caller inside a day stays with whoever
+  holds the lead. A call a person answered is not handed out. A lead typed in by hand belongs to
+  whoever typed it, and a hand-over on the lead sheet ("Hand over") writes a note; neither moves
+  the rotation.
+- **The lead email goes TO the person and copies the shared inbox** (`leadRecipients`: owner in
+  `to`; `ADMIN_EMAIL` plus `LEAD_NOTIFY_EMAILS` in `cc`). The subject ends "· to Mark" and the
+  body has a "Went to" row. The ack page fills "Your name" with that person.
+- **Leads list:** "Went to" (with a filter, `?owner=<user id>|none`) and "What they did"
+  (`whatTheyDid`: the latest note a person wrote and who wrote it, else Converted / Marked
+  contacted / Nothing yet; the phone assistant's own notes do not count). The CSV has "Went to".
+- Migration `drizzle/0011_lead_rotation.sql` is hand-applied like 0006-0010 and must land before
+  the deploy that reads the new columns. After it, the rotation is empty: every lead keeps going
+  to the shared inbox until an admin adds people on the On call page.
+- Not built: recording Call / Email / Text taps from the lead email (04), a time limit that hands
+  an unanswered lead on, a phone on the user, by-name transfer (07), the bot reading Media (09).

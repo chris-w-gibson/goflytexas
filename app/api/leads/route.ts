@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { createLead, findRecentLeadByEmail, recordEmailEvent } from '@/lib/leads';
 import { leadInputSchema } from '@/lib/validation';
 import { sendAdminNotification, sendAutoReply } from '@/lib/email';
+import { handOutLeadSafely } from '@/lib/rotationStore';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -105,7 +106,10 @@ export async function POST(req: NextRequest) {
           error: String(err?.message ?? err),
         }),
       ),
-    sendAdminNotification(lead)
+    // The lead goes to the next person in the rotation (Jim 2026-11-22); the
+    // alert is theirs, with the shared inbox copied.
+    handOutLeadSafely(lead.id)
+      .then((owner) => sendAdminNotification(lead, { owner }))
       .then(() => recordEmailEvent({ leadId: lead.id, kind: 'admin_notify' }))
       .catch((err) =>
         recordEmailEvent({
