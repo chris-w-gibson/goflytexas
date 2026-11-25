@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { leadNotes } from '@/lib/db/schema';
 import { getSessionFromCookies } from '@/lib/auth';
 import { markContacted } from '@/lib/leads';
+import { centralShort } from '@/lib/centralTime';
 
 async function addNoteAction(formData: FormData) {
   'use server';
@@ -60,12 +61,7 @@ export async function NotesSection({ leadId }: { leadId: string }) {
               <p className="whitespace-pre-wrap">{n.body}</p>
               <p className="text-xs text-slate-400 mt-1">
                 {n.authorName} ·{' '}
-                {n.createdAt.toLocaleString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: '2-digit',
-                })}
+                {centralShort(n.createdAt)}
               </p>
             </li>
           ))}

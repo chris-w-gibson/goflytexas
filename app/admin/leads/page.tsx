@@ -12,6 +12,7 @@ import { formatDuration, responseState } from '@/lib/followup';
 import { flightInterestLabel } from '@/lib/constants';
 import { whatTheyDid } from '@/lib/rotation';
 import { lastHumanNotes, ownerNames } from '@/lib/rotationStore';
+import { centralDate } from '@/lib/centralTime';
 
 export const dynamic = 'force-dynamic';
 
@@ -171,7 +172,7 @@ export default async function LeadsPage({
                       {l.name}
                     </Link>
                     <div className="text-xs text-slate-500">
-                      {new Date(l.createdAt).toLocaleDateString()}
+                      {centralDate(l.createdAt)}
                       {l.archivedAt ? ' · archived' : ''}
                     </div>
                   </td>
@@ -217,7 +218,7 @@ export default async function LeadsPage({
                     <ResponseCell lead={l} />
                   </td>
                   <td className="px-3 py-2 text-slate-500">
-                    {l.lastContactedAt ? new Date(l.lastContactedAt).toLocaleDateString() : '—'}
+                    {l.lastContactedAt ? centralDate(l.lastContactedAt) : '—'}
                   </td>
                 </tr>
               ))}

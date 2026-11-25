@@ -20,6 +20,7 @@ import { ownerNames } from '@/lib/rotationStore';
 import { asc, eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
+import { centralDateTime } from '@/lib/centralTime';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,13 +43,13 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
         <Link href="/admin/leads" className="text-sky-700 hover:underline text-sm">← Back to leads</Link>
         <h1 className="text-2xl font-bold mt-2">{lead.name}</h1>
         <p className="text-slate-500 text-sm">
-          Added {new Date(lead.createdAt).toLocaleString()} via {lead.source}
+          Added {centralDateTime(lead.createdAt)} via {lead.source}
         </p>
       </div>
 
       {lead.archivedAt ? (
         <div className="rounded-lg bg-slate-100 border border-slate-200 px-4 py-3 text-sm text-slate-700 flex items-center justify-between gap-3">
-          <span>Archived {new Date(lead.archivedAt).toLocaleString()} — settled, off the working list.</span>
+          <span>Archived {centralDateTime(lead.archivedAt)} — settled, off the working list.</span>
           <form action={unarchiveLeadAction}>
             <input type="hidden" name="id" value={lead.id} />
             <button type="submit" className="text-sky-700 hover:underline font-medium">
@@ -69,7 +70,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
               <span>
                 <strong className="text-navy-900">{ownerName}</strong>
                 {lead.assignedAt ? (
-                  <span className="text-slate-500"> · {new Date(lead.assignedAt).toLocaleString()}</span>
+                  <span className="text-slate-500"> · {centralDateTime(lead.assignedAt)}</span>
                 ) : null}
               </span>
             ) : (
@@ -120,7 +121,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
           </span>
         </Row>
         <Row label="First response"><FirstResponse lead={lead} /></Row>
-        <Row label="Last contacted">{lead.lastContactedAt ? new Date(lead.lastContactedAt).toLocaleString() : '—'}</Row>
+        <Row label="Last contacted">{lead.lastContactedAt ? centralDateTime(lead.lastContactedAt) : '—'}</Row>
         <div className="pt-3 border-t border-slate-100">
           <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">Message</div>
           <div className="whitespace-pre-wrap text-slate-800">{lead.message || <em className="text-slate-400">No message</em>}</div>
@@ -202,7 +203,7 @@ function FirstResponse({ lead }: { lead: NonNullable<Awaited<ReturnType<typeof g
     return (
       <span className={s.slow ? 'text-amber-700' : 'text-green-700'}>
         {formatDuration(s.ms)} after submission
-        {lead.firstContactedAt ? ` (${new Date(lead.firstContactedAt).toLocaleString()})` : ''}
+        {lead.firstContactedAt ? ` (${centralDateTime(lead.firstContactedAt)})` : ''}
       </span>
     );
   }

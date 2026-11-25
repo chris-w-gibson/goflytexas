@@ -1,6 +1,7 @@
 import { desc, eq, sql } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { chatMessages, chatSessions } from '@/lib/db/schema';
+import { centralShort } from '@/lib/centralTime';
 
 export const dynamic = 'force-dynamic';
 
@@ -55,12 +56,7 @@ export default async function ChatTranscriptsPage() {
             >
               <summary className="p-4 cursor-pointer select-none flex flex-wrap gap-3 items-center">
                 <span className="font-medium text-navy-900">
-                  {s.startedAt.toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                  })}
+                  {centralShort(s.startedAt)}
                 </span>
                 <span className="text-xs text-slate-500">
                   {s.messageCount} message{s.messageCount === 1 ? '' : 's'}
