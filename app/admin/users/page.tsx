@@ -4,6 +4,7 @@ import { users } from '@/lib/db/schema';
 import { getSessionFromCookies } from '@/lib/auth';
 import { InviteForm } from './InviteForm';
 import { sendPasswordResetAction, toggleUserDisabledAction } from './actions';
+import { centralDay } from '@/lib/centralTime';
 
 export const dynamic = 'force-dynamic';
 
@@ -44,11 +45,7 @@ export default async function UsersPage() {
                   {u.email} · {u.role}
                   {u.mustChangePassword ? ' · temp password pending' : ''}
                   {u.lastLoginAt
-                    ? ` · last login ${u.lastLoginAt.toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}`
+                    ? ` · last login ${centralDay(u.lastLoginAt)}`
                     : ' · never logged in'}
                 </p>
               </div>

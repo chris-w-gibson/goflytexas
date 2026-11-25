@@ -1,6 +1,7 @@
 import { listBotDocuments } from '@/lib/botKnowledge';
 import { UploadForm } from './UploadForm';
 import { deleteBotDocumentAction, toggleBotDocumentAction } from './actions';
+import { centralDay } from '@/lib/centralTime';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,11 +39,7 @@ export default async function BotKnowledgePage() {
                 <p className="font-medium text-navy-900">{doc.title}</p>
                 <p className="text-xs text-slate-500 mt-0.5">
                   {doc.filename} · {formatBytes(doc.content)} ·{' '}
-                  {doc.createdAt.toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
+                  {centralDay(doc.createdAt)}
                 </p>
                 <details className="mt-2">
                   <summary className="text-xs text-sky-700 cursor-pointer select-none">
