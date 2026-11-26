@@ -14,6 +14,9 @@ import {
   getUserById,
 } from '@/lib/auth';
 import { sendPasswordResetEmail, sendUserInvite } from '@/lib/email';
+import { redirect } from 'next/navigation';
+import { checkCell } from '@/lib/userPhone';
+import { reservedNumbers } from '@/lib/voice/twilio';
 
 async function requireAdmin() {
   const session = await getSessionFromCookies();
@@ -98,4 +101,17 @@ export async function sendPasswordResetAction(formData: FormData) {
   const rawToken = await createPasswordResetToken(target.id);
   await sendPasswordResetEmail(target.email, target.name, rawToken);
   revalidatePath('/admin/users');
+}
+
+/** An admin keeps each person's cell. A number that cannot be stored sends the page back with the reason. */
+export async function saveUserCellAction(formData: FormData) {
+  await requireAdmin();
+  const id = String(formData.get('id') ?? '');
+  const target = id ? await getUserById(id) : undefined;
+  if (!target) return;
+  const check = checkCell(formData.get('phone'), reservedNumbers());
+  if (!check.ok) redirect(`/admin/users?cell=${encodeURIComponent(id)}&why=${encodeURIComponent(check.error)}`);
+  await db.update(users).set({ phone: check.phone, updatedAt: new Date() }).where(eq(users.id, id));
+  revalidatePath('/admin/users');
+  redirect('/admin/users');
 }

@@ -30,11 +30,18 @@ export function lastFour(raw: string | null | undefined): string | null {
   return e ? e.slice(-4) : null;
 }
 
-/** Digits spaced for text-to-speech: "9 4 0, 9 0 5, 3 0 9 0". */
+const DIGIT_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+
+/**
+ * The number as it should be said: one digit at a time, in the usual three
+ * groups: "nine four zero, nine zero five, three zero nine zero". Words, not
+ * digits: given "9 4 0" the voice model regrouped them and said "nine forty,
+ * nine oh five, thirty ninety" (Jim 11/25, "the way it says your #").
+ */
 export function formatSpoken(raw: string | null | undefined): string | null {
   const e = toE164(raw);
   if (!e) return null;
   const d = e.slice(2);
-  const group = (s: string) => s.split('').join(' ');
+  const group = (s: string) => s.split('').map((c) => DIGIT_WORDS[Number(c)]).join(' ');
   return `${group(d.slice(0, 3))}, ${group(d.slice(3, 6))}, ${group(d.slice(6))}`;
 }

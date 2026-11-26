@@ -82,6 +82,17 @@ export async function uploadUrl(s: MediaStorage, key: string, contentType: strin
   });
 }
 
+/** Store a small file from this server (a picture on a suggestion); big media goes by signed link. */
+export async function putStored(s: MediaStorage, key: string, body: Buffer, contentType: string): Promise<void> {
+  if (s.driver === 'local') {
+    const full = localPath(s.dir, key);
+    await mkdir(path.dirname(full), { recursive: true });
+    await writeFile(full, body);
+    return;
+  }
+  await client(s).send(new PutObjectCommand({ Bucket: s.bucket, Key: key, Body: body, ContentType: contentType }));
+}
+
 /** A link that shows the file, or downloads it under `downloadAs`. */
 export async function viewUrl(
   s: MediaStorage,

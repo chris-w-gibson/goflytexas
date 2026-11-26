@@ -343,3 +343,34 @@ function escape(s: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+/**
+ * A suggestion or bug report from the team, mailed to whoever looks after the
+ * hub (`SUGGESTION_NOTIFY_EMAILS`). With that unset nothing is sent: the
+ * Suggestions page is the record either way.
+ */
+export function suggestionRecipients(env: Record<string, string | undefined> = process.env): string[] {
+  return parseEmailList(env.SUGGESTION_NOTIFY_EMAILS);
+}
+
+export async function sendSuggestionNotice(s: {
+  kind: 'suggestion' | 'bug';
+  body: string;
+  authorName: string;
+  hasPicture: boolean;
+}): Promise<void> {
+  const to = suggestionRecipients();
+  if (to.length === 0) return;
+  const label = s.kind === 'bug' ? 'Bug' : 'Suggestion';
+  const first = s.body.split('\n')[0].slice(0, 70);
+  await getResend().emails.send({
+    from: fromAddress(),
+    to,
+    subject: `GoFlyTexas hub · ${label} from ${s.authorName}: ${first}`,
+    html: wrap(`
+      <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#0c2340;font-weight:700;">${label} from ${escape(s.authorName)}</p>
+      <p style="white-space:pre-wrap;margin:0 0 16px;">${escape(s.body)}</p>
+      ${s.hasPicture ? '<p style="margin:0 0 16px;color:#6b7280;">A picture is attached to it in the hub.</p>' : ''}
+      <p><a href="${SITE_URL}/admin/suggestions" style="color:#0c2340;font-weight:700;">Open Suggestions</a></p>`),
+  });
+}

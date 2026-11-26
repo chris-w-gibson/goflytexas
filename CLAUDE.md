@@ -235,3 +235,39 @@ did with it".
   to the shared inbox until an admin adds people on the On call page.
 - Not built: recording Call / Email / Text taps from the lead email (04), a time limit that hands
   an unanswered lead on, a phone on the user, by-name transfer (07), the bot reading Media (09).
+
+## Jim's 11/25 notes (handwritten: AI ask for person, text vs email, suggestion tab, how it says the number)
+
+- **Admin dates are Central (11/25, Jim: "date seem wrong").** The server's clock is UTC, so a
+  date printed without a zone showed the next day for anything after 6 PM Central. Every date an
+  admin page prints goes through `lib/centralTime.ts`; `lib/__tests__/centralTime.test.ts` fails
+  on an admin page that formats a date without naming the zone.
+- **The phone assistant says a number one digit at a time, once.** The persona used to give
+  "nine forty, nine oh five, thirty ninety" as its example and the call note handed it "2 1 4",
+  so it said "two fourteen, four twelve, nine zero forty" and repeated it at the goodbye.
+  `formatSpoken` now returns words ("two one four, …"), the persona's example is digit by digit,
+  and the closing and the wrap-up turn say not to repeat a number the caller confirmed. Checked
+  by asking the voice model itself with the persona (six made-up calls: digit by digit in all,
+  said once in five). It has not been heard on a real call.
+- **Suggestions (`/admin/suggestions`).** Anyone signed in sends a suggestion or a bug with one
+  optional picture and sees the list; an admin marks one done with a line on what was done; the
+  break-glass key reads only. `suggestions` table (migration `0012`), rules in
+  `lib/suggestions/rules.ts`, storage in `lib/suggestions/store.ts`. The picture goes to the media
+  bucket under `suggestions/<yyyy>/<mm>/<id>.<ext>` from the server (`putStored`), through a
+  route (`/admin/suggestions/submit`) and not a server action, which stops at 1 MB. A notice is
+  mailed to `SUGGESTION_NOTIFY_EMAILS`; with that unset nothing is mailed and the page is the
+  record.
+- **A cell on each user (`users.phone`, migration `0013`).** An admin keeps it on the Users page
+  (`checkCell`: ten-digit US number, never one of our own lines). Nothing reads it yet: it is
+  there for lead texts and for ringing a person through.
+- **Texting is not built and cannot deliver yet.** The Twilio account holds an approved
+  sole-proprietor brand whose only campaign FAILED (January 2026, on the 817 number); every text
+  it has sent came back undelivered (30034 unregistered, 30032 toll-free not verified). Lead
+  texts need a registration in GoFlyTexas's own name (business name, tax ID, address) first.
+  The campaign's own rejection (30903): a business with a tax ID cannot use a sole-proprietor
+  brand; file a Low-Volume Standard brand. That review also wants a privacy policy and terms
+  page on the public site (neither exists) and a business email on a company domain.
+- Migrations `drizzle/0012_suggestions.sql` and `drizzle/0013_user_phone.sql` are hand-applied
+  like 0006-0011 and must land before the deploy that reads them.
+- Not built: lead texts, the AI ringing the next person in the rotation and passing the lead to
+  whoever answers (waits on what "they get skipped" means).

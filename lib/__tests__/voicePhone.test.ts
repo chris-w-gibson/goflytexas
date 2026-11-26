@@ -29,7 +29,7 @@ describe('display + spoken', () => {
   it('formats the web-form shape and the spoken shape', () => {
     expect(formatPhoneDisplay('+19409053090')).toBe('940-905-3090');
     expect(formatPhoneDisplay('junk')).toBeNull();
-    expect(formatSpoken('+19409053090')).toBe('9 4 0, 9 0 5, 3 0 9 0');
+    expect(formatSpoken('+19409053090')).toBe('nine four zero, nine zero five, three zero nine zero');
     expect(lastFour('+19409053090')).toBe('3090');
   });
   it('flags anonymous callers', () => {

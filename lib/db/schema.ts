@@ -101,6 +101,8 @@ export const users = pgTable('users', {
   // person who leaves keeps the place the list carries on from.
   inRotation: boolean('in_rotation').notNull().default(false),
   rotationOrder: integer('rotation_order'),
+  // 0013: the person's cell, +1XXXXXXXXXX. Kept for lead texts and ringing; nothing reads it yet.
+  phone: text('phone'),
   lastLoginAt: timestamp('last_login_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
@@ -292,3 +294,21 @@ export const mediaItems = pgTable('media_items', {
 });
 
 export type MediaItem = typeof mediaItems.$inferSelect;
+
+// 0012: suggestions and bug reports from the team (Jim 11/25).
+export const suggestions = pgTable('suggestions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  kind: text('kind').$type<'suggestion' | 'bug'>().notNull(),
+  body: text('body').notNull(),
+  pictureKey: text('picture_key'),
+  pictureType: text('picture_type'),
+  authorId: uuid('author_id').references(() => users.id, { onDelete: 'set null' }),
+  authorName: text('author_name').notNull(),
+  status: text('status').$type<'open' | 'done'>().notNull().default('open'),
+  reply: text('reply'),
+  closedByName: text('closed_by_name'),
+  closedAt: timestamp('closed_at', { withTimezone: true }),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export type Suggestion = typeof suggestions.$inferSelect;
