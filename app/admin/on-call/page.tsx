@@ -32,7 +32,7 @@ function FlowStrip({ next }: { next: RotationPerson | null }) {
     next
       ? { label: next.name, sub: 'next in the rotation' }
       : { label: 'Nobody up', sub: 'the rotation is empty or everyone is off' },
-    { label: 'Lead email', sub: next ? `to ${next.name}, copy to the shared inbox` : 'to the shared inbox' },
+    { label: 'Lead email', sub: next ? `to ${next.name} only` : 'to the shared inbox' },
   ];
   return (
     <ol className="flex flex-col sm:flex-row sm:flex-wrap sm:items-stretch gap-1 sm:gap-2 text-sm" data-testid="lead-flow">

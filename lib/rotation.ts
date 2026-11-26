@@ -171,14 +171,16 @@ export function whatTheyDid(lead: {
 }
 
 /**
- * Who the lead email goes to. With an owner it is theirs, and the shared inbox
- * (plus anyone on LEAD_NOTIFY_EMAILS) is copied; without one it goes to the
- * shared inbox as before.
+ * Who the lead email goes to. With an owner it is theirs alone: nobody is
+ * copied (Jim 2026-11-26: the shared inbox is Mark's own address, and a copy
+ * of someone else's lead reads to him as his to chase). Without an owner it
+ * goes to the shared inbox (plus anyone on LEAD_NOTIFY_EMAILS), so a lead is
+ * never left unannounced.
  */
 export function leadRecipients(
   owner: { email: string } | null,
   shared: string[],
-): { to: string[]; cc?: string[] } {
+): { to: string[] } {
   const seen = new Set<string>();
   const unique = (list: string[]) =>
     list.filter((e) => {
@@ -187,8 +189,5 @@ export function leadRecipients(
       seen.add(k);
       return true;
     });
-  if (!owner) return { to: unique(shared) };
-  const to = unique([owner.email]);
-  const cc = unique(shared);
-  return cc.length > 0 ? { to, cc } : { to };
+  return { to: unique(owner ? [owner.email] : shared) };
 }
