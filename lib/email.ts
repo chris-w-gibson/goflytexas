@@ -122,8 +122,8 @@ export type CallEmailContext = {
 
 /**
  * Owner alert. With `opts.owner` (the person the rotation gave the lead to) it
- * goes to them, and ADMIN_EMAIL plus LEAD_NOTIFY_EMAILS are copied; without
- * one it goes to ADMIN_EMAIL plus LEAD_NOTIFY_EMAILS. Built to be acted
+ * goes to them alone; without one it goes to ADMIN_EMAIL plus
+ * LEAD_NOTIFY_EMAILS. Built to be acted
  * on from a phone: tap-to-call, tap-to-email, and a one-click "I've reached
  * out" button that stamps the first-response time (no login needed).
  * With `opts.call` it becomes the "Missed call · AI answered" variant, or —

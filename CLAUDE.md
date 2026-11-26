@@ -224,9 +224,14 @@ did with it".
   holds the lead. A call a person answered is not handed out. A lead typed in by hand belongs to
   whoever typed it, and a hand-over on the lead sheet ("Hand over") writes a note; neither moves
   the rotation.
-- **The lead email goes TO the person and copies the shared inbox** (`leadRecipients`: owner in
-  `to`; `ADMIN_EMAIL` plus `LEAD_NOTIFY_EMAILS` in `cc`). The subject ends "· to Mark" and the
-  body has a "Went to" row. The ack page fills "Your name" with that person.
+- **The lead email goes to the person whose turn it is and to nobody else (Jim 11/26; until then
+  the shared inbox was copied).** `ADMIN_EMAIL` is Mark's own login address, so a copy of another
+  person's lead read to him as his to chase. `leadRecipients`: with an owner, `to` is the owner
+  alone; with none (nobody in the rotation, everyone off, a failed hand-out) it is `ADMIN_EMAIL`
+  plus `LEAD_NOTIFY_EMAILS`, so a lead is never left unannounced. The subject ends "· to Mark"
+  and the body has a "Went to" row. The ack page fills "Your name" with that person. Same day
+  Jim Malone left the rotation at his own ask (lead emails were reaching his EnviroServe
+  address, his hub login): a person who should not get lead email is taken out of the rotation.
 - **Leads list:** "Went to" (with a filter, `?owner=<user id>|none`) and "What they did"
   (`whatTheyDid`: the latest note a person wrote and who wrote it, else Converted / Marked
   contacted / Nothing yet; the phone assistant's own notes do not count). The CSV has "Went to".

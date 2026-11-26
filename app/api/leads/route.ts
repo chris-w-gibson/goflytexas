@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
         }),
       ),
     // The lead goes to the next person in the rotation (Jim 2026-11-22); the
-    // alert is theirs, with the shared inbox copied.
+    // alert is theirs alone.
     handOutLeadSafely(lead.id)
       .then((owner) => sendAdminNotification(lead, { owner }))
       .then(() => recordEmailEvent({ leadId: lead.id, kind: 'admin_notify' }))

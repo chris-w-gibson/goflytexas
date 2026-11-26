@@ -161,15 +161,19 @@ describe('whatTheyDid', () => {
 describe('leadRecipients', () => {
   const inbox = 'info@goflytexas.com';
 
-  it('sends to the person the lead went to and copies the shared inbox', () => {
-    expect(leadRecipients(mark, [inbox])).toEqual({ to: [mark.email], cc: [inbox] });
+  it('sends to the person the lead went to and copies nobody', () => {
+    expect(leadRecipients(mark, [inbox, 'owner@example.com'])).toEqual({ to: [mark.email] });
   });
 
   it('sends to the shared inbox alone when nobody took the lead', () => {
     expect(leadRecipients(null, [inbox, 'Info@GoFlyTexas.com'])).toEqual({ to: [inbox] });
   });
 
-  it('does not copy an address that is already the recipient', () => {
+  it('sends once when the person the lead went to uses the shared inbox', () => {
     expect(leadRecipients({ email: 'Info@goflytexas.com' }, [inbox])).toEqual({ to: ['Info@goflytexas.com'] });
+  });
+
+  it('sends to everyone on the shared list when nobody took the lead', () => {
+    expect(leadRecipients(null, [inbox, 'second@example.com'])).toEqual({ to: [inbox, 'second@example.com'] });
   });
 });
