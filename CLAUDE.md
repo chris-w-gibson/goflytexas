@@ -171,7 +171,9 @@ for media content… users drop their content in a general media tab".
   scripts sits in `~/.config/goflytexas/media.env`, mode 600). Without them the page says
   storage is not set up and takes no uploads.
 - The bucket needs CORS for the site's origin or the browser PUT is refused before it starts:
-  `npx tsx scripts/media-bucket-cors.ts https://www.goflytexas.com` (re-run if the address changes).
+  `npx tsx scripts/media-bucket-cors.ts https://www.goflytexas.com https://goflytexas-production.up.railway.app`
+  (every address the site answers on; with only www, uploads from the railway.app address read
+  "not added, the connection dropped", Jim 11/23; re-run if an address changes).
 - A signed upload link signs the content type (`signableHeaders`); by default only the host is
   signed and the link takes anything. The size cannot be signed, so `/admin/media/items` reads
   the size back from the bucket and removes a file over the limit. It accepts a storage key only
