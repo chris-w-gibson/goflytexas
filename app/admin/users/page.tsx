@@ -3,12 +3,17 @@ import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
 import { getSessionFromCookies } from '@/lib/auth';
 import { InviteForm } from './InviteForm';
-import { sendPasswordResetAction, toggleUserDisabledAction } from './actions';
+import { saveUserCellAction, sendPasswordResetAction, toggleUserDisabledAction } from './actions';
+import { formatPhoneDisplay } from '@/lib/voice/phone';
 import { centralDay } from '@/lib/centralTime';
 
 export const dynamic = 'force-dynamic';
 
-export default async function UsersPage() {
+export default async function UsersPage({
+  searchParams,
+}: {
+  searchParams: { cell?: string; why?: string };
+}) {
   const session = await getSessionFromCookies();
   const allUsers = await db.select().from(users).orderBy(asc(users.createdAt));
 
@@ -26,6 +31,10 @@ export default async function UsersPage() {
         <h1 className="text-2xl font-bold">Users</h1>
         <p className="text-sm text-slate-600 mt-1">
           Who can sign in to this admin console.
+        </p>
+        <p className="text-sm text-slate-600 mt-1">
+          A cell is kept for texting a person that a lead is waiting and for ringing them through. Neither is
+          switched on yet.
         </p>
       </div>
 
@@ -49,6 +58,27 @@ export default async function UsersPage() {
                     : ' · never logged in'}
                 </p>
               </div>
+              <form action={saveUserCellAction} className="flex items-center gap-2" data-testid="user-cell">
+                <input type="hidden" name="id" value={u.id} />
+                <input
+                  // Remounts on a save, so the box shows the number as it was stored.
+                  key={u.phone ?? 'none'}
+                  type="tel"
+                  name="phone"
+                  defaultValue={formatPhoneDisplay(u.phone) ?? ''}
+                  placeholder="Cell"
+                  aria-label={`Cell for ${u.name}`}
+                  className="w-36 border border-slate-300 rounded-lg px-2 py-1 text-sm"
+                />
+                <button type="submit" className="text-xs border border-slate-300 rounded-lg px-2 py-1 hover:bg-slate-50">
+                  Save cell
+                </button>
+                {searchParams.cell === u.id && searchParams.why && (
+                  <span role="alert" className="text-xs text-red-600">
+                    {searchParams.why}
+                  </span>
+                )}
+              </form>
               <div className="flex items-center gap-2">
                 <span
                   className={`text-xs px-2 py-1 rounded-full ${

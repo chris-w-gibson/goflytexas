@@ -12,7 +12,8 @@ import { mediaStorage, readLocal, writeLocal } from '@/lib/media/storage';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const KEY = /^media\/\d{4}\/\d{2}\/[0-9a-f-]{36}\.(?:thumb\.jpg|[a-z0-9]{1,5})$/;
+// The library's files, and the pictures on suggestions.
+const KEY = /^(?:media|suggestions)\/\d{4}\/\d{2}\/[0-9a-f-]{36}\.(?:thumb\.jpg|[a-z0-9]{1,5})$/;
 
 function localKey(req: NextRequest): string | null {
   const key = req.nextUrl.searchParams.get('key') ?? '';
