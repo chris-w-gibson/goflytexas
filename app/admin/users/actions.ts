@@ -1,10 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { db } from '@/lib/db';
-import { users } from '@/lib/db/schema';
+import { passwordResetTokens, users } from '@/lib/db/schema';
 import {
   createPasswordResetToken,
   createUser,
@@ -16,6 +16,7 @@ import {
 import { sendPasswordResetEmail, sendUserInvite } from '@/lib/email';
 import { redirect } from 'next/navigation';
 import { checkCell } from '@/lib/userPhone';
+import { tooSoon } from '@/lib/passwordResetNotice';
 import { reservedNumbers } from '@/lib/voice/twilio';
 
 async function requireAdmin() {
@@ -98,9 +99,24 @@ export async function sendPasswordResetAction(formData: FormData) {
   if (!id) return;
   const target = await getUserById(id);
   if (!target || target.disabled) return;
-  const rawToken = await createPasswordResetToken(target.id);
-  await sendPasswordResetEmail(target.email, target.name, rawToken);
-  revalidatePath('/admin/users');
+  const back = (outcome: string) => `/admin/users?reset=${encodeURIComponent(id)}&outcome=${outcome}`;
+  // The page used to show nothing after a press, so one reset became fifteen emails.
+  const [last] = await db
+    .select({ at: passwordResetTokens.createdAt })
+    .from(passwordResetTokens)
+    .where(eq(passwordResetTokens.userId, target.id))
+    .orderBy(desc(passwordResetTokens.createdAt))
+    .limit(1);
+  if (tooSoon(last?.at, new Date())) redirect(back('wait'));
+  let sent = true;
+  try {
+    const rawToken = await createPasswordResetToken(target.id);
+    await sendPasswordResetEmail(target.email, target.name, rawToken);
+  } catch (err) {
+    console.error('[users] password reset email failed', err instanceof Error ? err.message : err);
+    sent = false;
+  }
+  redirect(back(sent ? 'sent' : 'failed'));
 }
 
 /** An admin keeps each person's cell. A number that cannot be stored sends the page back with the reason. */

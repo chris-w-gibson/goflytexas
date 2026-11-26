@@ -269,5 +269,15 @@ did with it".
   page on the public site (neither exists) and a business email on a company domain.
 - Migrations `drizzle/0012_suggestions.sql` and `drizzle/0013_user_phone.sql` are hand-applied
   like 0006-0011 and must land before the deploy that reads them.
+- **"Send password reset" says what happened (Jim 11/25, picture of the Users page: "these dont
+  seem to work").** It worked and showed nothing: he pressed it fifteen times in six minutes for
+  one person and fifteen emails were delivered. The action now comes back to
+  `/admin/users?reset=<id>&outcome=sent|wait|failed` and the row prints one line
+  (`data-testid=reset-notice`, wording in `lib/passwordResetNotice.ts`); a second press for the
+  same person inside `RESEND_WAIT_SECONDS` sends nothing and says so; the button reads "Sending…"
+  while the email goes out. The link still lasts one hour (`PASSWORD_RESET_MINUTES`). A button
+  that sends something must say it did. Checked locally by posting the form itself with a
+  stand-in mail server (`RESEND_BASE_URL`), no browser: a local `next dev` plus a browser run has
+  twice taken the VM's memory and killed the relay Chrome (11/25, 11/26).
 - Not built: lead texts, the AI ringing the next person in the rotation and passing the lead to
   whoever answers (waits on what "they get skipped" means).
