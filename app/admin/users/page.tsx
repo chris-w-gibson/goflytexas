@@ -3,16 +3,18 @@ import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
 import { getSessionFromCookies } from '@/lib/auth';
 import { InviteForm } from './InviteForm';
+import { ResetButton } from './ResetButton';
 import { saveUserCellAction, sendPasswordResetAction, toggleUserDisabledAction } from './actions';
 import { formatPhoneDisplay } from '@/lib/voice/phone';
 import { centralDay } from '@/lib/centralTime';
+import { parseOutcome, resetNotice } from '@/lib/passwordResetNotice';
 
 export const dynamic = 'force-dynamic';
 
 export default async function UsersPage({
   searchParams,
 }: {
-  searchParams: { cell?: string; why?: string };
+  searchParams: { cell?: string; why?: string; reset?: string; outcome?: string };
 }) {
   const session = await getSessionFromCookies();
   const allUsers = await db.select().from(users).orderBy(asc(users.createdAt));
@@ -43,6 +45,8 @@ export default async function UsersPage({
       <div className="bg-white border border-slate-200 rounded-xl divide-y divide-slate-100">
         {allUsers.map((u) => {
           const isSelf = u.id === session.uid;
+          const outcome = searchParams.reset === u.id ? parseOutcome(searchParams.outcome) : null;
+          const notice = outcome ? resetNotice(outcome, u.email) : null;
           return (
             <div key={u.id} className="p-4 flex flex-wrap items-center gap-3">
               <div className="flex-1 min-w-[220px]">
@@ -92,12 +96,7 @@ export default async function UsersPage({
                 {!u.disabled && (
                   <form action={sendPasswordResetAction}>
                     <input type="hidden" name="id" value={u.id} />
-                    <button
-                      type="submit"
-                      className="text-xs border border-slate-300 rounded-lg px-2 py-1 hover:bg-slate-50"
-                    >
-                      Send password reset
-                    </button>
+                    <ResetButton />
                   </form>
                 )}
                 {!isSelf && (
@@ -117,6 +116,21 @@ export default async function UsersPage({
                   </form>
                 )}
               </div>
+              {notice && (
+                <p
+                  role="status"
+                  data-testid="reset-notice"
+                  className={`basis-full text-xs ${
+                    notice.tone === 'ok'
+                      ? 'text-emerald-700'
+                      : notice.tone === 'hold'
+                        ? 'text-amber-700'
+                        : 'text-red-600'
+                  }`}
+                >
+                  {notice.text}
+                </p>
+              )}
             </div>
           );
         })}

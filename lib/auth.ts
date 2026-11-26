@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { and, eq, gt, isNull } from 'drizzle-orm';
 import { db } from './db';
 import { passwordResetTokens, users, type User } from './db/schema';
+import { PASSWORD_RESET_MINUTES } from './passwordResetNotice';
 
 const SESSION_COOKIE = 'gft_session';
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
@@ -122,7 +123,7 @@ export async function createPasswordResetToken(userId: string): Promise<string> 
   await db.insert(passwordResetTokens).values({
     userId,
     tokenHash,
-    expiresAt: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+    expiresAt: new Date(Date.now() + 1000 * 60 * PASSWORD_RESET_MINUTES),
   });
   return raw;
 }
