@@ -10,9 +10,16 @@ import {
   type DayOff,
   type RotationPerson,
 } from '@/lib/rotation';
-import { loadRotation, recentHandOuts, rotationDay } from '@/lib/rotationStore';
+import { loadRotation, recentHandOuts, ringCandidates, rotationDay } from '@/lib/rotationStore';
+import {
+  chooseRingPlan,
+  ringThroughMode,
+  ringThroughOpen,
+  ringThroughPageWords,
+  ringThroughTimeoutSec,
+} from '@/lib/voice/ringThrough';
 import { addDays, dayLabel } from '@/lib/voice/onCall';
-import { routingMode } from '@/lib/voice/twilio';
+import { reservedNumbers, routingMode } from '@/lib/voice/twilio';
 import {
   addDayOffAction,
   addToRotationAction,
@@ -195,8 +202,17 @@ function PersonRow({
 
 export default async function OnCallPage() {
   const session = await getSessionFromCookies();
-  const today = rotationDay(new Date());
-  const [rotation, handOuts] = await Promise.all([loadRotation(today), recentHandOuts()]);
+  const now = new Date();
+  const today = rotationDay(now);
+  const [rotation, handOuts, candidates] = await Promise.all([loadRotation(today), recentHandOuts(), ringCandidates(now)]);
+  const ringMode = ringThroughMode();
+  const ringWords = ringThroughPageWords({
+    mode: ringMode,
+    open: ringThroughOpen(ringMode, now),
+    plan: chooseRingPlan(candidates, { reserved: reservedNumbers(), caller: null }),
+    noCell: candidates.filter((c) => !c.phone).map((c) => c.name),
+    seconds: ringThroughTimeoutSec(),
+  });
   const people = inOrder(rotation.people);
   const working = people.filter((p) => !isOff(p.id, today, rotation.daysOff));
   const upNext = comingUp(people, rotation.pointer, today, rotation.daysOff, Math.min(3, working.length));
@@ -229,6 +245,11 @@ export default async function OnCallPage() {
           )}
         </p>
         <FlowStrip next={next} />
+        <div className="text-sm text-slate-600 space-y-1 border-t border-slate-100 pt-3" data-testid="ring-through-status">
+          {ringWords.map((line) => (
+            <p key={line}>{line}</p>
+          ))}
+        </div>
       </section>
 
       {!canEdit && (

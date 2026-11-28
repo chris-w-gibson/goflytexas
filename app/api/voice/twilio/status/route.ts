@@ -1,5 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { transitionTwilioCall, upsertTwilioCall } from '@/lib/calls';
+import { ringDeps } from '@/lib/voice/ringThroughDeps';
+import { onCallerGone } from '@/lib/voice/ringThroughFlow';
 import { empty, readTwilioRequest } from '@/lib/voice/twilioRequest';
 
 /** Number-level status callback (terminal states). Coalesces end time/duration. */
@@ -26,5 +28,7 @@ export async function POST(req: NextRequest) {
     answeredBy: 'none',
     endedReason: `ended-while-ringing:${p.CallStatus}`,
   }).catch(() => undefined);
+  // The caller left while a team member's cell was ringing for them: stop that ring.
+  await onCallerGone(ringDeps(), callSid).catch((err) => console.error('twilio status: ring-through stop failed', err));
   return empty(204);
 }

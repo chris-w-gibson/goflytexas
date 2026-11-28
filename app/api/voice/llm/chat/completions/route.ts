@@ -3,10 +3,27 @@ import Anthropic from '@anthropic-ai/sdk';
 import { timingSafeEqual } from 'node:crypto';
 import { buildKnowledgeBlock } from '@/lib/botKnowledge';
 import { upsertCallStarted } from '@/lib/calls';
+import { ringCandidates } from '@/lib/rotationStore';
 import { completionJson, SSE_DONE, sseChunk } from '@/lib/voice/openaiSse';
 import { formatSpoken, toE164 } from '@/lib/voice/phone';
+import {
+  REACHING_LINE,
+  REACH_TEAM_TOOL,
+  chooseRingPlan,
+  ringThroughMode,
+  ringThroughNote,
+  ringThroughOpen,
+  spokenName,
+  trustedControlUrl,
+  type RingNoteView,
+  type RingPerson,
+} from '@/lib/voice/ringThrough';
+import { ringDeps } from '@/lib/voice/ringThroughDeps';
+import { startRingThrough } from '@/lib/voice/ringThroughFlow';
+import { linkAssistantCall, liveAiCall, ringStore } from '@/lib/voice/ringThroughStore';
 import { openAiChatRequestSchema } from '@/lib/voice/schemas';
 import { toAnthropicMessages } from '@/lib/voice/transcript';
+import { reservedNumbers } from '@/lib/voice/twilio';
 import {
   VOICE_CAP_MESSAGE,
   VOICE_ERROR_MESSAGE,
@@ -82,6 +99,35 @@ function getClient(): Anthropic {
   if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY is not set');
   client ??= new Anthropic();
   return client;
+}
+
+/**
+ * Ringing a person through (off unless VOICE_RING_THROUGH is set): what this
+ * turn may do about it. Null = the feature is off and the request is built
+ * exactly as before. The live call is found from the caller's number.
+ */
+type RingTurn = { parentSid: string | null; view: RingNoteView; plan: RingPerson[] };
+
+async function ringTurn(callerE164: string | null, now: Date): Promise<RingTurn | null> {
+  const mode = ringThroughMode();
+  if (mode === 'off') return null;
+  const unavailable: RingTurn = { parentSid: null, view: { kind: 'unavailable' }, plan: [] };
+  if (!callerE164) return unavailable;
+  try {
+    const live = await liveAiCall(callerE164, now);
+    if (!live) return unavailable;
+    if (live.state) {
+      const tried = live.state.state === 'ringing' || live.state.state === 'missed';
+      return { parentSid: live.parentSid, view: tried ? { kind: 'state', state: live.state } : { kind: 'unavailable' }, plan: [] };
+    }
+    const plan = ringThroughOpen(mode, now)
+      ? chooseRingPlan(await ringCandidates(now), { reserved: reservedNumbers(), caller: callerE164 })
+      : [];
+    return { parentSid: live.parentSid, view: { kind: plan.length > 0 ? 'available' : 'unavailable' }, plan };
+  } catch (err) {
+    console.error('voice llm: ring-through lookup failed', err);
+    return unavailable;
+  }
 }
 
 const SSE_HEADERS = {
@@ -177,8 +223,34 @@ export async function POST(req: NextRequest) {
   // stays byte-identical across turns and calls.
   const notes = [callContextNote({ callerSpoken: formatSpoken(callerE164), turn, maxTurns })];
   if (turn >= maxTurns) notes.push(wrapUpInstruction('turns'));
+  const ring = await ringTurn(callerE164, new Date());
+  if (ring) notes.push(ringThroughNote(ring.view));
   const last = history[history.length - 1];
   last.content = `${notes.join(' ')}\n${last.content}`;
+
+  // The assistant used reach_team: start ringing, once, without holding up its answer.
+  let reachHandled = false;
+  const onReach = (input: unknown) => {
+    if (reachHandled || !ring?.parentSid || ring.view.kind === 'state') return;
+    reachHandled = true;
+    const parentSid = ring.parentSid;
+    const monitor = (loose.call as { monitor?: { controlUrl?: unknown } } | undefined)?.monitor;
+    void (async () => {
+      if (callId !== 'unknown') await linkAssistantCall(callId, parentSid).catch(() => undefined);
+      const result = await startRingThrough(ringDeps(), {
+        parentSid,
+        plan: ring.plan,
+        callerName: spokenName((input as { caller_name?: unknown } | null)?.caller_name),
+        controlUrl: trustedControlUrl(monitor?.controlUrl),
+      });
+      console.log('voice llm ring-through', callId, result, ring.plan.length);
+    })().catch((err) => console.error('voice llm: ring-through start failed', err));
+  };
+  // This turn's note told the assistant to say nobody could be reached.
+  const tellingNobody =
+    ring?.parentSid && ring.view.kind === 'state' && ring.view.state.state === 'missed' && !ring.view.state.toldCaller
+      ? ring.parentSid
+      : null;
 
   let stream: ReturnType<Anthropic['messages']['stream']>;
   try {
@@ -188,6 +260,8 @@ export async function POST(req: NextRequest) {
       max_tokens: MAX_TOKENS,
       system: voiceSystemBlocks(knowledge),
       messages: history,
+      // Offered on every turn while the feature is on, so the cached prefix is the same turn to turn.
+      ...(ring ? { tools: [REACH_TEAM_TOOL] } : {}),
     });
   } catch (err) {
     console.error('voice llm: failed to start stream', err);
@@ -197,6 +271,7 @@ export async function POST(req: NextRequest) {
   stream.on('finalMessage', (m: Anthropic.Message) => {
     // cache_read_input_tokens > 0 on the 2nd turn proves the prefix cache works.
     console.log('voice llm usage', callId, turn, JSON.stringify(m.usage));
+    if (tellingNobody) void ringStore.markTold(tellingNobody).catch(() => undefined);
   });
 
   if (!streaming) {
@@ -206,7 +281,11 @@ export async function POST(req: NextRequest) {
         .map((b: Anthropic.ContentBlock) => (b.type === 'text' ? b.text : ''))
         .join('')
         .trim();
-      return NextResponse.json(completionJson(id, MODEL_NAME, text || VOICE_ERROR_MESSAGE));
+      const reach = final.content.find(
+        (b: Anthropic.ContentBlock) => b.type === 'tool_use' && b.name === REACH_TEAM_TOOL.name,
+      );
+      if (reach && reach.type === 'tool_use') onReach(reach.input);
+      return NextResponse.json(completionJson(id, MODEL_NAME, text || (reach ? REACHING_LINE : VOICE_ERROR_MESSAGE)));
     } catch (err) {
       console.error('voice llm: completion failed', err);
       return NextResponse.json(completionJson(id, MODEL_NAME, VOICE_ERROR_MESSAGE));
@@ -237,6 +316,12 @@ export async function POST(req: NextRequest) {
         }
       };
       let firstDelta = true;
+      stream.on('contentBlock', (block: Anthropic.ContentBlock) => {
+        if (block.type !== 'tool_use' || block.name !== REACH_TEAM_TOOL.name) return;
+        // The assistant started the ring without a word: say the line for it.
+        if (firstDelta) safeEnqueue(sseChunk(id, MODEL_NAME, REACHING_LINE, null));
+        onReach(block.input);
+      });
       stream.on('text', (delta: string) => {
         if (firstDelta) {
           firstDelta = false;

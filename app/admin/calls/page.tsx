@@ -3,6 +3,7 @@ import { listCalls, listChildrenByParent } from '@/lib/calls';
 import type { Call } from '@/lib/db/schema';
 import { formatCallDuration } from '@/lib/followup';
 import { formatPhoneDisplay } from '@/lib/voice/phone';
+import { ringThroughWords } from '@/lib/voice/ringThrough';
 import { recordingLink } from '@/lib/voice/twilio';
 import { reprocessCallAction } from './actions';
 
@@ -128,6 +129,11 @@ export default async function CallsPage({
                   <span className="text-sm text-slate-600 truncate max-w-xl basis-full sm:basis-auto">
                     {summaryLine(c)}
                   </span>
+                  {c.ringThrough ? (
+                    <span className="text-xs text-slate-600 basis-full" data-testid="ring-through">
+                      {ringThroughWords(c.ringThrough)}
+                    </span>
+                  ) : null}
                 </summary>
                 <div className="border-t border-slate-100 p-4 space-y-3">
                   {c.summary ? (

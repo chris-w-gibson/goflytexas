@@ -3,10 +3,12 @@ import {
   comingUp,
   dayOffRange,
   dayOffWords,
+  everyoneComingUp,
   isOff,
   leadRecipients,
   moved,
   nextUp,
+  nextUpSkipping,
   offThrough,
   orderForNewcomer,
   pointerAfter,
@@ -175,5 +177,38 @@ describe('leadRecipients', () => {
 
   it('sends to everyone on the shared list when nobody took the lead', () => {
     expect(leadRecipients(null, [inbox, 'second@example.com'])).toEqual({ to: [inbox, 'second@example.com'] });
+  });
+});
+
+// Jim 2026-11-27: "it skips them if they didn't answer the phone and it just
+// goes to the next person. So that means the third person is getting a lead now."
+describe('a ring nobody took', () => {
+  it('lists every working person once, from whoever is next', () => {
+    expect(everyoneComingUp(team, pointerAfter(mark), today, []).map((p) => p.id)).toEqual(['jim', 'kristen', 'mark']);
+    expect(everyoneComingUp(team, pointerAfter(mark), today, [off('jim', today, today)]).map((p) => p.id)).toEqual([
+      'kristen',
+      'mark',
+    ]);
+    expect(everyoneComingUp([], nobodyYet, today, [])).toEqual([]);
+  });
+
+  it('gives the lead to the third person when the first two were rung and did not pick up', () => {
+    const got = nextUpSkipping(team, nobodyYet, today, [], new Set(['mark', 'jim']));
+    expect(got?.id).toBe('kristen');
+    // The list moves on from her: the two who missed the ring get no make-up turn.
+    expect(nextUp(team, pointerAfter(got!), today, [])?.id).toBe('mark');
+  });
+
+  it('skips only the one who was rung when one person was tried', () => {
+    expect(nextUpSkipping(team, pointerAfter(kristen), today, [], new Set(['mark']))?.id).toBe('jim');
+  });
+
+  it('still gives the lead to someone when everyone was rung', () => {
+    expect(nextUpSkipping([mark], nobodyYet, today, [], new Set(['mark']))?.id).toBe('mark');
+    expect(nextUpSkipping([mark, jim], nobodyYet, today, [], new Set(['mark', 'jim']))?.id).toBe('mark');
+  });
+
+  it('gives it to nobody only when nobody is working', () => {
+    expect(nextUpSkipping([mark], nobodyYet, today, [off('mark', today, today)], new Set())).toBeNull();
   });
 });

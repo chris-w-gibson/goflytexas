@@ -284,5 +284,58 @@ did with it".
   that sends something must say it did. Checked locally by posting the form itself with a
   stand-in mail server (`RESEND_BASE_URL`), no browser: a local `next dev` plus a browser run has
   twice taken the VM's memory and killed the relay Chrome (11/25, 11/26).
-- Not built: lead texts, the AI ringing the next person in the rotation and passing the lead to
-  whoever answers (waits on what "they get skipped" means).
+- Not built: lead texts (blocked on the texting registration).
+
+## Ringing a person through (Jim's 11/27 call, GFT-1127-01/02; requirements: `docs/meetings/requirements/call-jim_2026-11-27.md`)
+
+Jim: the AI answers every call; when the caller asks for a person, ring "whoever's next" on the
+rotation while the AI keeps talking; about 12 seconds each; "two's enough"; the person hears who
+is calling and presses 1; "it skips them if they didn't answer the phone".
+
+- **Off unless `VOICE_RING_THROUGH` is set** (`off` | `business_hours` | `always`; ring time
+  `VOICE_RING_THROUGH_TIMEOUT`, default 12 s). With it off the assistant's request is built exactly
+  as before and nobody's cell rings. It has unit tests, a real-Postgres run of its SQL and a
+  model check; **it has never taken a live call.** Switch it on only for a test call with a real
+  phone, and only after cells are saved on Users (nobody had one on 11/27) and a second person is
+  in the rotation.
+- **How the call moves.** The caller's Twilio call is bridged to the assistant's number. On each
+  turn the assistant's request (`/api/voice/llm/chat/completions`) carries the caller's number,
+  which finds the live Twilio row (`liveAiCall`). The assistant is always given the `reach_team`
+  tool while the feature is on (so the cached prompt prefix does not change turn to turn) and a
+  per-turn note says whether it may use it (`ringThroughNote`). When it does, we place our own
+  call from `VOICE_TWILIO_NUMBER` to the next person's cell (`twilioRest.createCall`); the
+  assistant's call carries on meanwhile. The person hears `ringThroughWhisperLine` and presses 1
+  (`/api/voice/twilio/ring-through/whisper` → `/accept`); the caller's call is then redirected by
+  REST into a conference room named after it and the person's leg joins the same room. No 1 (no
+  answer, busy, voicemail, hang-up) ends that leg and its status callback
+  (`/ring-through/leg-status`) rings the second person, then stops.
+- **State is `calls.ring_through` on the caller's Twilio row** (migration `0014`): `ringing`,
+  `connected`, `missed`, `ended` (the caller left while it rang). Every change is a conditional
+  update (`ringThroughStore.ts`), so a press and a time-out arriving together cannot both win.
+  Rules and wording are pure in `lib/voice/ringThrough.ts`; the order of events is
+  `lib/voice/ringThroughFlow.ts`, tested with stand-ins for the database and the phone network.
+- **Who is rung:** the next two people coming up in the rotation who are working today and have a
+  cell on their user (`ringCandidates` + `chooseRingPlan`). No cell = cannot be rung, and is not
+  counted as having missed anything.
+- **The lead (`processStoredCall`).** Taken: the lead is that person's (`giveLeadTo`) and the list
+  moves on from them, so whoever was rung first is skipped. Nobody took it: everyone rung is
+  skipped and the lead goes to the next person after them (`nextUpSkipping`); when that leaves
+  nobody, the usual next person gets it. The caller left while it rang: handed out as usual.
+- **Two emails when a person takes it:** first the assistant's part ("Call put through", to that
+  person), then, when the recording is transcribed, the "Answered by" notes, which for a
+  ring-through go to that person and not the shared inbox.
+- **Telling the caller nobody picked up:** if the platform sent a control address
+  (`call.monitor.controlUrl`, accepted only on `*.vapi.ai` over https) the assistant is made to
+  say it at once (`sayOnCall`); otherwise the next turn's note has the assistant say it.
+- **The persona's standing "no transfer" sentence now defers to the call details.** With the
+  literal old sentence the model offered a callback even when it could ring (1 of 7 made-up
+  calls). Check wording changes with
+  `railway run -e production -s goflytexas -- npx tsx scripts/voice-ring-through-check.ts`
+  (asks the voice model itself; nothing is rung).
+- **Assumed from Twilio's behaviour, to be proven on the first test call:** redirecting the
+  caller's call ends its leg to the assistant; the `<Dial record>` around a `<Conference>`
+  produces the two-channel recording the existing recording route files.
+- Open with Jim: business hours only or any hour (built as a setting, shipped off); whether the
+  person should see the caller's number instead of ours.
+- Migration `drizzle/0014_ring_through.sql` is hand-applied like 0006-0013 and must land before
+  the deploy that reads the new column: every `select()` on `calls` names it.

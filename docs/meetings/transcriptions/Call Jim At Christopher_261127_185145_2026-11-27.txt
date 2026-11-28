@@ -1,0 +1,425 @@
+# Transcription: Call Jim At Christopher_261127_185145.m4a
+# Date: 2026-11-27
+# Model: faster-whisper-small.en (20-min pieces)
+# Duration: 27.3 min
+
+[00:00:00] All right, we're here in present minded
+[00:00:10] There we go, you hear me
+[00:00:16] Perfect. All right back to business. Oh, yeah
+[00:00:22] So the thing I thought of not long ago is on the media thing. Yeah
+[00:00:39] Just having an option to basically indicate. Hey, this is something we want to post
+[00:00:44] Probably like that cut off lane
+[00:00:47] Like gate lane
+[00:00:49] Yeah, just letting you know. This is like and this is a fire. We want to send out
+[00:00:53] You know what I mean? Mm-hmm like the trainings and shit like that's like ready content
+[00:00:58] exactly
+[00:01:01] Yeah
+[00:01:05] Just like ready content yeah, that's that's it. Mm-hmm. Oh, you just put it in there and let it know
+[00:01:10] Hey, this is spread about right I guess
+[00:01:16] Sounds like that. No, I think you're ready to go for someone to sign off at that point. I guess the ad then yeah
+[00:01:26] Yeah, admin can sign off on it. I guess
+[00:01:32] Let someone else post it in other than admin, you know, so that'd be pretty good. I
+[00:01:43] Got to open up. Give me just a second here to find
+[00:01:47] myself one
+[00:01:50] Two and
+[00:01:52] But essentially I received pretty much had it all implemented already. I think
+[00:01:57] There was something on the calls. So let's let's talk about that when I come to know that one. I'll talk in my head. Okay, I
+[00:02:05] Actually don't know which way to go with this
+[00:02:08] So AI is gonna answer every call and if someone said if it says
+[00:02:17] Hey, I want to speak can I speak to a human?
+[00:02:20] Can I speak to someone?
+[00:02:22] I'm wondering if we can set this up somehow to call that person who's on the lead whose order who's turn it is
+[00:02:30] In other words having their phone number in here to call them and
+[00:02:34] Have a I keep talking to them. Okay. Yeah, I'll try to reach someone in the meantime while we're waiting
+[00:02:40] What can I help you to kind of answer any questions, you know kind of continue the dialogue, right?
+[00:02:47] And if someone thinks it's fun to just cuts that off right in the middle. Yeah, I mean
+[00:02:54] Do we have any capabilities of this
+[00:02:57] Well, it's like where I just kind of chooses who who gets what well, yeah, it would be the whoever's next on the lead list
+[00:03:06] It would call them
+[00:03:08] But do we I mean, I don't know what we're gonna use or what kind of capabilities we have, you know what I mean?
+[00:03:13] like
+[00:03:14] we can make it based off of decisions around like
+[00:03:20] Is there like a methodology that we want to do
+[00:03:24] I like based off of leads. I like we can have the AI like go off and like
+[00:03:30] Target whoever we want to come next is what I'm saying
+[00:03:33] Well, we want to just do it on the leads. I mean, sorry on the
+[00:03:39] Fuck where is it on call? Whoever's the next one on that? Yep. We wanted to call them
+[00:03:46] And so what I was thinking and if that's possible, then maybe it's a little more complex
+[00:03:51] But it calls that person next right gives them
+[00:03:56] I don't know 12 seconds whatever whatever is a reasonable amount of time to answer the phone
+[00:04:02] Uh-huh, if they don't answer it immediately calls the next person on the list
+[00:04:07] And then it's like hey, I'm sorry, I'm not maybe we're reaching anybody right now, but AI continues talking to them
+[00:04:14] In other words like okay, I call him and it gives me a couple answers couple things. I'm like, okay, cool
+[00:04:19] I like this. Hey, can I speak to a person to get this kid or can I talk to someone? Yeah, I'm like bye time
+[00:04:28] So it says yeah, I'll reach out to them right now
+[00:04:34] And we can continue further discussion and tell someone answers. Mm-hmm. What else can I answer for you?
+[00:04:41] You know me? Yeah, so AI continues talking to them why it's ringing
+[00:04:46] And if they answer
+[00:04:48] It puts them right into the call and maybe AI tells the answer the person that answers maybe not AI whatever
+[00:04:55] Tells the person that answers. Hey, I have Susie
+[00:05:00] Johnson on the phone and
+[00:05:02] She's asked about well, you know, maybe this is hey, I have a go fly Texas call on the phone for you
+[00:05:07] Her name Susie Johnson. I'm connecting you now
+[00:05:11] And it connects her
+[00:05:13] Or she can push a to hey
+[00:05:17] So pass on this push a button push down or zero or hang up
+[00:05:23] It'll go the next person
+[00:05:26] You know, I mean like if you know if you I shouldn't have fucking taken this call. Fuck. I can't do that right now
+[00:05:32] I'm driving down the road. You know what I mean? Uh-huh
+[00:05:37] Or something like that and then you can they could just hang up
+[00:05:41] Not take it, you know push push one to be connected or something like that
+[00:05:45] Right if you don't push one you or hang up or do anything else that's gonna fucking disconnect you
+[00:05:52] and then it would just go to the second person in order of the
+[00:05:57] Lead
+[00:05:58] Batterless, you know what I mean? Mm-hmm. The only thing with that it kind of complicates it a little bit because like
+[00:06:06] Okay. Well you had the opportunity to take that lead you passed it up or you didn't answer the phone the second
+[00:06:12] The next person in line got it
+[00:06:15] But I'm kind of thinking okay, like you weren't available you didn't answer the phone that's yeah, you should still get the next lead coming in or call
+[00:06:24] And then once you're completed it goes back to the normal rotation, but it skips that person who did get the call
+[00:06:30] But I don't want to go down the list like try one try two try three try four just like that twos enough
+[00:06:38] That's it. You know what I mean? Yeah, I'm thinking how that cue system would work
+[00:06:45] Yeah
+[00:06:46] And then it's got to know is that second person did take the call the first person still gets
+[00:06:51] The next lead and then it goes to the third person
+[00:06:55] In order that could be at the top of the list is the bottom of the list anywhere. Yeah
+[00:07:02] So if that's something that's possible that'd be pretty pretty freaking cool
+[00:07:09] Think about what I said here in the notes my notes
+[00:07:15] So
+[00:07:17] No, that's the very first thing
+[00:07:22] Okay. Yeah, that's the very first thing on my list
+[00:07:25] So how about this and I don't I don't this isn't a big thing for me
+[00:07:29] But Mark was like, yeah, dude, I see I I stay up on my text all time. Like I even text
+[00:07:34] I know I got a text. I'm like fucking email works the same way dude
+[00:07:38] But he's like is there any possible way like I could get a text when there's a GF lead G of T lead
+[00:07:46] And I'm like, what do I mean when he see got an email, you know, you got an email when you see you got a text
+[00:07:53] You know, you got a text like now I'm talking
+[00:07:56] But he doesn't work his email that way, you know, he works his text that way, right?
+[00:08:01] He's obviously stays up on those. So basically what he's asking is hey, if I get a if we get a lead
+[00:08:08] Can we can we just get a text a simple text just saying hey in your emails a GFT lead?
+[00:08:15] Not not not the actual lead information and all the mechanics behind it. You know what I mean? Yeah
+[00:08:22] Just a simple text saying hey you got a lead. No, I can tell you what a
+[00:08:28] Text service we get out of there
+[00:08:31] For that kind of like notification
+[00:08:34] Yeah, okay
+[00:08:38] So and there's also flexibility behind this right like if hey we can do it
+[00:08:43] We're it goes from one person goes to the next person
+[00:08:46] But it's gonna scramble everything up for the person that didn't answer the phone to go back to them and then skip the next person
+[00:08:53] You know what I mean? Like yeah, okay. Let's simplify it it skips them if they didn't answer the phone and
+[00:08:59] It just goes the next person. So that means the third person is getting a lead now
+[00:09:03] So that's a more simplistic way. Yeah, you got this suggestion tab slash
+[00:09:09] bug. Oh
+[00:09:12] Yes, Jesus. Yes
+[00:09:14] Okay, so one of the things the bot was doing where we called it
+[00:09:18] The initial time it asked you about the telephone number
+[00:09:22] It read it or the weird ass way and I noticed that before so it's like, okay
+[00:09:27] Jim Malone and the best number to reach out is
+[00:09:31] 21
+[00:09:33] 462 849
+[00:09:35] 9040 and I'm like what the fuck the way you just said that I mean sure that's my number
+[00:09:42] No, you know what I mean and then it said it again that way and then at the very end it said, okay
+[00:09:47] 2 1 4 4 1 2 9 0 4 up
+[00:09:50] So basically the best thing to do is to tell it's a stripped out the normal way people say a telephone number
+[00:09:58] Normally you say the area code and then you say the first three and then you say the last four. Yeah
+[00:10:05] It did like the first four and then the next
+[00:10:10] Three and then the last three and I'm like what they or whatever it was, you know what I mean?
+[00:10:16] Weird
+[00:10:18] But I think it I don't know if you should just something or whatever but it seemed to lighten up and be a little
+[00:10:24] friendly or
+[00:10:28] No, I haven't checked the service in a second with actual voices because we would generally have it like listen to about
+[00:10:34] four or five or six calls and
+[00:10:36] Then from between you and I and then like retrain it based off like feedback
+[00:10:41] So I kind of want to sit down and like go over it a couple more times. Yeah, I was doing
+[00:10:45] No
+[00:10:47] Data that's going into it. That's pretty solid
+[00:10:50] See how it's handling
+[00:10:52] Yeah, and and this is this little piece here
+[00:10:56] It's more of like a little bit of a recap if in case I didn't discuss some of this
+[00:11:01] But I'd really like that bought the about knowledge part
+[00:11:06] To also be pulling in from the scripts of these calls and shit like that, you know what I mean?
+[00:11:11] I
+[00:11:12] Like to be learning from that and learning from our answers and yeah
+[00:11:16] I have like an evaluation system in place to for this improvement because it's got a I pretty much have to teach it how to learn
+[00:11:25] So yeah, it's something that that'll be picking up over time. That's why it's just gonna get smoother and better
+[00:11:31] Yeah, I mean, I don't know how simple or difficult that is
+[00:11:34] But it just seems to read all these scripts and needs to read our answers and needs to understand
+[00:11:38] Okay, that's the question. This is the answer. It has that knowledge now
+[00:11:43] You don't I mean? Yeah, okay
+[00:11:45] now
+[00:11:47] Take it a little bit further right? Like okay, take that knowledge that you have and wonder your answer and
+[00:11:53] As the same bot like it needs to be all the same brain, you know what I mean?
+[00:11:57] Remember how we like feed the brain feed the brain
+[00:12:01] Just like if someone's on that little bot for texting on the app, I mean on that website, right? Uh-huh
+[00:12:08] Like it needs to know. Okay. Hey, when they ask this question and I respond this way when they're
+[00:12:14] From those transcripts from the calls. This seems to be a really good angle answering this plus it's the answer
+[00:12:21] Because it's always turned out pretty good when our people answer it like this, you know, what am I?
+[00:12:27] That's a little deep but
+[00:12:29] It's you know, I think it'd be cool. They need to know it's wins its losses the good and the bad
+[00:12:34] Those are the likes the four categories. Yeah
+[00:12:37] Yeah, you know just like sometimes
+[00:12:39] You know one person can answer something this way and it doesn't sound so great another person can they get the same answer? It's just
+[00:12:46] Worded a little different and it's more of a like better response to yeah, man. It gets received better
+[00:12:57] There was something else we talked about I can't fucking remember what it was but
+[00:13:03] Latest leads handed 145
+[00:13:10] So
+[00:13:13] The website
+[00:13:17] And that was a phone so how did phone
+[00:13:24] Blue wally
+[00:13:26] So how would it have done the phone one? How would it have known the phone one?
+[00:13:34] November the lead there November 25th at 5 39 p.m
+[00:13:39] We'd only had the phone set up through this yet
+[00:13:47] Green graph screen without what you got. You see it. I'm just looking at the bottom of there
+[00:13:53] I guess I'm on the dashboard now on call
+[00:13:57] But I can should be a good dashboard to see the most recent to yeah on call
+[00:14:03] Well, then say where it came from on there
+[00:14:09] It probably needs to say where it came from. Oh, yeah, that's part of it
+[00:14:13] So the dashboard and the leads will see the leads
+[00:14:17] That went to me fuck
+[00:14:24] Now that went to Jim Lewis, so it says it came in from phone
+[00:14:40] So this thing's already thinking it's already working phones
+[00:14:44] No, I didn't double check if this was a
+[00:14:47] A dummy test when I was building this out
+[00:14:51] Okay, I'm thinking that this may be a test one. No don't validate that first what for you
+[00:15:04] No, this was one we called
+[00:15:06] This is the one mark and I called but it says it sent it to Jim Lewis
+[00:15:13] and it said
+[00:15:15] It was a phone call
+[00:15:18] But it knows what the fuck we said on the phone. Oh because we called the dummy one
+[00:15:24] Yeah, these dummy ones are getting registered in here. I got it
+[00:15:28] Yeah, this was me and mark calling us. That's what this was. You're harassing my slave
+[00:15:33] My baby your slaves kind of harassing me not telling me hey, this is fucking fake
+[00:15:39] Yeah, well, I need to have a setup where like we have like a test like ideally we have like a test phone over week in
+[00:15:45] catalog because right now it's gonna get that a call onto that phone number and I have no idea like
+[00:15:50] Who's a slight because that phone number just means it's live for the AI
+[00:15:54] That's all of its only impression. So it would be good. I have like a fake or like an internal phone number that we use just to
+[00:15:59] chat with it
+[00:16:01] What happened if I go to the leads and go to all
+[00:16:07] There's the last one went to me and then all the rest are nobody. Oh, is that cuz it's new and it didn't have it recorded
+[00:16:27] You know what I mean working Oh
+[00:16:30] What are we gonna you can take my parents wherever you want, you know, I don't need my parents I'm getting a love and stuff
+[00:16:37] On the phone
+[00:16:39] minute
+[00:16:42] Oh, I know I've got
+[00:16:46] Everyone else can do stuff. I'm working. Everybody else is free. No one else is working
+[00:16:50] No, I was just doing anything y'all are doing nothing with your lives. It's black Friday
+[00:16:54] Okay, so back with you, um, yeah, so you said you saw a bunch of calls and they hadn't been moved over to anyone else
+[00:17:05] But you know, but I think that's cuz we just added went like where did the league go?
+[00:17:10] Well, I put that on the dashboard not on the dashboard but on the leads
+[00:17:15] Yes
+[00:17:20] This did go somewhere and they were recorded before but now it's not really I think it kind of
+[00:17:27] Wiped out all the history there
+[00:17:31] I'm thinking I may need to re migrate some data. So I want to just take this and I'll take this all
+[00:17:42] contacted
+[00:17:44] Yeah, yeah, that's what it is the one to information just got
+[00:17:49] tossed
+[00:17:57] Look at these leads
+[00:17:59] It's the one that I sent you right?
+[00:18:03] Want to nobody went to nobody that one that went to call them
+[00:18:07] Yeah
+[00:18:10] This is I think it's because I just bit built out the
+[00:18:15] Yeah, the queue that we just built and so I could start moving them to somebody
+[00:18:20] But that's supposed to be how it look moving forward who it goes to
+[00:18:25] Got you. Oh what we had before is who responded to it Mingo
+[00:18:36] Okay
+[00:18:41] I don't know anything else to say, but oh
+[00:18:45] You think you're gonna have some preservo game time game time plan energy you and you when you're back
+[00:18:52] Yeah, I mean that'd be pretty fun for Sunday Monday
+[00:18:57] Okay Monday
+[00:19:04] Late Sunday
+[00:19:09] Good Monday
+[00:19:13] Yeah, I'll still be I won't leave until like Tuesday at four in the morning
+[00:19:18] No, I mean are you gonna be back in Dallas? Yeah. Yeah, I'll get back
+[00:19:22] I'm either gonna go down to Austin see those folks
+[00:19:25] Tomorrow and I'll be back up Sunday like around 2
+[00:19:29] Or I'll just be here. But yeah, I know I should be
+[00:19:34] I'll be back for sure for sure Sunday like at 3 4 p.m. And then I'm there until Tuesday
+[00:19:40] Well, you know, you gotta work Monday, but whatever we fun time Monday, no, I can make time
+[00:19:48] Choose if 6 a.m. Oh
+[00:19:51] Yeah, that's her. Yeah, sometimes Monday. We can definitely do something. Yeah, I think Monday Monday will be a fun time
+[00:20:00] Yeah, we can do something for sure.
+[00:20:02] I like it. I like it.
+[00:20:03] That'd be good. Just like, just.
+[00:20:06] Oh, you know what else we could do?
+[00:20:09] Tell me.
+[00:20:09] Let's figure out where the fuck we're going to put this number.
+[00:20:12] If we're not going to leave it there.
+[00:20:13] I mean, I think I probably need to explore like who can host this fucking number.
+[00:20:18] Yeah, we can handle where the number needs to go.
+[00:20:21] Yeah.
+[00:20:22] I think we'll dance around on all three talking points.
+[00:20:25] I think we'll probably spend time on GoFly and Biro and then Presurbo.
+[00:20:29] Yeah. Where can I host a number or cheat?
+[00:20:37] Hell, it might even be a free place, but that might be a big gamble.
+[00:20:41] Who knows what they're doing?
+[00:20:43] They're going to buy.
+[00:20:44] You know, it's kind of weird.
+[00:20:45] Like who fucking hosts the phone number?
+[00:20:47] A hundred. I mean, a dollar ten a month.
+[00:20:51] Google.
+[00:20:53] Well, I mean, GoDaddy's got you at what, for two bucks a month on this number right now?
+[00:20:58] No.
+[00:20:59] No more?
+[00:21:01] No, no, no. GoDaddy?
+[00:21:02] No, it's with Grasshopper.
+[00:21:03] Oh, yeah, Grasshopper.
+[00:21:04] And there's some shit behind it.
+[00:21:07] We'll send your voicemail and a fucking email.
+[00:21:09] Well, thanks.
+[00:21:12] And there's like call forwarding like an orders and shit like that.
+[00:21:16] You know, there's all that crap too, but it's Fox.
+[00:21:18] I don't know. It's 50 bucks a month or something.
+[00:21:21] Oh, boy.
+[00:21:22] There's a bunch of people under 10 bucks.
+[00:21:24] I'm just seeing a list from chat just telling me.
+[00:21:28] It's a whole bunch of shit.
+[00:21:29] This is free.
+[00:21:30] Whatever the fuck that is.
+[00:21:31] They're so tricky.
+[00:21:32] That's getting in a shit band.
+[00:21:38] Well, they sometimes make their shit complicated.
+[00:21:41] Do they?
+[00:21:42] Well, just because everyone knows like that's spam all the time.
+[00:21:45] Because like you go to some of these super cheap stuff, then like you're already kind
+[00:21:48] of like already blacklisted off of a lot of stuff because everyone's like, oh, that's
+[00:21:52] spam numbers.
+[00:21:53] Yeah, but we're not calling out.
+[00:21:56] We're only taking calls in.
+[00:21:57] We're only taking calls true.
+[00:21:58] That's right.
+[00:21:59] This ain't like our environment.
+[00:22:00] It's fucking GoFly.
+[00:22:03] But it just needs to fucking actually work.
+[00:22:05] You know what I mean?
+[00:22:06] There's there's several.
+[00:22:16] Some of them have caveats and shit, you know, but whatever.
+[00:22:23] We'll find some or or there may be a simple dumbed down version five bucks a month with
+[00:22:30] that grasshopper, you know?
+[00:22:32] Yeah.
+[00:22:36] But that's probably something we need to find because it's probably going to do about
+[00:22:40] the same damn thing with the borrows for.
+[00:22:42] No, I know.
+[00:22:44] We're going to have that to be a little more exotic since we're going to try to build almost
+[00:22:50] like salesmen, the genteck salesman.
+[00:22:53] Right.
+[00:22:55] Yeah, this thing will probably grow a little bit on imagining.
+[00:23:01] But I think we can sell this.
+[00:23:02] I think we can market this and sell it.
+[00:23:04] I think we can take this to market.
+[00:23:06] Oh, yeah.
+[00:23:07] Especially once we already get it moving.
+[00:23:09] Oh, my gosh.
+[00:23:15] It'd be really good for the small companies.
+[00:23:17] Again, this is like an add on.
+[00:23:19] We could sell to the contractor's input server.
+[00:23:22] Okay, it's free to use this.
+[00:23:24] You're not paying shit, but them and like the construction or any of the companies
+[00:23:29] using like, I don't know, there's got to be some environment like folks that would
+[00:23:34] love this to work with you guys.
+[00:23:37] I mean, it's going to be just nice to have once it's fleshed out.
+[00:23:40] I mean, big companies are praying for their fucking fault.
+[00:23:48] Maybe.
+[00:23:49] Yeah.
+[00:23:50] But the medium and small companies definitely can use this.
+[00:23:54] Yeah.
+[00:23:55] Like, why are you answering your phone, dude?
+[00:23:58] Let AI fucking answer phones.
+[00:24:00] Let them do that.
+[00:24:01] I love these organizers.
+[00:24:02] Let them take notes.
+[00:24:03] The big thing is take notes, transcribe calls.
+[00:24:06] No one should be writing down notes in scratch paper.
+[00:24:08] I mean, that shit anymore.
+[00:24:10] Mm-hmm.
+[00:24:11] Just be there to get words out of people's brains, and that's it.
+[00:24:18] I wonder what people are paying for that answering service bullshit.
+[00:24:21] I know, because then on the day, I still think humans should be talking,
+[00:24:24] and then AI should be recording.
+[00:24:27] Yeah, that too.
+[00:24:28] That part of it too, for sure.
+[00:24:30] Especially as the owner or manager.
+[00:24:36] Yeah.
+[00:24:37] What about people selling these people?
+[00:24:39] We'd rather have people answering and talking, and they are recording,
+[00:24:44] and then you can just get like scorecards and cheat sheets for the
+[00:24:47] future from AI on helping you close deals.
+[00:24:50] That's how that little relationship goes.
+[00:24:52] Right.
+[00:24:53] So would it, if it, well, if it boards the call on to them,
+[00:24:57] it's already connected in it.
+[00:24:59] Yep.
+[00:25:00] I guess if they click the telephone number on the email,
+[00:25:04] it's not going to have that transcript, is it?
+[00:25:06] Bingo.
+[00:25:07] Or you're going to make it forward it through it?
+[00:25:10] Yeah, I'll support it through it.
+[00:25:12] So they'll call through that number?
+[00:25:14] Yep.
+[00:25:15] Oh, okay.
+[00:25:16] That makes no sense.
+[00:25:17] So they want to know their number,
+[00:25:18] and they're just going to see if GoFly text was calling, right?
+[00:25:21] Yeah, Bingo.
+[00:25:22] Gotcha.
+[00:25:23] And then it'll pull all the transcripts.
+[00:25:25] Okay.
+[00:25:26] Okay.
+[00:25:27] That's good.
+[00:25:28] That's really good.
+[00:25:29] Oh, I like that.
+[00:25:30] Just for just, it'll be great for us when we talk about that.
+[00:25:32] Repeated performance on improving shit.
+[00:25:34] Yeah.
+[00:25:35] Good learning from it and all that too.
+[00:25:37] Yeah.
+[00:25:38] Mm-hmm.
+[00:25:39] Very nice.
+[00:25:40] All right.
+[00:25:41] Well, I ain't got nothing else to do.
+[00:25:43] No, I don't.
+[00:25:44] I just say good luck with however your family's doing.
+[00:25:46] Bless them.
+[00:25:47] Good luck with all that.
+[00:25:48] And then I'm going to keep enduring.
+[00:25:50] I'm enduring this and I'll make it to Monday.
+[00:25:53] Yeah, I got two young teenage boys all in a round on a four wheeler and fucking running
+[00:25:59] through the woods.
+[00:26:00] They're on about six mores each right now.
+[00:26:03] Well, they just cracked out.
+[00:26:04] I've got about.
+[00:26:05] Yeah, they're fucking just all in a half to the yard.
+[00:26:09] Tearing the yard up.
+[00:26:10] Oh, well, fuck it.
+[00:26:12] Yeah, I got about 15 of these little bastards.
+[00:26:15] So I'm like, all right.
+[00:26:16] Well, and everyone looks at me because I'm the entertaining one from out of town.
+[00:26:19] So everyone's like, oh my God, Chris is back.
+[00:26:21] So I'm going to get waterboarded, but we will chat freaking Monday and I'll be
+[00:26:26] rejuvenated.
+[00:26:28] Yeah, they literally are like, Hey, we just saw these deer in the woods.
+[00:26:31] We're going to go chase them on the four wheeler.
+[00:26:33] Catch them.
+[00:26:34] I'm like, Oh my God.
+[00:26:35] Okay.
+[00:26:36] Good luck.
+[00:26:37] Oh, yeah.
+[00:26:38] I mean, to find out.
+[00:26:39] I go.
+[00:26:40] Here's a fucking tree.
+[00:26:41] Just keep your helmets on.
+[00:26:42] Yeah.
+[00:26:43] Just learn.
+[00:26:44] On a tree.
+[00:26:45] Oh,
+[00:26:47] Oh,
+[00:26:48] I'll see you in a bit.
+[00:26:49] I'll get there.
+[00:26:50] There's some moving.
+[00:26:51] All right.
+[00:26:52] All right.
+[00:26:53] Bye.
+[00:26:54] Later.
+[00:26:55] your parents are going to be happy. The plane didn't crash, but you broke the call.
+[00:26:58] The moment.
+[00:27:02] All right, brother. Well, and there.
+[00:27:05] All right. I'll see you in a bit. I'll get there. There's some moving.
+[00:27:08] I forget about. All right.
+[00:27:11] Thanks.
