@@ -27,6 +27,7 @@ import {
 } from './normalize';
 import { formatPhoneDisplay } from './phone';
 import { ringOutcome, type RingOutcome } from './ringThrough';
+import { testCallerFor } from './testCallerStore';
 import { classifyCall, classifyHumanCall } from './transcript';
 import { transcribeRecording, twilioTranscribeOpts } from './transcribe';
 import { recordingLink } from './twilio';
@@ -91,11 +92,21 @@ async function ringOutcomeFor(call: Call): Promise<RingOutcome | null> {
 }
 
 /**
- * Turn a finished platform call (Vapi/Retell) into a lead + owner alert.
- * Idempotent: a retried webhook for a call that already produced a lead
- * returns immediately.
+ * `real`: an admin said a call marked as a test was a real caller after all
+ * (Calls page, "File as a real call"), so the own-phone check is stepped over.
  */
-export async function processCallEnd(n: NormalizedCallEnd, rawPayload: unknown): Promise<Call> {
+export type ProcessOpts = { real?: boolean };
+
+/**
+ * Turn a finished platform call (Vapi/Retell) into a lead + owner alert.
+ * Idempotent: a retried webhook for a call that already produced a lead, or
+ * was already filed as a test, returns immediately.
+ */
+export async function processCallEnd(
+  n: NormalizedCallEnd,
+  rawPayload: unknown,
+  opts?: ProcessOpts,
+): Promise<Call> {
   const call = await upsertCallEnded(n, rawPayload);
 
   if (n.platform !== 'twilio') {
@@ -110,9 +121,10 @@ export async function processCallEnd(n: NormalizedCallEnd, rawPayload: unknown):
   }
 
   if (call.status === 'processed' && call.leadId) return call;
+  if (call.status === 'test' && !opts?.real) return call;
 
   try {
-    return await processStoredCall(call, n);
+    return await processStoredCall(call, n, opts);
   } catch (err) {
     await finalizeCall(call.id, { status: 'failed' }).catch(() => undefined);
     throw err;
@@ -125,7 +137,11 @@ export async function processCallEnd(n: NormalizedCallEnd, rawPayload: unknown):
  * - human: gentler classifier, staff-aware extraction, lead stamped as a human
  *          touch at call end, "Answered by …" alert without the ack button
  */
-export async function processStoredCall(call: Call, n: NormalizedCallEnd): Promise<Call> {
+export async function processStoredCall(
+  call: Call,
+  n: NormalizedCallEnd,
+  opts?: ProcessOpts,
+): Promise<Call> {
   const human = n.answeredBy === 'human';
   const staffName = n.answeredByName ?? 'Staff';
   const mode: ExtractionMode = human ? { kind: 'human', staffName } : { kind: 'ai' };
@@ -133,6 +149,30 @@ export async function processStoredCall(call: Call, n: NormalizedCallEnd): Promi
   const kind = human
     ? classifyHumanCall({ durationSec: n.durationSec, turns: n.transcript })
     : classifyCall({ durationSec: n.durationSec, turns: n.transcript });
+
+  // One of our own phones trying the line (Jim 2026-11-27): the call stays in
+  // Calls with its summary so it can be listened back, and nothing else
+  // happens: no lead, no note on an old lead, no turn used, no email.
+  const tester = opts?.real ? null : await testCallerFor(n.fromNumber);
+  if (tester) {
+    let heard: CallExtraction | null = null;
+    if (kind !== 'no_message') {
+      try {
+        heard =
+          (await countPipelineCallsSince(startOfUtcDay())) > dailyCallLimit()
+            ? fallbackExtraction(n.transcript, n.fromNumber, mode)
+            : await extractCall(getClient(), voiceModel(), n.transcript, n.fromNumber, mode);
+      } catch (err) {
+        console.error('voice pipeline: test call summary failed', err);
+      }
+    }
+    await finalizeCall(call.id, {
+      status: 'test',
+      ...(heard ? { extracted: heard, summary: heard.summary } : {}),
+      ...(human ? { transcriptionStatus: 'done' as const } : {}),
+    });
+    return (await getCallById(call.id)) ?? call;
+  }
 
   let extracted: CallExtraction;
   if (kind === 'no_message') {
@@ -297,7 +337,7 @@ const inFlight = new Map<string, Promise<{ call: Call } | { skipped: string }>>(
  */
 export async function processTwilioCall(
   callSid: string,
-  opts?: { force?: boolean },
+  opts?: { force?: boolean } & ProcessOpts,
 ): Promise<{ call: Call } | { skipped: string }> {
   const existing = inFlight.get(callSid);
   if (existing) return existing;
@@ -324,7 +364,7 @@ export async function processTwilioCall(
           event: { name: 'deepgram', payload: raw },
         });
       }
-      const call = await processStoredCall(fresh, normalizeFromCallRow(fresh));
+      const call = await processStoredCall(fresh, normalizeFromCallRow(fresh), { real: opts?.real });
       return { call };
     } catch (err) {
       await finalizeCall(claimed.id, { status: 'failed', transcriptionStatus: 'failed' }).catch(
@@ -345,6 +385,7 @@ export async function processTwilioCall(
 export async function processRawPayload(
   platform: VoicePlatform,
   body: unknown,
+  opts?: ProcessOpts,
 ): Promise<{ call: Call } | { ignored: string }> {
   let n: NormalizedCallEnd | null;
   switch (platform) {
@@ -360,6 +401,6 @@ export async function processRawPayload(
       return { ignored: `unknown platform ${String(platform)}` };
   }
   if (!n) return { ignored: 'no call id in payload' };
-  const call = await processCallEnd(n, body);
+  const call = await processCallEnd(n, body, opts);
   return { call };
 }
