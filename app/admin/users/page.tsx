@@ -38,6 +38,10 @@ export default async function UsersPage({
           A cell is kept for texting a person that a lead is waiting and for ringing them through. Neither is
           switched on yet.
         </p>
+        <p className="text-sm text-slate-600 mt-1">
+          A call to the school line from a cell saved here is marked as a test on Calls: it makes no lead and
+          uses nobody&apos;s turn.
+        </p>
       </div>
 
       <InviteForm />

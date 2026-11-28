@@ -339,3 +339,24 @@ is calling and presses 1; "it skips them if they didn't answer the phone".
   person should see the caller's number instead of ours.
 - Migration `drizzle/0014_ring_through.sql` is hand-applied like 0006-0013 and must land before
   the deploy that reads the new column: every `select()` on `calls` names it.
+
+## Calls from our own phones are tests (Jim's 11/27 call, GFT-1127-07)
+
+Jim and Mark rang the line on 11/25 to try the assistant; the call became a lead for Jim Lewis,
+used a turn in the rotation and started the reminders. Jim: "not telling me hey, this is fake."
+
+- **Whose phones:** every cell saved on Users (people not disabled), everyone on the on-call list
+  (`phone_staff`, active or not), and `VOICE_TEST_CALLERS` for a phone that is on neither
+  (`"+18175551234:Chris,Ann:+18175555678"`). `teamPhones()` in `lib/voice/testCallerStore.ts`;
+  the rules and the wording are pure in `lib/voice/testCallers.ts`.
+- **What happens (`processStoredCall`):** the call is filed with status `test` and its summary, and
+  nothing else: no lead, no note on an older lead with that number, no turn used (also when the
+  caller asked for a person and somebody took it), no email. A second report of the same call does
+  nothing. If the lookup fails the call is treated as a customer's: a real caller is never lost to
+  this check.
+- **Calls page:** a `test` badge and the line "Test call from <name>'s phone. No lead was made and
+  nobody's turn was used." The row Twilio keeps for the same call carries a "<name>'s phone" chip.
+- **The way back:** "File as a real call" on a test call re-runs it with the check stepped over
+  (`reprocessCallAction` with `real=1`), so it becomes a lead and is handed out the usual way. Use
+  it to show the lead half of a ring-through test, then delete that lead.
+- No migration: `calls.status` is text.

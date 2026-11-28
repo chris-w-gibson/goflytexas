@@ -28,6 +28,7 @@ vi.mock('../voice/extract', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../voice/extract')>();
   return { ...actual, extractCall: vi.fn() };
 });
+vi.mock('../voice/testCallerStore', () => ({ testCallerFor: vi.fn(async () => null) }));
 vi.mock('../voice/transcribe', () => ({
   transcribeRecording: vi.fn(async () => ({ turns: [{ role: 'user', text: 'transcribed words here' }], raw: {}, channels: 2 })),
   twilioTranscribeOpts: vi.fn(() => ({ accountSid: 'a', authToken: 'b', deepgramKey: 'c' })),
@@ -38,6 +39,7 @@ import * as leads from '@/lib/leads';
 import { sendAdminNotification } from '@/lib/email';
 import { giveLeadToSafely, handOutLeadSafely, ownerOf } from '@/lib/rotationStore';
 import { extractCall } from '../voice/extract';
+import { testCallerFor } from '../voice/testCallerStore';
 import { transcribeRecording } from '../voice/transcribe';
 import { processCallEnd, processRawPayload, processTwilioCall } from '../voice/pipeline';
 
@@ -96,6 +98,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   process.env.ANTHROPIC_API_KEY = 'test';
   vi.mocked(leads.findRecentLeadByPhone).mockResolvedValue(undefined);
+  vi.mocked(testCallerFor).mockResolvedValue(null);
   vi.mocked(calls.countPipelineCallsSince).mockResolvedValue(0);
   vi.mocked(calls.linkChildCall).mockResolvedValue(null);
   vi.mocked(extractCall).mockResolvedValue(extraction as never);
@@ -348,6 +351,125 @@ describe('who a phone lead goes to', () => {
       expect(sent.call!.answeredBy).toBe('human');
       expect(sent.call!.putThroughTo).toBeNull();
     });
+  });
+});
+
+// Jim 2026-11-27: he and Mark rang the line to try the assistant; it became a
+// lead for Jim Lewis and chased him to call a customer who did not exist.
+describe('a call from one of our own phones', () => {
+  const marksCell = '+18175550111';
+  const tryout = {
+    platform: 'vapi' as const,
+    platformCallId: 'vapi-9',
+    fromNumber: marksCell,
+    toNumber: '+19402917613',
+    forwardedFrom: null,
+    startedAt,
+    endedAt,
+    durationSec: 90,
+    endedReason: 'customer-ended-call',
+    recordingUrl: null,
+    transcript: [{ role: 'user' as const, text: 'This is Blue Whatley, I want a discovery flight' }],
+    platformSummary: null,
+    answeredBy: 'ai' as const,
+    answeredByName: null,
+    parentCallId: null,
+  };
+  const tryoutRow = (over: Partial<Call> = {}) =>
+    row({ platform: 'vapi', platformCallId: 'vapi-9', fromNumber: marksCell, answeredBy: 'ai', answeredByName: null, status: 'received', ...over });
+
+  beforeEach(() => {
+    vi.mocked(calls.upsertCallEnded).mockResolvedValue(tryoutRow());
+    vi.mocked(testCallerFor).mockImplementation(async (from) => (from === marksCell ? 'Mark King' : null));
+  });
+
+  it('is kept with its summary and makes no lead, uses no turn and sends no email', async () => {
+    await processCallEnd(tryout, {});
+    expect(calls.finalizeCall).toHaveBeenCalledWith('call-uuid', {
+      status: 'test',
+      extracted: extraction,
+      summary: extraction.summary,
+    });
+    expect(leads.createLead).not.toHaveBeenCalled();
+    expect(leads.findRecentLeadByPhone).not.toHaveBeenCalled();
+    expect(leads.addLeadNote).not.toHaveBeenCalled();
+    expect(handOutLeadSafely).not.toHaveBeenCalled();
+    expect(giveLeadToSafely).not.toHaveBeenCalled();
+    expect(sendAdminNotification).not.toHaveBeenCalled();
+  });
+
+  it('uses no turn even when the caller asked for a person and somebody took it', async () => {
+    vi.mocked(calls.getCallByPlatformId).mockResolvedValue(
+      row({
+        platformCallId: 'CA777',
+        ringThrough: {
+          state: 'ended',
+          step: 0,
+          plan: [{ userId: 'user-jim', name: 'Jim Lewis', number: '+18175550122' }],
+          legSid: 'CA778',
+          callerName: null,
+          startedAt: startedAt.toISOString(),
+          answeredUserId: 'user-jim',
+          answeredName: 'Jim Lewis',
+        },
+      } as Partial<Call>),
+    );
+    vi.mocked(calls.upsertCallEnded).mockResolvedValue(tryoutRow({ parentCallId: 'CA777' }));
+    await processCallEnd({ ...tryout, parentCallId: 'CA777' }, {});
+    expect(giveLeadToSafely).not.toHaveBeenCalled();
+    expect(leads.createLead).not.toHaveBeenCalled();
+  });
+
+  it('a hang-up is filed as a test without asking the model', async () => {
+    await processCallEnd({ ...tryout, durationSec: 2, transcript: [] }, {});
+    expect(extractCall).not.toHaveBeenCalled();
+    expect(calls.finalizeCall).toHaveBeenCalledWith('call-uuid', { status: 'test' });
+  });
+
+  it('is still filed as a test when the summary cannot be written', async () => {
+    vi.mocked(extractCall).mockRejectedValue(new Error('model down'));
+    await processCallEnd(tryout, {});
+    expect(calls.finalizeCall).toHaveBeenCalledWith('call-uuid', { status: 'test' });
+    expect(calls.finalizeCall).not.toHaveBeenCalledWith('call-uuid', expect.objectContaining({ status: 'failed' }));
+  });
+
+  it('a second report of the same call does nothing', async () => {
+    vi.mocked(calls.upsertCallEnded).mockResolvedValue(tryoutRow({ status: 'test' }));
+    await processCallEnd(tryout, {});
+    expect(extractCall).not.toHaveBeenCalled();
+    expect(calls.finalizeCall).not.toHaveBeenCalled();
+  });
+
+  it('a call a person answered from one of our phones is a test too', async () => {
+    const r = row({ fromNumber: marksCell });
+    vi.mocked(calls.getCallByPlatformId).mockResolvedValue(r);
+    vi.mocked(calls.claimTranscription).mockResolvedValue(r);
+    await processTwilioCall('CA123');
+    expect(calls.finalizeCall).toHaveBeenCalledWith('call-uuid', {
+      status: 'test',
+      extracted: extraction,
+      summary: extraction.summary,
+      transcriptionStatus: 'done',
+    });
+    expect(leads.createLead).not.toHaveBeenCalled();
+    expect(leads.markContactedAt).not.toHaveBeenCalled();
+    expect(sendAdminNotification).not.toHaveBeenCalled();
+  });
+
+  it('filed as a real call on an admin\'s word: the lead is made and handed out', async () => {
+    vi.mocked(calls.upsertCallEnded).mockResolvedValue(tryoutRow({ status: 'test' }));
+    await processCallEnd(tryout, {}, { real: true });
+    expect(testCallerFor).not.toHaveBeenCalled();
+    expect(leads.createLead).toHaveBeenCalledTimes(1);
+    expect(handOutLeadSafely).toHaveBeenCalledWith('lead-1');
+    expect(sendAdminNotification).toHaveBeenCalledTimes(1);
+  });
+
+  it('a customer is handled exactly as before', async () => {
+    vi.mocked(calls.upsertCallEnded).mockResolvedValue(tryoutRow({ fromNumber: '+18175550142' }));
+    await processCallEnd({ ...tryout, fromNumber: '+18175550142' }, {});
+    expect(leads.createLead).toHaveBeenCalledTimes(1);
+    expect(handOutLeadSafely).toHaveBeenCalledWith('lead-1');
   });
 });
 

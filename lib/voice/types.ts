@@ -49,6 +49,8 @@ export type CallStatus =
   | 'no_message'
   | 'spam'
   | 'failed'
+  // A call from one of our own phones: kept for listening back, never a lead.
+  | 'test'
   // Twilio switchboard parent rows
   | 'ringing'
   | 'answered'
@@ -59,6 +61,7 @@ export const TERMINAL_CALL_STATUSES: ReadonlySet<CallStatus> = new Set<CallStatu
   'processed',
   'no_message',
   'spam',
+  'test',
 ]);
 
 export type TranscriptionStatus = 'pending' | 'running' | 'done' | 'failed';
