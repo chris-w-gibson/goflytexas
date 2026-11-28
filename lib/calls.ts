@@ -1,4 +1,4 @@
-import { and, desc, eq, gte, inArray, isNull, lt, ne, or, sql } from 'drizzle-orm';
+import { and, desc, eq, gte, inArray, isNotNull, isNull, lt, ne, or, sql } from 'drizzle-orm';
 import { db } from './db';
 import { calls, type Call } from './db/schema';
 import type {
@@ -312,7 +312,9 @@ export async function linkChildCall(input: {
       .where(
         and(
           eq(calls.platform, 'twilio'),
-          eq(calls.status, 'forwarded_to_ai'),
+          // A caller rung through to a person leaves 'forwarded_to_ai' the moment
+          // that person presses 1, before the assistant's end-of-call report lands.
+          or(eq(calls.status, 'forwarded_to_ai'), isNotNull(calls.forwardedToAiAt)),
           eq(calls.fromNumber, input.fromNumber),
           gte(calls.createdAt, since),
           sql`not exists (select 1 from ${calls} c2 where c2.parent_call_id = ${calls.platformCallId})`,

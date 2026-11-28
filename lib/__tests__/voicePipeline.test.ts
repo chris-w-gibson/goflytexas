@@ -20,6 +20,7 @@ vi.mock('@/lib/leads', () => ({
 }));
 vi.mock('@/lib/email', () => ({ sendAdminNotification: vi.fn(async () => undefined) }));
 vi.mock('@/lib/rotationStore', () => ({
+  giveLeadToSafely: vi.fn(async () => null),
   handOutLeadSafely: vi.fn(async () => null),
   ownerOf: vi.fn(async () => null),
 }));
@@ -35,7 +36,7 @@ vi.mock('../voice/transcribe', () => ({
 import * as calls from '@/lib/calls';
 import * as leads from '@/lib/leads';
 import { sendAdminNotification } from '@/lib/email';
-import { handOutLeadSafely, ownerOf } from '@/lib/rotationStore';
+import { giveLeadToSafely, handOutLeadSafely, ownerOf } from '@/lib/rotationStore';
 import { extractCall } from '../voice/extract';
 import { transcribeRecording } from '../voice/transcribe';
 import { processCallEnd, processRawPayload, processTwilioCall } from '../voice/pipeline';
@@ -276,6 +277,77 @@ describe('who a phone lead goes to', () => {
     await processTwilioCall('CA123');
     expect(handOutLeadSafely).not.toHaveBeenCalled();
     expect(vi.mocked(sendAdminNotification).mock.calls[0][1]!.owner).toBeNull();
+  });
+
+  // Jim 2026-11-27: a caller who asks for a person is rung through to the next
+  // person on the rotation; "it skips them if they didn't answer the phone".
+  describe('after a caller asked for a person', () => {
+    const jimL = { userId: 'user-jim', name: 'Jim Lewis', number: '+18175550102' };
+    const markP = { userId: mark.id, name: mark.name, number: '+18175550101' };
+    const rung = (over: Record<string, unknown>) =>
+      row({
+        platformCallId: 'CAparent',
+        answeredBy: 'ai',
+        answeredByName: null,
+        status: 'forwarded_to_ai',
+        ringThrough: { step: 0, plan: [jimL, markP], legSid: null, callerName: null, startedAt: '', ...over },
+      } as Partial<Call>);
+    const aiChild = () => ({ ...aiRow(), parentCallId: 'CAparent' }) as Call;
+
+    it('the lead is the person who took the call, and the alert says they were put through', async () => {
+      vi.mocked(calls.upsertCallEnded).mockResolvedValue(aiChild());
+      vi.mocked(calls.getCallByPlatformId).mockResolvedValue(
+        rung({ state: 'connected', step: 1, answeredUserId: mark.id, answeredName: mark.name }),
+      );
+      vi.mocked(giveLeadToSafely).mockResolvedValue(mark);
+      await processCallEnd(missed, {});
+      expect(giveLeadToSafely).toHaveBeenCalledWith('lead-1', mark.id);
+      expect(handOutLeadSafely).not.toHaveBeenCalled();
+      const sent = vi.mocked(sendAdminNotification).mock.calls[0][1]!;
+      expect(sent.owner).toEqual(mark);
+      expect(sent.call!.putThroughTo).toBe('Mark King');
+      expect(sent.call!.rangNoAnswer).toEqual(['Jim Lewis']);
+    });
+
+    it('when nobody took it, everyone who was rung is skipped for this lead', async () => {
+      vi.mocked(calls.upsertCallEnded).mockResolvedValue(aiChild());
+      vi.mocked(calls.getCallByPlatformId).mockResolvedValue(rung({ state: 'missed', step: 1 }));
+      const kristen = { id: 'user-kristen', name: 'Kristen', email: 'kristen@example.com' };
+      vi.mocked(handOutLeadSafely).mockResolvedValue(kristen);
+      await processCallEnd(missed, {});
+      expect(giveLeadToSafely).not.toHaveBeenCalled();
+      expect(vi.mocked(handOutLeadSafely).mock.calls[0][0]).toBe('lead-1');
+      expect(vi.mocked(handOutLeadSafely).mock.calls[0][2]).toEqual({ skip: ['user-jim', mark.id] });
+      const sent = vi.mocked(sendAdminNotification).mock.calls[0][1]!;
+      expect(sent.owner).toEqual(kristen);
+      expect(sent.call!.putThroughTo).toBeNull();
+      expect(sent.call!.rangNoAnswer).toEqual(['Jim Lewis', 'Mark King']);
+    });
+
+    it('a caller who left while it rang is handed out the usual way', async () => {
+      vi.mocked(calls.upsertCallEnded).mockResolvedValue(aiChild());
+      vi.mocked(calls.getCallByPlatformId).mockResolvedValue(rung({ state: 'ended' }));
+      vi.mocked(handOutLeadSafely).mockResolvedValue(mark);
+      await processCallEnd(missed, {});
+      expect(handOutLeadSafely).toHaveBeenCalledWith('lead-1');
+      expect(vi.mocked(sendAdminNotification).mock.calls[0][1]!.call!.rangNoAnswer).toEqual([]);
+    });
+
+    it('the notes from the conversation with the person go to that person, not the shared inbox', async () => {
+      const r = rung({ state: 'connected', step: 0, answeredUserId: 'user-jim', answeredName: 'Jim Lewis' });
+      const talked = { ...r, answeredBy: 'human', answeredByName: 'Jim Lewis', status: 'answered' } as Call;
+      vi.mocked(calls.getCallByPlatformId).mockResolvedValue(talked);
+      vi.mocked(calls.claimTranscription).mockResolvedValue(talked);
+      vi.mocked(calls.upsertTwilioCall).mockResolvedValue(talked);
+      const jimOwner = { id: 'user-jim', name: 'Jim Lewis', email: 'jim@example.com' };
+      vi.mocked(giveLeadToSafely).mockResolvedValue(jimOwner);
+      await processTwilioCall('CAparent');
+      expect(giveLeadToSafely).toHaveBeenCalledWith('lead-1', 'user-jim');
+      const sent = vi.mocked(sendAdminNotification).mock.calls[0][1]!;
+      expect(sent.owner).toEqual(jimOwner);
+      expect(sent.call!.answeredBy).toBe('human');
+      expect(sent.call!.putThroughTo).toBeNull();
+    });
   });
 });
 

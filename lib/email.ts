@@ -118,7 +118,21 @@ export type CallEmailContext = {
   answeredByName?: string | null;
   followUps?: string[];
   booking?: string | null;
+  /** The caller asked for a person and this team member took the call from the assistant. */
+  putThroughTo?: string | null;
+  /** People whose cell was rung for this caller and who did not take it. */
+  rangNoAnswer?: string[];
 };
+
+/** The line above the lead's name: how the call came in and who dealt with it. Already HTML-safe. */
+export function callEyebrow(call: CallEmailContext): string {
+  if (call.answeredBy === 'human') {
+    return `Answered by ${escape(call.answeredByName ?? 'the team')} &mdash; notes filed automatically`;
+  }
+  if (call.putThroughTo) return `Phone lead &mdash; asked for a person, put through to ${escape(call.putThroughTo)}`;
+  if (call.rangNoAnswer?.length) return 'Phone lead &mdash; asked for a person, nobody picked up';
+  return call.repeat ? 'Phone lead &mdash; missed call, called again' : 'Phone lead &mdash; missed call, AI answered';
+}
 
 /**
  * Owner alert. With `opts.owner` (the person the rotation gave the lead to) it
@@ -146,14 +160,8 @@ export async function sendAdminNotification(
   // Source-forward, no response-time nagging (Jim 2026-08-31: "my partner is
   // not going to like the idea he is being babysat") — the eyebrow says how
   // the lead came in, nothing more.
-  const eyebrow = human
-    ? `Answered by ${escape(staff)} &mdash; notes filed automatically`
-    : call
-      ? call.repeat
-        ? 'Phone lead &mdash; missed call, called again'
-        : 'Phone lead &mdash; missed call, AI answered'
-      : 'Website lead';
-  const eyebrowColor = human ? '#0c2340' : '#b91c1c';
+  const eyebrow = call ? callEyebrow(call) : 'Website lead';
+  const eyebrowColor = human || call?.putThroughTo ? '#0c2340' : '#b91c1c';
   const followUps = call?.followUps ?? [];
   const html = wrap(`
       <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:${eyebrowColor};font-weight:700;">${eyebrow}</p>
@@ -182,6 +190,7 @@ export async function sendAdminNotification(
         }`
             : `<tr><td style="padding:4px 0;color:#6b7280;width:140px;">Prefers</td><td>${escape(lead.preferredContact ?? 'email')}</td></tr>`
         }
+        ${call?.rangNoAnswer?.length ? `<tr><td style="padding:4px 0;color:#6b7280;">Rang, no answer</td><td>${escape(call.rangNoAnswer.join(', '))}</td></tr>` : ''}
         ${owner ? `<tr><td style="padding:4px 0;color:#6b7280;">Went to</td><td><strong>${escape(owner.name)}</strong></td></tr>` : ''}
         <tr><td style="padding:4px 0;color:#6b7280;">Came from</td><td>${escape(source ?? 'Direct / organic')}</td></tr>
         <tr><td style="padding:4px 0;color:#6b7280;">${call ? 'Call ended' : 'Submitted'}</td><td>${escape(new Date(lead.createdAt).toLocaleString('en-US', { timeZone: 'America/Chicago' }))} CT</td></tr>
@@ -210,7 +219,7 @@ export async function sendAdminNotification(
   const subject = human
     ? `Call · ${lead.name} · ${contact} · ${interest} · answered by ${staff}`
     : call
-      ? `Missed call · ${lead.name} · ${contact} · ${interest}${forOwner}`
+      ? `${call.putThroughTo ? 'Call put through' : 'Missed call'} · ${lead.name} · ${contact} · ${interest}${forOwner}`
       : `New lead · ${lead.name} · ${contact} · ${interest}${forOwner}`;
   const { error } = await getResend().emails.send({
     from: fromAddress(),

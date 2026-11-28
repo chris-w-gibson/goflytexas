@@ -12,6 +12,7 @@ import {
   bigint,
   type AnyPgColumn,
 } from 'drizzle-orm/pg-core';
+import type { RingThroughState } from '../voice/ringThrough';
 import type {
   AnsweredBy,
   CallExtraction,
@@ -101,7 +102,7 @@ export const users = pgTable('users', {
   // person who leaves keeps the place the list carries on from.
   inRotation: boolean('in_rotation').notNull().default(false),
   rotationOrder: integer('rotation_order'),
-  // 0013: the person's cell, +1XXXXXXXXXX. Kept for lead texts and ringing; nothing reads it yet.
+  // 0013: the person's cell, +1XXXXXXXXXX. Read when a caller asks the AI for a person (ring-through); lead texts are not built.
   phone: text('phone'),
   lastLoginAt: timestamp('last_login_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
@@ -206,6 +207,9 @@ export const calls = pgTable('calls', {
   // 0009: the on-call order chosen when the call came in (name + number, in
   // ring order). Null = the simultaneous ring of VOICE_RING_TARGETS.
   ringPlan: jsonb('ring_plan').$type<{ name: string; number: string }[] | null>(),
+  // 0014: a caller who asked for a person inside an AI call: who was rung and
+  // how it ended. Null = nobody was asked for.
+  ringThrough: jsonb('ring_through').$type<RingThroughState | null>(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });

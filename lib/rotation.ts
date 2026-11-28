@@ -96,6 +96,35 @@ export function nextUp(
   return comingUp(people, pointer, day, daysOff, 1)[0] ?? null;
 }
 
+/** Every working person once, in the order they would get leads from here. */
+export function everyoneComingUp(
+  people: RotationPerson[],
+  pointer: Pointer,
+  day: string,
+  daysOff: DayOff[],
+): RotationPerson[] {
+  const working = people.filter((p) => !isOff(p.id, day, daysOff)).length;
+  return comingUp(people, pointer, day, daysOff, working);
+}
+
+/**
+ * Who gets a lead when the people in `skip` were rung for it and did not pick
+ * up (Jim 2026-11-27: "it skips them if they didn't answer the phone and it
+ * just goes to the next person. So that means the third person is getting a
+ * lead now"). When skipping leaves nobody, the usual next person gets it: a
+ * lead always goes to someone.
+ */
+export function nextUpSkipping(
+  people: RotationPerson[],
+  pointer: Pointer,
+  day: string,
+  daysOff: DayOff[],
+  skip: ReadonlySet<string>,
+): RotationPerson | null {
+  const order = everyoneComingUp(people, pointer, day, daysOff);
+  return order.find((p) => !skip.has(p.id)) ?? order[0] ?? null;
+}
+
 /** The pointer after `person` has been given a lead. */
 export function pointerAfter(person: RotationPerson): Pointer {
   return { userId: person.id, position: person.order };

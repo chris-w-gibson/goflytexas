@@ -18,7 +18,7 @@ import {
   markContactedAt,
   recordEmailEvent,
 } from '@/lib/leads';
-import { handOutLeadSafely, ownerOf } from '@/lib/rotationStore';
+import { giveLeadToSafely, handOutLeadSafely, ownerOf } from '@/lib/rotationStore';
 import { extractCall, fallbackExtraction, isRecentDuplicate, type ExtractionMode } from './extract';
 import {
   normalizeFromCallRow,
@@ -26,6 +26,7 @@ import {
   normalizeVapiEndOfCall,
 } from './normalize';
 import { formatPhoneDisplay } from './phone';
+import { ringOutcome, type RingOutcome } from './ringThrough';
 import { classifyCall, classifyHumanCall } from './transcript';
 import { transcribeRecording, twilioTranscribeOpts } from './transcribe';
 import { recordingLink } from './twilio';
@@ -72,6 +73,22 @@ function whenCT(d: Date | null): string {
 }
 
 const AI_AUTHOR = 'AI phone agent';
+
+/**
+ * How a ring-through on this call ended, read from the caller's Twilio row
+ * (the assistant's own row points at it). Null = the caller never asked for a
+ * person, or left before anyone could take it.
+ */
+async function ringOutcomeFor(call: Call): Promise<RingOutcome | null> {
+  try {
+    if (call.platform === 'twilio') return ringOutcome(call.ringThrough);
+    const parentSid = call.parentCallId ?? (await getCallById(call.id))?.parentCallId;
+    return parentSid ? ringOutcome((await getCallByPlatformId(parentSid))?.ringThrough) : null;
+  } catch (err) {
+    console.error('voice pipeline: ring-through lookup failed', err);
+    return null;
+  }
+}
 
 /**
  * Turn a finished platform call (Vapi/Retell) into a lead + owner alert.
@@ -216,7 +233,24 @@ export async function processStoredCall(call: Call, n: NormalizedCallEnd): Promi
   // the voicemail will go to them"): it goes to the next person in the
   // rotation. A repeat caller stays with whoever already has them. A call a
   // person answered is theirs already and is not handed out.
-  const owner = human ? null : lead.ownerId ? await ownerOf(lead) : await handOutLeadSafely(lead.id);
+  //
+  // A caller who asked for a person (Jim 2026-11-27): when somebody took the
+  // call the lead is theirs, and whoever was rung first and did not pick up is
+  // skipped; when nobody took it, everyone rung is skipped and the lead goes
+  // to the next person after them.
+  const ring = await ringOutcomeFor(call);
+  let owner: Awaited<ReturnType<typeof ownerOf>> = null;
+  if (ring?.kind === 'taken') {
+    owner = lead.ownerId
+      ? await ownerOf(lead)
+      : ((await giveLeadToSafely(lead.id, ring.userId)) ?? (await handOutLeadSafely(lead.id)));
+  } else if (!human) {
+    owner = lead.ownerId
+      ? await ownerOf(lead)
+      : ring?.kind === 'missed'
+        ? await handOutLeadSafely(lead.id, new Date(), { skip: ring.tried.map((p) => p.userId) })
+        : await handOutLeadSafely(lead.id);
+  }
 
   const fresh = (await getCallById(call.id)) ?? call;
   try {
@@ -233,6 +267,13 @@ export async function processStoredCall(call: Call, n: NormalizedCallEnd): Promi
         answeredByName: n.answeredByName,
         followUps,
         booking: extracted.booking ?? null,
+        putThroughTo: !human && ring?.kind === 'taken' ? ring.name : null,
+        rangNoAnswer:
+          ring?.kind === 'missed'
+            ? ring.tried.map((p) => p.name)
+            : ring?.kind === 'taken'
+              ? ring.missed.map((p) => p.name)
+              : [],
       },
     });
     await recordEmailEvent({ leadId: lead.id, kind: 'admin_notify' });

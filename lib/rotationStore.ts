@@ -3,8 +3,10 @@ import { db } from './db';
 import { leadNotes, leads, rotationDaysOff, rotationState, users, type Lead } from './db/schema';
 import {
   AI_NOTE_AUTHOR,
+  everyoneComingUp,
   moved,
   nextUp,
+  nextUpSkipping,
   orderForNewcomer,
   pointerAfter,
   type DayOff,
@@ -80,13 +82,20 @@ export async function loadRotation(day: string): Promise<RotationView> {
  * arrive together go to two different people. Null = nobody could take it
  * (empty list, or everyone off today): the lead stays with the shared inbox.
  */
-export async function handOutLead(leadId: string, now: Date = new Date()): Promise<LeadOwner | null> {
+export async function handOutLead(
+  leadId: string,
+  now: Date = new Date(),
+  opts?: { skip?: string[] },
+): Promise<LeadOwner | null> {
   const day = rotationDay(now);
   return db.transaction(async (tx) => {
     await tx.insert(rotationState).values({ id: 1 }).onConflictDoNothing();
     await tx.execute(sql`select id from rotation_state where id = 1 for update`);
     const [people, daysOff, pointer] = await Promise.all([peopleIn(tx), daysOffFrom(tx, day), pointerOf(tx)]);
-    const person = nextUp(people, pointer, day, daysOff);
+    // People rung for this call who did not pick up are skipped (they get no make-up turn).
+    const person = opts?.skip?.length
+      ? nextUpSkipping(people, pointer, day, daysOff, new Set(opts.skip))
+      : nextUp(people, pointer, day, daysOff);
     if (!person) return null;
     const after = pointerAfter(person);
     await tx.update(leads).set({ ownerId: person.id, assignedAt: now, updatedAt: now }).where(eq(leads.id, leadId));
@@ -102,13 +111,76 @@ export async function handOutLead(leadId: string, now: Date = new Date()): Promi
  * The hand-out must never cost a lead: if it fails, the lead is already saved
  * and its email goes to the shared inbox the way it did before the rotation.
  */
-export async function handOutLeadSafely(leadId: string, now: Date = new Date()): Promise<LeadOwner | null> {
+export async function handOutLeadSafely(
+  leadId: string,
+  now: Date = new Date(),
+  opts?: { skip?: string[] },
+): Promise<LeadOwner | null> {
   try {
-    return await handOutLead(leadId, now);
+    return await handOutLead(leadId, now, opts);
   } catch (err) {
     console.error('[rotation] hand-out failed; the lead goes to the shared inbox', err);
     return null;
   }
+}
+
+/**
+ * The lead belongs to the person who took the call (a caller rung through to
+ * them). The list moves on from that person, so whoever was rung before them
+ * and did not pick up is skipped. Null when that person can no longer hold a
+ * lead; the caller of this then hands it out the usual way.
+ */
+export async function giveLeadTo(leadId: string, userId: string, now: Date = new Date()): Promise<LeadOwner | null> {
+  return db.transaction(async (tx) => {
+    await tx.insert(rotationState).values({ id: 1 }).onConflictDoNothing();
+    await tx.execute(sql`select id from rotation_state where id = 1 for update`);
+    const [person] = await tx
+      .select({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        disabled: users.disabled,
+        inRotation: users.inRotation,
+        order: users.rotationOrder,
+      })
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1);
+    if (!person || person.disabled) return null;
+    await tx.update(leads).set({ ownerId: person.id, assignedAt: now, updatedAt: now }).where(eq(leads.id, leadId));
+    if (person.inRotation) {
+      await tx
+        .update(rotationState)
+        .set({ lastUserId: person.id, lastPosition: person.order ?? 0, updatedAt: now })
+        .where(eq(rotationState.id, 1));
+    }
+    return { id: person.id, name: person.name, email: person.email };
+  });
+}
+
+export async function giveLeadToSafely(leadId: string, userId: string, now: Date = new Date()): Promise<LeadOwner | null> {
+  try {
+    return await giveLeadTo(leadId, userId, now);
+  } catch (err) {
+    console.error('[rotation] could not give the lead to the person who took the call', err);
+    return null;
+  }
+}
+
+/**
+ * The people who could be rung right now, in the order their turns come, each
+ * once, with the cell saved on their user (null when none is saved).
+ */
+export async function ringCandidates(now: Date = new Date()): Promise<{ id: string; name: string; phone: string | null }[]> {
+  const day = rotationDay(now);
+  const [people, daysOff, pointer, cells] = await Promise.all([
+    peopleIn(db),
+    daysOffFrom(db, day),
+    pointerOf(db),
+    db.select({ id: users.id, phone: users.phone }).from(users).where(eq(users.inRotation, true)),
+  ]);
+  const cellOf = new Map(cells.map((c) => [c.id, c.phone]));
+  return everyoneComingUp(people, pointer, day, daysOff).map((p) => ({ id: p.id, name: p.name, phone: cellOf.get(p.id) ?? null }));
 }
 
 /** Who a lead went to, when that person can still be written to. */
